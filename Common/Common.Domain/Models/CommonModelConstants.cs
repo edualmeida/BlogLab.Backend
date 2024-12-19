@@ -1,0 +1,9 @@
+public class CommonModelConstants
+{
+    public class Common
+    {
+        public const int Zero = 0;
+        public const int MinNameLength = 3;
+        public const int MaxNameLength = 50;
+    }
+}
