@@ -2,15 +2,9 @@
 
 public class DeleteArticleCommand : EntityCommand, IRequest<Result>
 {
-    public class DeleteArticleCommandHandler : IRequestHandler<DeleteArticleCommand, Result>
+    public class DeleteArticleCommandHandler(IArticleDomainRepository articleRepository) 
+        : IRequestHandler<DeleteArticleCommand, Result>
     {
-        private readonly IArticleDomainRepository articleRepository;
-
-        public DeleteArticleCommandHandler(IArticleDomainRepository articleRepository)
-        {
-            this.articleRepository = articleRepository;
-        }
-
         public async Task<Result> Handle(
             DeleteArticleCommand request, 
             CancellationToken cancellationToken)

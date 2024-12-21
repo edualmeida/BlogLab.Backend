@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
-internal class ArticleRepository : DataRepository<BlogDbContext, Article>,
+internal class ArticleRepository : DataRepository<ArticleCatalogDbContext, Article>,
     IArticleDomainRepository,
     IArticleQueryRepository
 {
     private readonly IMapper mapper;
 
-    public ArticleRepository(BlogDbContext db, IMapper mapper)
+    public ArticleRepository(ArticleCatalogDbContext db, IMapper mapper)
         : base(db)
         => this.mapper = mapper;
 

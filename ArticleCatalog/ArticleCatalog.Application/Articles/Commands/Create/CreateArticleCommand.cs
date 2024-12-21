@@ -2,19 +2,10 @@ using MediatR;
 
 public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleResponse>
 {
-    public class CreateArticleCommandHandler : IRequestHandler<CreateArticleCommand, CreateArticleResponse>
+    public class CreateArticleCommandHandler(
+        IArticleDomainRepository articleRepository,
+        IArticleFactory articleFactory) : IRequestHandler<CreateArticleCommand, CreateArticleResponse>
     {
-        private readonly IArticleDomainRepository articleRepository;
-        private readonly IArticleFactory articleFactory;
-
-        public CreateArticleCommandHandler(
-            IArticleDomainRepository articleRepository,
-            IArticleFactory articleFactory)
-        {
-            this.articleRepository = articleRepository;
-            this.articleFactory = articleFactory;
-        }
-
         public async Task<CreateArticleResponse> Handle(
             CreateArticleCommand request,
             CancellationToken cancellationToken)

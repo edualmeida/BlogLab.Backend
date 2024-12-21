@@ -6,27 +6,17 @@ using Microsoft.Net.Http.Headers;
 
 [ApiController]
 [Route("api/[controller]")]
-public abstract class ApiController : ControllerBase
+public abstract class ApiController(IMediator mediator) : ControllerBase
 {
     protected const string Id = "{id}";
     protected const string PathSeparator = "/";
 
-    private IMediator? mediator;
+    protected Task<ActionResult<TResult>> Send<TResult>(IRequest<TResult> request)
+        => mediator.Send(request).ToActionResult();
 
-    protected IMediator Mediator
-        => mediator ??= HttpContext
-            .RequestServices
-            .GetService<IMediator>()!;
+    protected Task<ActionResult<TResult>> Send<TResult>(IRequest<Result<TResult>> request)
+        => mediator.Send(request).ToActionResult();
 
-    protected Task<ActionResult<TResult>> Send<TResult>(
-        IRequest<TResult> request)
-        => Mediator.Send(request).ToActionResult();
-
-    protected Task<ActionResult<TResult>> Send<TResult>(
-        IRequest<Result<TResult>> request)
-        => Mediator.Send(request).ToActionResult();
-
-    protected Task<ActionResult> Send(
-        IRequest<Result> request)
-        => Mediator.Send(request).ToActionResult();
+    protected Task<ActionResult> Send(IRequest<Result> request)
+        => mediator.Send(request).ToActionResult();
 }

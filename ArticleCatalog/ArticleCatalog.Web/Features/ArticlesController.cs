@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
-public class BikesController : ApiController
+public class ArticlesController(IMediator mediator) : ApiController(mediator)
 {
     [HttpGet]
     public async Task<ActionResult<List<ArticleResponse>>> GetAll([FromQuery] ArticleGetAllQuery query)
