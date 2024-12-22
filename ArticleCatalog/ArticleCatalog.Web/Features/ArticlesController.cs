@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 public class ArticlesController(IMediator mediator) : ApiController(mediator)
 {
     [HttpGet]
-    public async Task<ActionResult<List<ArticleResponse>>> GetAll([FromQuery] ArticleGetAllQuery query)
-        => await Send(query);
+    public async Task<ActionResult<List<ArticleResponse>>> GetAll()
+        => await Send(new ArticleGetAllQuery());
 
     [HttpGet]
     [Route(Id)]
@@ -18,6 +18,6 @@ public class ArticlesController(IMediator mediator) : ApiController(mediator)
     
     [HttpPut]
     [Route(Id)]
-    public async Task<ActionResult> Update(UpdateArticleCommand command)
-        => await Send(command);
+    public async Task<ActionResult> Update(Guid id, ArticleCommand command)
+        => await Send(new UpdateArticleCommand(id, command));
 }

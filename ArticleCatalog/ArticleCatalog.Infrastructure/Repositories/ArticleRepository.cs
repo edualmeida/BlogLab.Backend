@@ -20,14 +20,13 @@ internal class ArticleRepository : DataRepository<ArticleCatalogDbContext, Artic
             .ProjectTo<ArticleResponse>(AllAsNoTracking())
                 .FirstAsync(b => b.Id == id, cancellationToken);
 
-    public async Task<List<ArticleResponse>> GetAll(QueryOrderBy orderBy, CancellationToken cancellationToken = default)
+    public async Task<List<ArticleResponse>> GetAll(CancellationToken cancellationToken = default)
         => (await mapper
             .ProjectTo<ArticleResponse>(AllAsNoTracking()
             .Include(b => b.Color)
-            .Include(b => b.Category))
-            //.ToOrdered(orderBy)) SQL Lite does not support decimal order by
-            .ToListAsync(cancellationToken))
-            .ToOrdered(orderBy);
+            .Include(b => b.Category)
+            .Include(b=>b.Thumbnail))
+            .ToListAsync(cancellationToken));
 
     public async Task Delete(Guid id, CancellationToken cancellationToken = default)
     {
@@ -55,13 +54,4 @@ internal class ArticleRepository : DataRepository<ArticleCatalogDbContext, Artic
     {
         return await Data.Colors.FirstAsync(x => x.Name == name);
     }
-}
-
-internal static class QueryableBikeExtesions
-{
-    public static List<ArticleResponse> ToOrdered(this List<ArticleResponse> query, QueryOrderBy direction) => direction switch
-    {
-        QueryOrderBy.Title => [.. query.OrderBy(x => x.Title)],
-        _ => query,
-    };
 }

@@ -12,9 +12,11 @@ public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleRespon
         {
             var article = articleFactory
                 .WithTitle(request.Title)
-                .WithThumbnail(request.Thumbnail)
-                .WithColor(request.Color)
-                .WithCategory(request.Category)
+                .WithSubtitle(request.Subtitle)
+                .WithText(request.Text)
+                .WithThumbnailId(request.ThumbnailId)
+                .WithColorId(request.ColorId)
+                .WithCategoryId(request.CategoryId)
                 .Build();
 
             await articleRepository.Save(article, cancellationToken);

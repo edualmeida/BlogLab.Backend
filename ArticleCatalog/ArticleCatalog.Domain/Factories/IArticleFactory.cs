@@ -3,7 +3,7 @@ public interface IArticleFactory : IFactory<Article>
     IArticleFactory WithTitle(string title);
     IArticleFactory WithSubtitle(string subtitle);
     IArticleFactory WithText(string text);
-    IArticleFactory WithThumbnail(Guid thumbnailId);
-    IArticleFactory WithCategory(Guid categoryId);
-    IArticleFactory WithColor(Guid colorId);
+    IArticleFactory WithThumbnailId(Guid thumbnailId);
+    IArticleFactory WithCategoryId(Guid categoryId);
+    IArticleFactory WithColorId(Guid colorId);
 }

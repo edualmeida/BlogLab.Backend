@@ -19,13 +19,13 @@ public class ArticleCommandValidator : AbstractValidator<ArticleCommand>
             .Length(ArticleModelConstants.Article.MinTitleLength, ArticleModelConstants.Article.MaxTitleLength)
             .WithMessage($"Name must be between {ArticleModelConstants.Article.MinTitleLength} and {ArticleModelConstants.Article.MaxTitleLength} characters.");
 
-        RuleFor(b => b.Category)
+        RuleFor(b => b.CategoryId)
             .NotEmpty().WithMessage("CategoryId is required.");
 
-        RuleFor(b => b.Color)
+        RuleFor(b => b.ColorId)
             .NotEmpty().WithMessage("ColorId is required.");
 
-        RuleFor(b => b.Thumbnail)
+        RuleFor(b => b.ThumbnailId)
             .NotEmpty().WithMessage("Thumbnail is required.");
     }
 }

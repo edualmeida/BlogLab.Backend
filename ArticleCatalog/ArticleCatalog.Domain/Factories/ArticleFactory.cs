@@ -38,7 +38,7 @@ internal class ArticleFactory : IArticleFactory
         return this;
     }
 
-    public IArticleFactory WithCategory(Guid category)
+    public IArticleFactory WithCategoryId(Guid category)
     {
         articleCategory = category;
         isCategorySet = true;
@@ -46,7 +46,7 @@ internal class ArticleFactory : IArticleFactory
         return this;
     }
 
-    public IArticleFactory WithThumbnail(Guid thumbnail)
+    public IArticleFactory WithThumbnailId(Guid thumbnail)
     {
         this.articleThumbnail = thumbnail;
         isThumbnailSet = true;
@@ -54,7 +54,7 @@ internal class ArticleFactory : IArticleFactory
         return this;
     }
 
-    public IArticleFactory WithColor(Guid color)
+    public IArticleFactory WithColorId(Guid color)
     {
         this.articleColor = color;
         isColorSet = true;
