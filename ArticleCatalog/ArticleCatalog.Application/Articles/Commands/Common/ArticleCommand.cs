@@ -1,4 +1,4 @@
-public class ArticleCommand : ArticleCommandModel
+public class ArticleCommand : ArticleModel
 {
     
 }

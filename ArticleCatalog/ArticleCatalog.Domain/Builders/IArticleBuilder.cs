@@ -1,4 +1,4 @@
-public interface IArticleBuilder : IFactory<Article>
+public interface IArticleBuilder : IBuilder<Article>
 {
     IArticleBuilder WithTitle(string title);
     IArticleBuilder WithSubtitle(string subtitle);

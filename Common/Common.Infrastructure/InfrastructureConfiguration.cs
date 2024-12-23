@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 public static class InfrastructureConfiguration
 {
-    public static IServiceCollection AddDBStorage<TDbContext>(
+    public static IServiceCollection AddDabaseStorage<TDbContext>(
         this IServiceCollection services,
         IConfiguration configuration,
         Assembly assembly)

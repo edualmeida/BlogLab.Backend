@@ -23,9 +23,9 @@ internal class ArticleRepository : DataRepository<ArticleCatalogDbContext, Artic
     public async Task<List<ArticleResponse>> GetAll(CancellationToken cancellationToken = default)
         => (await mapper
             .ProjectTo<ArticleResponse>(AllAsNoTracking()
-            .Include(b => b.Color)
-            .Include(b => b.Category)
-            .Include(b=>b.Thumbnail))
+                .Include(b => b.Color)
+                .Include(b => b.Category)
+                .Include(b=>b.Thumbnail))
             .ToListAsync(cancellationToken));
 
     public async Task Delete(Guid id, CancellationToken cancellationToken = default)
@@ -38,20 +38,5 @@ internal class ArticleRepository : DataRepository<ArticleCatalogDbContext, Artic
         Data.Articles.Remove(article);
 
         await Data.SaveChangesAsync(cancellationToken);
-    }
-
-    public async Task<Thumbnail> FindThumbnail(string name)
-    {
-        return await Data.Thumbnails.FirstAsync(x=>x.Name == name);
-    }
-
-    public async Task<Category> FindCategory(string name)
-    {
-        return await Data.Categories.FirstAsync(x => x.Name == name);
-    }
-
-    public async Task<Color> FindColor(string name)
-    {
-        return await Data.Colors.FirstAsync(x => x.Name == name);
     }
 }

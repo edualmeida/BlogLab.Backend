@@ -7,6 +7,6 @@ public static class InfrastructureConfiguration
     public static IServiceCollection AddArticleCatalogInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
         => services
-            .AddDBStorage<ArticleCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
+            .AddDabaseStorage<ArticleCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
             .AddTransient<IDbInitializer, ArticleCatalogDbInitializer>();
 }

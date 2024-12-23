@@ -4,13 +4,13 @@ public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleRespon
 {
     public class CreateArticleCommandHandler(
         IArticleDomainRepository articleRepository,
-        IArticleBuilder articleFactory) : IRequestHandler<CreateArticleCommand, CreateArticleResponse>
+        IArticleBuilder articleBuilder) : IRequestHandler<CreateArticleCommand, CreateArticleResponse>
     {
         public async Task<CreateArticleResponse> Handle(
             CreateArticleCommand request,
             CancellationToken cancellationToken)
         {
-            var article = articleFactory
+            var article = articleBuilder
                 .WithTitle(request.Title)
                 .WithSubtitle(request.Subtitle)
                 .WithText(request.Text)
