@@ -1,4 +1,4 @@
-internal class ArticleFactory : IArticleFactory
+internal class ArticleBuilder : IArticleBuilder
 {
     private string articleTitle = default!;
     private string articleSubtitle = default!;
@@ -6,6 +6,8 @@ internal class ArticleFactory : IArticleFactory
     private Guid articleThumbnail = default!;
     private Guid articleCategory = default!;
     private Guid articleColor = default!;
+    private bool articleEnabled = true;
+    private DateTime articleCreatedOn = DateTime.UtcNow;
 
     private bool isTitleSet = false;
     private bool isColorSet = false;
@@ -14,7 +16,7 @@ internal class ArticleFactory : IArticleFactory
     private bool isCategorySet = false;
     private bool isThumbnailSet = false;
 
-    public IArticleFactory WithTitle(string title)
+    public IArticleBuilder WithTitle(string title)
     {
         articleTitle = title;
         isTitleSet = true;
@@ -22,7 +24,7 @@ internal class ArticleFactory : IArticleFactory
         return this;
     }
 
-    public IArticleFactory WithSubtitle(string subtitle)
+    public IArticleBuilder WithSubtitle(string subtitle)
     {
         articleSubtitle = subtitle;
         isSubtitleSet = true;
@@ -30,7 +32,7 @@ internal class ArticleFactory : IArticleFactory
         return this;
     }
 
-    public IArticleFactory WithText(string text)
+    public IArticleBuilder WithText(string text)
     {
         articleText = text;
         isTextSet = true;
@@ -38,7 +40,7 @@ internal class ArticleFactory : IArticleFactory
         return this;
     }
 
-    public IArticleFactory WithCategoryId(Guid category)
+    public IArticleBuilder WithCategoryId(Guid category)
     {
         articleCategory = category;
         isCategorySet = true;
@@ -46,7 +48,7 @@ internal class ArticleFactory : IArticleFactory
         return this;
     }
 
-    public IArticleFactory WithThumbnailId(Guid thumbnail)
+    public IArticleBuilder WithThumbnailId(Guid thumbnail)
     {
         this.articleThumbnail = thumbnail;
         isThumbnailSet = true;
@@ -54,7 +56,7 @@ internal class ArticleFactory : IArticleFactory
         return this;
     }
 
-    public IArticleFactory WithColorId(Guid color)
+    public IArticleBuilder WithColorId(Guid color)
     {
         this.articleColor = color;
         isColorSet = true;
@@ -73,6 +75,8 @@ internal class ArticleFactory : IArticleFactory
             articleText,
             articleCategory,
             articleColor,
-            articleThumbnail);
+            articleThumbnail,
+            articleEnabled,
+            articleCreatedOn);
     }
 }

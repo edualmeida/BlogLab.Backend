@@ -20,4 +20,9 @@ public class ArticlesController(IMediator mediator) : ApiController(mediator)
     [Route(Id)]
     public async Task<ActionResult> Update(Guid id, ArticleCommand command)
         => await Send(new UpdateArticleCommand(id, command));
+
+    [HttpDelete]
+    [Route(Id)]
+    public async Task<ActionResult> Delete([FromRoute] DeleteArticleCommand command)
+        => await Send(command);
 }

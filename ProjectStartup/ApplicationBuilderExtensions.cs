@@ -30,8 +30,12 @@
         return app;
     }
 
-    public static IApplicationBuilder Initialize(this IApplicationBuilder app)
+    private static readonly bool _initializeDatabase = false;
+    public static IApplicationBuilder InitializeDatabase(this IApplicationBuilder app)
     {
+        if (!_initializeDatabase)
+            return app;
+
         using var serviceScope = app.ApplicationServices.CreateScope();
         var initializers = serviceScope.ServiceProvider.GetServices<IDbInitializer>();
 

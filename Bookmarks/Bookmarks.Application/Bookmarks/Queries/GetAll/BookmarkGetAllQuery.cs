@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 
-public class BookmarkGetAllQuery : EntityCommand, IRequest<List<BookmarkBikeResponse>>
+public class BookmarkGetAllQuery : EntityCommand, IRequest<List<BookmarkArticleResponse>>
 {
-    public class BookmarkGetAllQueryHandler : IRequestHandler<BookmarkGetAllQuery, List<BookmarkBikeResponse>>
+    public class BookmarkGetAllQueryHandler : IRequestHandler<BookmarkGetAllQuery, List<BookmarkArticleResponse>>
     {
         private readonly IBookmarkQueryRepository bookmarkRepository;
         private readonly IArticleCatalogHttpService articleCatalogHttpService;
@@ -19,7 +19,7 @@ public class BookmarkGetAllQuery : EntityCommand, IRequest<List<BookmarkBikeResp
             this.mapper = mapper;
         }
 
-        public async Task<List<BookmarkBikeResponse>> Handle(
+        public async Task<List<BookmarkArticleResponse>> Handle(
             BookmarkGetAllQuery request, 
             CancellationToken cancellationToken)
         {
@@ -29,9 +29,9 @@ public class BookmarkGetAllQuery : EntityCommand, IRequest<List<BookmarkBikeResp
                 return [];
             }
 
-            var articles = await articleCatalogHttpService.GetBikesByIds(bookmarks.Select(x => x.ArticleId.ToString()));
+            var articles = await articleCatalogHttpService.GetArticlesByIds(bookmarks.Select(x => x.ArticleId.ToString()));
 
-            return mapper.Map<List<BookmarkBikeResponse>>(articles.Where(x=> bookmarks.Exists(f=>f.ArticleId == x.Id)));
+            return mapper.Map<List<BookmarkArticleResponse>>(articles.Where(x=> bookmarks.Exists(f=>f.ArticleId == x.Id)));
         }
     }
 }

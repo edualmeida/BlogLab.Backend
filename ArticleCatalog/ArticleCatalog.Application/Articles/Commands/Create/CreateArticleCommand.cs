@@ -4,7 +4,7 @@ public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleRespon
 {
     public class CreateArticleCommandHandler(
         IArticleDomainRepository articleRepository,
-        IArticleFactory articleFactory) : IRequestHandler<CreateArticleCommand, CreateArticleResponse>
+        IArticleBuilder articleFactory) : IRequestHandler<CreateArticleCommand, CreateArticleResponse>
     {
         public async Task<CreateArticleResponse> Handle(
             CreateArticleCommand request,

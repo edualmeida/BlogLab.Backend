@@ -20,7 +20,7 @@ public class CreateBookmarkCommand : BookmarkCommand, IRequest<CreateBookmarkRes
             CancellationToken cancellationToken)
         {
             var bookmark = bookmarkFactory
-                .WithBikeId(request.ArticleId)
+                .WithArticleId(request.ArticleId)
                 .WithCustomerId(request.CustomerId)
                 .Build();
             

@@ -1,7 +1,7 @@
 using FluentValidation;
 
-public class DeleteBikeCommandValidator : AbstractValidator<BookmarkCommand>
+public class DeleteArticleCommandValidator : AbstractValidator<BookmarkCommand>
 {
-    public DeleteBikeCommandValidator() 
+    public DeleteArticleCommandValidator() 
         => Include(new BookmarkCommandValidator());
 }

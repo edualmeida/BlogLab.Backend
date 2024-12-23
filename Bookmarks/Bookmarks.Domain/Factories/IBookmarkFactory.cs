@@ -1,6 +1,6 @@
 public interface IBookmarkFactory : IFactory<Bookmark>
 {
     IBookmarkFactory WithCustomerId(Guid customerId);
-    IBookmarkFactory WithBikeId(Guid articleId);
+    IBookmarkFactory WithArticleId(Guid articleId);
     Bookmark Build();
 }

@@ -4,7 +4,7 @@ internal class BookmarkFactory : IBookmarkFactory
     private Guid articleId = default!;
 
     private bool isCustomerIdSet = false;
-    private bool isBikeIdSet = false;
+    private bool isArticleIdSet = false;
 
     public IBookmarkFactory WithCustomerId(Guid customerId)
     {
@@ -14,17 +14,17 @@ internal class BookmarkFactory : IBookmarkFactory
         return this;
     }
 
-    public IBookmarkFactory WithBikeId(Guid articleId)
+    public IBookmarkFactory WithArticleId(Guid articleId)
     {
         this.articleId = articleId;
-        isBikeIdSet = true;
+        isArticleIdSet = true;
 
         return this;
     }
 
     public Bookmark Build()
     {
-        if (!isCustomerIdSet || !isBikeIdSet)
+        if (!isCustomerIdSet || !isArticleIdSet)
             throw new InvalidOperationException("Customer ID, article Id must have a value.");
 
         return new Bookmark(customerId, articleId);

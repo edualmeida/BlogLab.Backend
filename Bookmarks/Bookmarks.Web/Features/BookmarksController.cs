@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 public class BookmarksController(IMediator mediator) : ApiController(mediator)
 {
     [HttpGet]
-    public async Task<ActionResult<List<BookmarkBikeResponse>>> GetAll()
+    public async Task<ActionResult<List<BookmarkArticleResponse>>> GetAll()
         => await Send(new BookmarkGetAllQuery());
 
     [HttpPost]
