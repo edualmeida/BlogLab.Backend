@@ -1,9 +1,10 @@
 using MediatR;
 
-public class UpdateArticleCommand : ArticleCommand, IRequest<Result>
+public class UpdateArticleCommand(Guid id, ArticleCommand command) : IRequest<Result>
 {
-    public Guid Id { get; set; }
-    
+    public Guid Id => id;
+    public ArticleCommand Article => command;
+
     public class UpdateArticleCommandHandler : IRequestHandler<UpdateArticleCommand, Result>
     {
         private readonly IArticleDomainRepository articleRepository;
@@ -17,7 +18,12 @@ public class UpdateArticleCommand : ArticleCommand, IRequest<Result>
         {
             var article = await articleRepository.Find(request.Id, cancellationToken);
 
-            article.UpdateTitle(request.Text);
+            article.UpdateTitle(request.Article.Title);
+            article.UpdateSubtitle(request.Article.Subtitle);
+            article.UpdateText(request.Article.Text);
+            article.UpdateCategory(request.Article.CategoryId);
+            article.UpdateColor(request.Article.ColorId);
+            article.UpdateThumbnail(request.Article.ThumbnailId);
 
             await articleRepository.Save(article, cancellationToken);
 

@@ -2,28 +2,21 @@ using MediatR;
 
 public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleResponse>
 {
-    public class CreateArticleCommandHandler : IRequestHandler<CreateArticleCommand, CreateArticleResponse>
+    public class CreateArticleCommandHandler(
+        IArticleDomainRepository articleRepository,
+        IArticleBuilder articleBuilder) : IRequestHandler<CreateArticleCommand, CreateArticleResponse>
     {
-        private readonly IArticleDomainRepository articleRepository;
-        private readonly IArticleFactory articleFactory;
-
-        public CreateArticleCommandHandler(
-            IArticleDomainRepository articleRepository,
-            IArticleFactory articleFactory)
-        {
-            this.articleRepository = articleRepository;
-            this.articleFactory = articleFactory;
-        }
-
         public async Task<CreateArticleResponse> Handle(
             CreateArticleCommand request,
             CancellationToken cancellationToken)
         {
-            var article = articleFactory
+            var article = articleBuilder
                 .WithTitle(request.Title)
-                .WithThumbnail(request.Thumbnail)
-                .WithColor(request.Color)
-                .WithCategory(request.Category)
+                .WithSubtitle(request.Subtitle)
+                .WithText(request.Text)
+                .WithThumbnailId(request.ThumbnailId)
+                .WithColorId(request.ColorId)
+                .WithCategoryId(request.CategoryId)
                 .Build();
 
             await articleRepository.Save(article, cancellationToken);

@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-public abstract class DataRepository<TDbContext, TEntity> : IDomainRepository<TEntity>
+public abstract class DataRepository<TDbContext, TEntity>(TDbContext db) : IDomainRepository<TEntity>
     where TDbContext : DbContext
     where TEntity : Entity, IAggregateRoot
 {
-    protected DataRepository(TDbContext db) => Data = db;
-
-    protected TDbContext Data { get; }
+    protected TDbContext Data { get; } = db;
 
     protected IQueryable<TEntity> All() => Data.Set<TEntity>();
 

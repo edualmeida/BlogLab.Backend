@@ -9,7 +9,7 @@ public sealed class ArticleCatalogHttpService : IArticleCatalogHttpService
         this.client = client;
     }
 
-    public async Task<List<ArticleResponse>> GetBikesByIds(IEnumerable<string> ids)
+    public async Task<List<ArticleResponse>> GetArticlesByIds(IEnumerable<string> ids)
     {
         //var idsUri = string.Join("&", ids);
 

@@ -7,16 +7,16 @@ public static class DomainConfiguration
         this IServiceCollection services,
         Assembly assembly)
         => services
-            .AddFactories(assembly)
+            .AddBuilders(assembly)
             .AddInitialData(assembly);
 
-    private static IServiceCollection AddFactories(
+    private static IServiceCollection AddBuilders(
         this IServiceCollection services,
         Assembly assembly)
         => services
             .Scan(scan => scan
                 .FromAssemblies(assembly)
-                .AddClasses(classes => classes.AssignableTo(typeof(IFactory<>)))
+                .AddClasses(classes => classes.AssignableTo(typeof(IBuilder<>)))
                 .AsMatchingInterface()
                 .WithTransientLifetime());
 

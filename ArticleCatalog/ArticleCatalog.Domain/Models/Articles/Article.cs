@@ -6,7 +6,9 @@ public class Article : Entity, IAggregateRoot
         string text,
         Guid categoryId,
         Guid colorId,
-        Guid thumbnailId)
+        Guid thumbnailId,
+        bool enabled,
+        DateTime createdOnUTC)
     {
         Validate(title, subtitle, text);
         Title = title;
@@ -15,6 +17,8 @@ public class Article : Entity, IAggregateRoot
         CategoryId = categoryId;
         ColorId = colorId;
         ThumbnailId = thumbnailId;
+        Enabled = enabled;
+        CreatedOnUTC = createdOnUTC;
     }
 
     public string Title { get; private set; }
@@ -23,6 +27,9 @@ public class Article : Entity, IAggregateRoot
     public Guid CategoryId { get; private set; }
     public Guid ColorId { get; private set; }
     public Guid ThumbnailId { get; private set; }
+    public bool Enabled { get; set; }
+    public DateTime CreatedOnUTC { get; set; }
+
     public virtual Category? Category { get; set; }
     public virtual Color? Color { get; set; }
     public virtual Thumbnail? Thumbnail { get; set; }
@@ -63,6 +70,12 @@ public class Article : Entity, IAggregateRoot
     public Article UpdateThumbnail(Guid thumbnailId)
     {
         ThumbnailId = thumbnailId;
+        return this;
+    }
+
+    public Article DisableArticle()
+    {
+        Enabled = false;
         return this;
     }
 

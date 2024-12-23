@@ -27,6 +27,6 @@ var app = builder.Build();
 
 app
     .UseWebService(app.Environment)
-    .Initialize();
+    .InitializeDatabase();
 
 app.Run();

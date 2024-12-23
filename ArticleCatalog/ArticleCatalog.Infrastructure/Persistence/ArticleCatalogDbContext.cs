@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 
-internal class BlogDbContext : BaseDbContext<BlogDbContext>
+internal class ArticleCatalogDbContext : BaseDbContext<ArticleCatalogDbContext>
 {
-    public BlogDbContext(
-        DbContextOptions<BlogDbContext> options)
+    public ArticleCatalogDbContext(
+        DbContextOptions<ArticleCatalogDbContext> options)
         : base(options)
     {
     }
