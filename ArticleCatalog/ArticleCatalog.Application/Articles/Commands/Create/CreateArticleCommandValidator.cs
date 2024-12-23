@@ -1,7 +1,7 @@
 using FluentValidation;
 
-public class CreateBikeCommandValidator : AbstractValidator<CreateArticleCommand>
+public class CreateArticleCommandValidator : AbstractValidator<CreateArticleCommand>
 {
-    public CreateBikeCommandValidator()
+    public CreateArticleCommandValidator()
         => Include(new ArticleCommandValidator());
 }

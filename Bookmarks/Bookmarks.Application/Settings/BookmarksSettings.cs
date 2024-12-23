@@ -5,6 +5,6 @@
 
 public class BookmarksSettings(ArticleCatalogAPIClientSettings articleCatalogAPIClientSettings)
 {
-    public ArticleCatalogAPIClientSettings BikeCatalogAPIClientSettings { get; set; } 
+    public ArticleCatalogAPIClientSettings ArticleCatalogAPIClientSettings { get; set; } 
         = articleCatalogAPIClientSettings;
 }

@@ -8,7 +8,7 @@ public static class InfrastructureConfiguration
         this IServiceCollection services,
         IConfiguration configuration)
         => services
-            .AddDBStorage<BookmarksDbContext>(
+            .AddDabaseStorage<BookmarksDbContext>(
                 configuration,
                 Assembly.GetExecutingAssembly())
             .AddHttpClients(configuration);
@@ -19,7 +19,7 @@ public static class InfrastructureConfiguration
         => services.AddHttpClient<ArticleCatalogHttpService>(httpClient =>
             {
                 var httpClientSettings = configuration.GetBookmarksSettings();
-                httpClient.BaseAddress = new Uri(httpClientSettings.BikeCatalogAPIClientSettings.BaseUrl);
+                httpClient.BaseAddress = new Uri(httpClientSettings.ArticleCatalogAPIClientSettings.BaseUrl);
             })
             .ConfigureDefaultHttpClientHandler()
             .AddTypedClient<IArticleCatalogHttpService, ArticleCatalogHttpService>()

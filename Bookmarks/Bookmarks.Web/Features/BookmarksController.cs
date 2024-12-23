@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
-public class BookmarksController : ApiController
+public class BookmarksController(IMediator mediator) : ApiController(mediator)
 {
     [HttpGet]
-    public async Task<ActionResult<List<BookmarkBikeResponse>>> GetAll()
+    public async Task<ActionResult<List<BookmarkArticleResponse>>> GetAll()
         => await Send(new BookmarkGetAllQuery());
 
     [HttpPost]
@@ -16,7 +17,6 @@ public class BookmarksController : ApiController
         => await Send(command);
 
     [HttpDelete]
-    [Route("{ArticleId}")]
     public async Task<ActionResult> Delete([FromRoute] DeleteBookmarkCommand command)
         => await Send(command);
 }

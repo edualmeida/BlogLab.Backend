@@ -1,4 +1,4 @@
 public interface IArticleCatalogHttpService
 {
-    public Task<List<ArticleResponse>> GetBikesByIds(IEnumerable<string> ids);
+    public Task<List<ArticleResponse>> GetArticlesByIds(IEnumerable<string> ids);
 }

@@ -22,6 +22,5 @@ public static class ApplicationConfiguration
         => services
             .AddAutoMapper(
                 (_, config) => config
-                    .AddProfile(new MappingProfile(assembly)),
-                Array.Empty<Assembly>());
+                    .AddProfile(new MappingProfile(assembly)), Array.Empty<Assembly>());
 }
