@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder
@@ -17,10 +20,7 @@ builder
 builder.Services
     .AddTokenAuthentication(builder.Configuration)
     .AddModelBinders()
-    .AddSwaggerGen(c =>
-    {
-        c.SwaggerDoc("v1", new() { Title = "Blog API", Version = "v1" });
-    })
+    .AddSwagger()
     .AddHttpClient();
 
 var app = builder.Build();

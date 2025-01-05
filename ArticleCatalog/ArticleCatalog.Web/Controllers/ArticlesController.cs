@@ -1,6 +1,8 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+[Authorize]
 public class ArticlesController(IMediator mediator) : ApiController(mediator)
 {
     [HttpGet]

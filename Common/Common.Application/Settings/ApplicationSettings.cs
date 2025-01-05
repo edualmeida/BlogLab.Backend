@@ -1,6 +1,6 @@
 ﻿public class ApplicationSettings
 {
-    public ApplicationSettings() => Secret = default!;
+    public ApplicationSettings() => PrivateKey = default!;
 
-    public string Secret { get; private set; }
+    public string PrivateKey { get; private set; }
 }
