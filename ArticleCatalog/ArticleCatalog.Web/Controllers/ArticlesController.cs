@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-[Authorize]
-public class ArticlesController(IMediator mediator) : ApiController(mediator)
+public class ArticlesController(ILogger<ArticlesController> logger, IMediator mediator) : ApiController(logger, mediator)
 {
     [HttpGet]
     public async Task<ActionResult<List<ArticleResponse>>> GetAll()

@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,9 +22,13 @@ builder.Services
     .AddSwagger()
     .AddHttpClient();
 
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
+
 var app = builder.Build();
 
 app
+    .UseSerilogRequestLogging()
     .UseWebService(app.Environment)
     .InitializeDatabase();
 
