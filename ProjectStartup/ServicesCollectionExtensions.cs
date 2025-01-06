@@ -34,6 +34,29 @@ public static class ServicesCollectionExtensions
                         new List<string>()
                     }
                 });
+
+                options.AddSecurityDefinition("APIKey", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "API Key",
+                    Name = "X-Api-Key",
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "APIKey"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
             });
 
         return services;

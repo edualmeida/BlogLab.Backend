@@ -23,7 +23,7 @@ public static class InfrastructureConfiguration
     {
         var configKey = configuration
             .GetSection(nameof(ApplicationSettings))
-            .GetValue<string>(nameof(ApplicationSettings.PrivateKey));
+            .GetValue<string>(nameof(ApplicationSettings.JwtPrivateKey));
 
         var privateKey = Encoding.UTF8.GetBytes(configKey!);
 
@@ -45,6 +45,14 @@ public static class InfrastructureConfiguration
                     ValidateAudience = false
                 };
             });
+
+        services
+            .AddAuthentication()
+            .AddScheme<ApiKeySchemeOptions, ApiKeyHandler>(ApiKey.SchemeName, 
+                (options) =>
+                {
+                    configuration.GetRequiredSection("ApiKeyOptions").Bind(options);
+                });
 
         services.AddHttpContextAccessor();
 

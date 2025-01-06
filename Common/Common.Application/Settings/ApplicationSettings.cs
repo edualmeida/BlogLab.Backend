@@ -1,6 +1,6 @@
 ﻿public class ApplicationSettings
 {
-    public ApplicationSettings() => PrivateKey = default!;
+    public ApplicationSettings() => JwtPrivateKey = default!;
 
-    public string PrivateKey { get; private set; }
+    public string JwtPrivateKey { get; private set; }
 }

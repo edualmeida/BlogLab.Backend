@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-public class BookmarksController(ILogger<BookmarksController> logger, IMediator mediator) : ApiController(logger, mediator)
+public class BookmarksController(IMediator mediator) : ApiController(mediator)
 {
     [HttpGet]
     public async Task<ActionResult<List<BookmarkArticleResponse>>> GetAll()

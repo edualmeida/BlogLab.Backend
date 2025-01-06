@@ -1,15 +1,18 @@
 # Get all
 GET {{HostAddress}}/{{Path}}
 Accept: application/json
+X-Api-Key: JEXqpyi4cPGWgH
 
 ### get by id
 
 GET {{HostAddress}}/{{Path}}/ad73ec52-0974-4198-810e-4840e1ad195a
 Accept: application/json
+X-Api-Key: JEXqpyi4cPGWgH
 
 ### create article
 
 POST {{HostAddress}}/{{Path}}
+X-Api-Key: JEXqpyi4cPGWgH
 Content-Type: application/json
 {
     "title": "Test",
