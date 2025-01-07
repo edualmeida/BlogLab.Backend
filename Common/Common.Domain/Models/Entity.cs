@@ -1,6 +1,8 @@
 ﻿public abstract class Entity : IEntity
 {
     public Guid Id { get; private set; } = default;
+    public DateTime CreatedOnUTC { get; set; } = DateTime.UtcNow;
+    public bool Enabled { get; set; } = true;
 
     public override bool Equals(object? obj)
     {

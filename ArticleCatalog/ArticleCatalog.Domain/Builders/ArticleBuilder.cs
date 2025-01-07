@@ -6,8 +6,7 @@ internal class ArticleBuilder : IArticleBuilder
     private Guid articleThumbnail = default!;
     private Guid articleCategory = default!;
     private Guid articleColor = default!;
-    private bool articleEnabled = true;
-    private DateTime articleCreatedOn = DateTime.UtcNow;
+    private Guid articleAuthorId = default!;
 
     private bool isTitleSet = false;
     private bool isColorSet = false;
@@ -15,6 +14,7 @@ internal class ArticleBuilder : IArticleBuilder
     private bool isTextSet = false;
     private bool isCategorySet = false;
     private bool isThumbnailSet = false;
+    private bool isAuthorSet = false;
 
     public IArticleBuilder WithTitle(string title)
     {
@@ -64,10 +64,18 @@ internal class ArticleBuilder : IArticleBuilder
         return this;
     }
 
+    public IArticleBuilder WithAuthorId(Guid authorId)
+    {
+        this.articleAuthorId = authorId;
+        isThumbnailSet = true;
+
+        return this;
+    }
+
     public Article Build()
     {
-        if (!isColorSet || !isCategorySet || !isTitleSet || !isThumbnailSet || !isSubtitleSet || !isTextSet)
-            throw new InvalidOperationException("subtitle, text, title, thumbnail, must have a value.");
+        if (!isColorSet || !isCategorySet || !isTitleSet || !isThumbnailSet || !isSubtitleSet || !isTextSet || isAuthorSet)
+            throw new InvalidOperationException("subtitle, text, title, thumbnail, author must have a value.");
 
         return new Article(
             articleTitle,
@@ -76,7 +84,6 @@ internal class ArticleBuilder : IArticleBuilder
             articleCategory,
             articleColor,
             articleThumbnail,
-            articleEnabled,
-            articleCreatedOn);
+            articleAuthorId);
     }
 }

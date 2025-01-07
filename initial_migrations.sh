@@ -9,3 +9,13 @@ dotnet ef migrations add InitialMigration --context "BookmarksDbContext" --proje
 Update-Database -Context ArticleCatalogDbContext
 
 Update-Database -Context BookmarksDbContext
+
+
+dotnet ef migrations add LastChanges --context "ArticleCatalogDbContext" --project ArticleCatalog/ArticleCatalog.Infrastructure --startup-project ProjectStartup
+
+dotnet ef migrations add AddUsersTable --context "ArticleCatalogDbContext" --project ArticleCatalog/ArticleCatalog.Infrastructure --startup-project ProjectStartup
+
+
+Remove last migrations:
+
+dotnet ef migrations remove --context "ArticleCatalogDbContext" --project ArticleCatalog/ArticleCatalog.Infrastructure --startup-project ProjectStartup
