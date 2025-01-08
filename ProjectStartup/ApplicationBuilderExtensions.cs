@@ -34,7 +34,7 @@
         return app;
     }
 
-    private static readonly bool _initializeDatabase = false;
+    private static readonly bool _initializeDatabase = true;
     public static IApplicationBuilder InitializeDatabase(this IApplicationBuilder app)
     {
         if (!_initializeDatabase)

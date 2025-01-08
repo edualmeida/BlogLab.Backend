@@ -18,6 +18,13 @@ builder
 
 builder
     .Services
+    .AddIdentityDomain()
+    .AddIdentityApplication(builder.Configuration)
+    .AddIdentityInfrastructure(builder.Configuration)
+    .AddIdentityWebComponents();
+
+builder
+    .Services
     .AddTokenAuthentication(builder.Configuration)
     .AddModelBinders()
     .AddSwagger()

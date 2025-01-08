@@ -37,9 +37,9 @@ internal class IdentityDbInitializer : DbInitializer
 
                 await roleManager.CreateAsync(adminRole);
 
-                var adminUser = new User("admin@store.com");
+                var adminUser = new User("admin@eduardolab.com");
 
-                await userManager.CreateAsync(adminUser, "Secret.1");
+                await userManager.CreateAsync(adminUser, "adminPassTest1");
                 await userManager.AddToRoleAsync(adminUser, CommonModelConstants.Common.AdministratorRoleName);
             })
             .GetAwaiter()
