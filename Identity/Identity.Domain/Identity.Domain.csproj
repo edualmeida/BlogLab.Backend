@@ -4,7 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>ArticleCatalog.Domain</RootNamespace>
+        <RootNamespace>Identity.Domain</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

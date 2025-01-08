@@ -5,21 +5,24 @@
         string firstName,
         string middleName,
         string lastName,
-        string password)
+        string passwordSalt,
+        string passwordHash)
     {
         Validate(email, firstName, middleName, lastName);
         Email = email;
         FirstName = firstName;
         MiddleName = middleName;
         LastName = lastName;
-        Password = password;
+        PasswordSalt = passwordSalt;
+        PasswordHash = passwordHash;
         Roles = new HashSet<Role>();
     }
     public string Email { get; private set; }
     public string FirstName { get; private set; }
     public string MiddleName { get; private set; }
     public string LastName { get; private set; }
-    public string Password { get; private set; }
+    public string PasswordSalt { get; set; }
+    public string PasswordHash { get; private set; }
     public virtual HashSet<Role> Roles { get; set; }
 
     public User AddSupplier(Role role)

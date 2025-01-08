@@ -29,7 +29,7 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasMaxLength(UserModelConstants.User.MaxNameLength);
 
-        builder.Property(p => p.Password)
+        builder.Property(p => p.PasswordHash)
             .IsRequired()
             .HasMaxLength(UserModelConstants.User.MaxPasswordLength);
 

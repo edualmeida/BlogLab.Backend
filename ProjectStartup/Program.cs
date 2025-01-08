@@ -16,7 +16,8 @@ builder
     .AddBookmarksInfrastructure(builder.Configuration)
     .AddBookmarksWebComponents();
 
-builder.Services
+builder
+    .Services
     .AddTokenAuthentication(builder.Configuration)
     .AddModelBinders()
     .AddSwagger()

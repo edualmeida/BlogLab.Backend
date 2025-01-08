@@ -4,15 +4,12 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>ArticleCatalog.Web</RootNamespace>
+        <RootNamespace>Identity.Web</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+      <ProjectReference Include="..\..\Common\Common.Web\Common.Web.csproj" />
+      <ProjectReference Include="..\Identity.Application\Identity.Application.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\Common\Common.Web\Common.Web.csproj" />
-      <ProjectReference Include="..\ArticleCatalog.Application\ArticleCatalog.Application.csproj" />
-    </ItemGroup>
 </Project>
