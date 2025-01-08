@@ -1,6 +1,6 @@
 ﻿public interface IIdentity
 {
-    Task<Result<IUser>> Register(UserRequestModel userRequest);
+    Task<Result<bool>> Register(RegisterUserCommand userRequest);
 
     Task<Result<UserResponseModel>> Login(UserRequestModel userRequest);
 

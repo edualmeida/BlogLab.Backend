@@ -1,4 +1,4 @@
-public class UserModelConstants
+﻿public class UserModelConstants
 {
     public class Identity
     {

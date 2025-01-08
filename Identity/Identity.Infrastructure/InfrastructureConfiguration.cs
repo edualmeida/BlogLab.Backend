@@ -13,7 +13,8 @@ public static class InfrastructureConfiguration
             .AddDabaseStorage<IdentityDbContext>(
                 configuration,
                 Assembly.GetExecutingAssembly())
-            .AddTransient<IDbInitializer, IdentityDbInitializer>();
+            .AddTransient<IDbInitializer, IdentityDbInitializer>()
+            .AddTransient<IIdentityQueryRepository, IdentityRepository>();
 
     private static IServiceCollection AddIdentity(
         this IServiceCollection services)

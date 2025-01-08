@@ -1,33 +1,31 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-internal class IdentityService : IIdentity
+internal class IdentityService(
+    UserManager<User> userManager,
+    IJwtGenerator jwtGenerator,
+    IUserBuilder builder
+    ) : IIdentity
 {
     private const string InvalidErrorMessage = "Invalid credentials.";
 
-    private readonly UserManager<User> userManager;
-    private readonly IJwtGenerator jwtGenerator;
-
-    public IdentityService(
-        UserManager<User> userManager,
-        IJwtGenerator jwtGenerator)
+    public async Task<Result<bool>> Register(RegisterUserCommand request)
     {
-        this.userManager = userManager;
-        this.jwtGenerator = jwtGenerator;
-    }
-
-    public async Task<Result<IUser>> Register(UserRequestModel userRequest)
-    {
-        var user = new User(userRequest.Email);
+        var user = builder
+                .WithFirstName(request.FirstName)
+                .WithMiddleName(request.MiddleName)
+                .WithSurname(request.Surname)
+                .WithEmail(request.Email)
+                .Build();
 
         var identityResult = await userManager.CreateAsync(
             user,
-            userRequest.Password);
+            request.Password);
 
         var errors = identityResult.Errors.Select(e => e.Description);
 
         return identityResult.Succeeded
-            ? Result<IUser>.SuccessWith(user)
-            : Result<IUser>.Failure(errors);
+            ? Result<bool>.SuccessWith(true)
+            : Result<bool>.Failure(errors);
     }
 
     public async Task<Result<UserResponseModel>> Login(UserRequestModel userRequest)

@@ -8,5 +8,18 @@ public static class InfrastructureConfiguration
         this IServiceCollection services, IConfiguration configuration)
         => services
             .AddDabaseStorage<ArticleCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
-            .AddTransient<IDbInitializer, ArticleCatalogDbInitializer>();
+            .AddTransient<IDbInitializer, ArticleCatalogDbInitializer>()
+            .AddHttpClients(configuration);
+
+    public static IServiceCollection AddHttpClients(
+    this IServiceCollection services,
+    IConfiguration configuration)
+        => services.AddHttpClient<AuthorsHttpService>(httpClient =>
+        {
+            var httpClientSettings = configuration.GetArticleCatalogSettings();
+            httpClient.BaseAddress = new Uri(httpClientSettings.AuthorsAPIClientSettings.BaseUrl);
+        })
+            .ConfigureDefaultHttpClientHandler()
+            .AddTypedClient<IAuthorsHttpService, AuthorsHttpService>()
+            .Services;
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Identity;
 
 internal class IdentityDbInitializer : DbInitializer
 {
@@ -37,7 +38,7 @@ internal class IdentityDbInitializer : DbInitializer
 
                 await roleManager.CreateAsync(adminRole);
 
-                var adminUser = new User("admin@eduardolab.com");
+                var adminUser = new UserData().GetData();
 
                 await userManager.CreateAsync(adminUser, "adminPassTest1");
                 await userManager.AddToRoleAsync(adminUser, CommonModelConstants.Common.AdministratorRoleName);

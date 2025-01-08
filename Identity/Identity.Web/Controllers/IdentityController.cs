@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 public class IdentityController(IMediator mediator) : ApiController(mediator)
 {
+    [HttpGet]
+    public async Task<ActionResult<List<UserResponse>>> GetAll()
+        => await Send(new UserGetAllQuery());
+
     [HttpPost]
     [Route(nameof(Register))]
     public async Task<ActionResult> Register(

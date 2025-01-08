@@ -2,12 +2,24 @@
 
 public class RegisterUserCommand : UserRequestModel, IRequest<Result>
 {
+    public string FirstName { get; private set; }
+    public string MiddleName { get; private set; }
+    public string Surname { get; private set; }
+
     public RegisterUserCommand(
         string email,
         string password,
-        string confirmPassword)
+        string confirmPassword,
+        string firstName,
+        string middleName,
+        string surName)
         : base(email, password)
-        => ConfirmPassword = confirmPassword;
+     {
+        ConfirmPassword = confirmPassword;
+        FirstName = firstName;
+        MiddleName = middleName;
+        Surname = surName;
+    }
 
     public string ConfirmPassword { get; }
 
