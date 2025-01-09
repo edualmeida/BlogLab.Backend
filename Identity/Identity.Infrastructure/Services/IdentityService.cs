@@ -23,9 +23,14 @@ internal class IdentityService(
 
         var errors = identityResult.Errors.Select(e => e.Description);
 
-        return identityResult.Succeeded
-            ? Result<bool>.SuccessWith(true)
-            : Result<bool>.Failure(errors);
+        if (!identityResult.Succeeded)
+        {
+            return Result<bool>.Failure(errors);
+        }
+
+        await userManager.AddToRoleAsync(user, GetRoleName(request.Role));
+
+        return Result<bool>.SuccessWith(true);
     }
 
     public async Task<Result<UserResponseModel>> Login(UserRequestModel userRequest)
@@ -70,4 +75,14 @@ internal class IdentityService(
             ? Result.Success
             : Result.Failure(errors);
     }
+
+
+    private string GetRoleName(RegisterUserRole userRole)
+        => userRole switch
+        {
+            RegisterUserRole.Administrator => CommonModelConstants.Common.AdministratorRoleName,
+            RegisterUserRole.User => CommonModelConstants.Common.UserRoleName,
+            RegisterUserRole.Author => CommonModelConstants.Common.AuthorRoleName,
+            _ => throw new InvalidOperationException("Invalid user role.")
+        };
 }

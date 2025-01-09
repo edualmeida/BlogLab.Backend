@@ -38,6 +38,6 @@ var app = builder.Build();
 app
     .UseSerilogRequestLogging()
     .UseWebService(app.Environment)
-    .InitializeDatabase();
+    .InitializeDatabase(builder.Configuration);
 
 app.Run();

@@ -9,6 +9,8 @@ public class User : IdentityUser, IEntity, IAggregateRoot
         string lastName)
     {
         Validate(email, firstName, middleName, lastName);
+
+        UserName = email;
         Email = email;
         FirstName = firstName;
         MiddleName = middleName;
@@ -46,7 +48,6 @@ public class User : IdentityUser, IEntity, IAggregateRoot
     {
         ValidateEmail(email);
         ValidateName(firstName, "First Name");
-        ValidateName(middleName, "Middle Name");
         ValidateName(lastName, "Last Name");
     }
     private void ValidateEmail(string email)

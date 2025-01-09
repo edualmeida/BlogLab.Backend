@@ -1,39 +1,32 @@
+@apiKey=JEXqpyi4cPGWgH
+
 # Get all
 GET {{HostAddress}}/{{Path}}
 Accept: application/json
-X-Api-Key: JEXqpyi4cPGWgH
+X-Api-Key: {{apiKey}}
 
-### get by id
+### register
 
-GET {{HostAddress}}/{{Path}}/ad73ec52-0974-4198-810e-4840e1ad195a
-Accept: application/json
-X-Api-Key: JEXqpyi4cPGWgH
-
-### create article
-
-POST {{HostAddress}}/{{Path}}
+POST {{HostAddress}}/{{Path}}/Register
 X-Api-Key: JEXqpyi4cPGWgH
 Content-Type: application/json
 {
-    "title": "Test",
-    "subtitle": "test",
-    "text": "text",
-    "categoryid": "803C62B1-C1CA-4C9B-BDB8-7DA7485283D9",
-    "colorid": "0DE1AECF-3217-4AF5-87D7-0B48F5322022",
-    "thumbnailid": "48AA27CA-2EAF-4CBD-B744-B84F045E066D"
+    "FirstName": "Admin",
+    "MiddleName": "",
+    "Surname": "Admin",
+    "email": "admin@eduardolab.com",
+    "password": "0DE1AECF-3217-4AF5-87D7-0B48F5322022",
+    "ConfirmPassword": "0DE1AECF-3217-4AF5-87D7-0B48F5322022",
+    "Role": 1
 }
 
-### update article
+### login
 
-PUT {{HostAddress}}/{{Path}}/ad73ec52-0974-4198-810e-4840e1ad195a
+POST {{HostAddress}}/{{Path}}/login
 Content-Type: application/json
 {
-    "title": "Title update2",
-    "subtitle": "subtitle update2",
-    "text": "text update 2",
-    "categoryid": "803C62B1-C1CA-4C9B-BDB8-7DA7485283D9",
-    "colorid": "0DE1AECF-3217-4AF5-87D7-0B48F5322022",
-    "thumbnailid": "48AA27CA-2EAF-4CBD-B744-B84F045E066D"
+    "email": "admin@eduardolab.com",
+    "password": "0DE1AECF-3217-4AF5-87D7-0B48F5322022"
 }
 
 ### delete article (logically)
@@ -42,17 +35,3 @@ DELETE {{HostAddress}}/{{Path}}/ad73ec52-0974-4198-810e-4840e1ad195a
 Content-Type: application/json
 
 ###
-
-GET https://localhost:7190/api/articles
-
-###
-
-GET {{HostAddress}}/{{Path}}
-Accept: application/json
-
-###
-
-@hostname=localhost
-@port=7190
-@host={{hostname}}:{{port}}
-GET https://{{host}}/api/articles

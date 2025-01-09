@@ -34,10 +34,11 @@
         return app;
     }
 
-    private static readonly bool _initializeDatabase = false;
-    public static IApplicationBuilder InitializeDatabase(this IApplicationBuilder app)
+    public static IApplicationBuilder InitializeDatabase(
+        this IApplicationBuilder app, 
+        IConfiguration configuration)
     {
-        if (!_initializeDatabase)
+        if (configuration.GetSection("InitializeDatabase").Value == "false")
             return app;
 
         using var serviceScope = app.ApplicationServices.CreateScope();

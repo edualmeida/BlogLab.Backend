@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 public class IdentityController(IMediator mediator) : ApiController(mediator)
 {
+    [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
     [HttpGet]
     public async Task<ActionResult<List<UserResponse>>> GetAll()
         => await Send(new UserGetAllQuery());
 
+    [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
     [HttpPost]
     [Route(nameof(Register))]
     public async Task<ActionResult> Register(
