@@ -10,7 +10,9 @@ public static class ServicesCollectionExtensions
             .AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new() { Title = "Blog API", Version = "v1" });
-                options.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
+                options.AddSecurityDefinition(
+                    name: JwtBearerDefaults.AuthenticationScheme, 
+                    securityScheme: new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
                     Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",

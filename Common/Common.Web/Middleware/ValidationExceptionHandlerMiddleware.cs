@@ -46,6 +46,9 @@ public class ValidationExceptionHandlerMiddleware
             case NotFoundException _:
                 code = HttpStatusCode.NotFound;
                 break;
+            case HttpRequestException ex:
+                code = ex.StatusCode!.Value;
+                break;
         }
 
         context.Response.ContentType = "application/json";

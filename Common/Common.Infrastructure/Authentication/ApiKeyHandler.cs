@@ -48,11 +48,11 @@ public class ApiKeyHandler : AuthenticationHandler<ApiKeySchemeOptions>
 
         if (Options.ReadOnly)
         {
-            claims.Add(new Claim(ClaimTypes.Role, "ReadOnly")); ;
+            claims.Add(new Claim(ClaimTypes.Role, "ReadOnly"));
         }
         else
         {
-            claims.Add(new Claim(ClaimTypes.Role, "ReadWrite")); ;
+            claims.Add(new Claim(ClaimTypes.Role, "ReadWrite"));
         }
 
         ClaimsIdentity identity = new(claims, Scheme.Name);

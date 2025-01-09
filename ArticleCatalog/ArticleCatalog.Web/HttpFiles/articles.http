@@ -3,7 +3,7 @@
 # Get all
 GET {{HostAddress}}/{{Path}}
 Accept: application/json
-X-Api-Key: @apiKey
+X-Api-Key: {{apiKey}}
 
 ### get by id
 

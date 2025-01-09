@@ -44,15 +44,11 @@ public static class InfrastructureConfiguration
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+            })
+            .AddScheme<ApiKeySchemeOptions, ApiKeyHandler>(ApiKey.SchemeName, options =>
+            {
+                configuration.GetRequiredSection("ApiKeyOptions").Bind(options);
             });
-
-        services
-            .AddAuthentication()
-            .AddScheme<ApiKeySchemeOptions, ApiKeyHandler>(ApiKey.SchemeName, 
-                (options) =>
-                {
-                    configuration.GetRequiredSection("ApiKeyOptions").Bind(options);
-                });
 
         services.AddHttpContextAccessor();
 
