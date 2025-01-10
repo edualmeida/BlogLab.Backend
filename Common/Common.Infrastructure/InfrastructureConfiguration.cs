@@ -54,6 +54,14 @@ public static class InfrastructureConfiguration
 
         return services;
     }
+    public static void ConfigureApiKey(
+    this HttpClient httpClient,
+    IConfiguration configuration)
+    {
+        var options = configuration.GetApiKeySchemeOptions();
+        httpClient.DefaultRequestHeaders
+                .Add(options.HeaderName, options.ApiKey);
+    }
 
     public static IHttpClientBuilder ConfigureDefaultHttpClientHandler(this IHttpClientBuilder builder)
         => builder

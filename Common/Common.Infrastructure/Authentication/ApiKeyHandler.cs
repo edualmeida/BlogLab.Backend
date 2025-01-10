@@ -9,6 +9,7 @@ using System.Text.Encodings.Web;
 public class ApiKeyHandler : AuthenticationHandler<ApiKeySchemeOptions>
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private ILogger _logger { get; }
 
     public ApiKeyHandler(
         IOptionsMonitor<ApiKeySchemeOptions> options,
@@ -16,6 +17,7 @@ public class ApiKeyHandler : AuthenticationHandler<ApiKeySchemeOptions>
         UrlEncoder encoder,
         IHttpContextAccessor httpContextAccessor) : base(options, logger, encoder)
     {
+        _logger = logger.CreateLogger(GetType().FullName!);
         _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
     }
 
