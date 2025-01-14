@@ -1,0 +1,6 @@
+@apiKey=JEXqpyi4cPGWgH
+
+# Get all
+GET {{HostAddress}}/{{CategoriesPath}}
+Accept: application/json
+X-Api-Key: {{apiKey}}
