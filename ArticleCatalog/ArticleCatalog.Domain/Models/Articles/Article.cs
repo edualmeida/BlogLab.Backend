@@ -5,7 +5,6 @@ public class Article : Entity, IAggregateRoot
         string subtitle,
         string text,
         Guid categoryId,
-        Guid colorId,
         Guid thumbnailId,
         Guid authorId)
     {
@@ -14,7 +13,6 @@ public class Article : Entity, IAggregateRoot
         Subtitle = subtitle;
         Text = text;
         CategoryId = categoryId;
-        ColorId = colorId;
         ThumbnailId = thumbnailId;
         AuthorId = authorId;
     }
@@ -23,12 +21,10 @@ public class Article : Entity, IAggregateRoot
     public string Subtitle { get; private set; }
     public string Text { get; private set; }
     public Guid CategoryId { get; private set; }
-    public Guid ColorId { get; private set; }
     public Guid ThumbnailId { get; private set; }
     public Guid AuthorId { get; private set; }
 
     public virtual Category? Category { get; set; }
-    public virtual Color? Color { get; set; }
     public virtual Thumbnail? Thumbnail { get; set; }
 
     public Article UpdateTitle(string title)
@@ -55,12 +51,6 @@ public class Article : Entity, IAggregateRoot
     public Article UpdateCategory(Guid categoryId)
     {
         CategoryId = categoryId;
-        return this;
-    }
-
-    public Article UpdateColor(Guid colorId)
-    {
-        ColorId = colorId;
         return this;
     }
 

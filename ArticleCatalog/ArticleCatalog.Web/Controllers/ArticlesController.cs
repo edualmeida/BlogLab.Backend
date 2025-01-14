@@ -13,7 +13,8 @@ public class ArticlesController(IMediator mediator) : ApiController(mediator)
     [Route(Id)]
     public async Task<ActionResult<ArticleResponse>> GetById([FromRoute] ArticleGetByIdQuery query)
         => await Send(query);
-    
+
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<CreateArticleResponse>> Create(CreateArticleCommand command)
         => await Send(command);

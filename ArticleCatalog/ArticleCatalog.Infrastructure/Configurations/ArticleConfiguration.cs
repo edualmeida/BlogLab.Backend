@@ -27,9 +27,6 @@ internal class ArticleConfiguration : IEntityTypeConfiguration<Article>
             .HasMaxLength(ArticleModelConstants.Article.MaxTextLength);
 
         builder
-            .HasOne(p => p.Color);
-
-        builder
             .HasOne(p => p.Category);
 
         builder

@@ -22,7 +22,6 @@ public class UpdateArticleCommand(Guid id, ArticleCommand command) : IRequest<Re
             article.UpdateSubtitle(request.Article.Subtitle);
             article.UpdateText(request.Article.Text);
             article.UpdateCategory(request.Article.CategoryId);
-            article.UpdateColor(request.Article.ColorId);
             article.UpdateThumbnail(request.Article.ThumbnailId);
 
             await articleRepository.Save(article, cancellationToken);
