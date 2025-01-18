@@ -9,7 +9,7 @@ X-Api-Key: {{apiKey}}
 
 GET {{HostAddress}}/{{Path}}/ad73ec52-0974-4198-810e-4840e1ad195a
 Accept: application/json
-X-Api-Key: @apiKey
+X-Api-Key: {{apiKey}}
 
 ### create article
 

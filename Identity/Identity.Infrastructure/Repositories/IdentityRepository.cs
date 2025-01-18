@@ -10,4 +10,7 @@ internal class IdentityRepository(
         => (await mapper
             .ProjectTo<UserResponse>(userManager.Users)
             .ToListAsync(cancellationToken));
+
+    public async Task<UserResponse> GetById(Guid id, CancellationToken cancellationToken = default)
+        => mapper.Map<UserResponse>(await userManager.FindByIdAsync(id.ToString()));
 }

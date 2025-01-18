@@ -5,7 +5,13 @@ GET {{HostAddress}}/{{Path}}
 Accept: application/json
 X-Api-Key: {{apiKey}}
 
-### register
+### get by id
+
+GET {{HostAddress}}/{{Path}}/85c8e95d-c1d8-4e80-af00-f64589602764
+Accept: application/json
+X-Api-Key: {{apiKey}}
+
+### register Admin
 
 POST {{HostAddress}}/{{Path}}/Register
 X-Api-Key: JEXqpyi4cPGWgH
@@ -18,6 +24,21 @@ Content-Type: application/json
     "password": "0DE1AECF-3217-4AF5-87D7-0B48F5322022",
     "ConfirmPassword": "0DE1AECF-3217-4AF5-87D7-0B48F5322022",
     "Role": 1
+}
+
+### register User
+
+POST {{HostAddress}}/{{Path}}/Register
+X-Api-Key: JEXqpyi4cPGWgH
+Content-Type: application/json
+{
+    "FirstName": "Test",
+    "MiddleName": "",
+    "Surname": "Test",
+    "email": "test@test.com",
+    "password": "1q",
+    "ConfirmPassword": "1q2w3e4r",
+    "Role": 2
 }
 
 ### login
