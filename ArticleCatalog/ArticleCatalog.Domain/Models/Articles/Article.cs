@@ -83,7 +83,7 @@ public class Article : Entity, IAggregateRoot
         => Guard.ForStringLength(title, ArticleModelConstants.Article.MinTitleLength, ArticleModelConstants.Article.MaxTitleLength, nameof(Title));
 
     private void ValidateSubtitle(string subtitle)
-        => Guard.ForStringLength(subtitle, ArticleModelConstants.Article.MinTextLength, ArticleModelConstants.Article.MaxTextLength, nameof(Subtitle));
+        => Guard.ForStringLength(subtitle, ArticleModelConstants.Article.MinSubtitleLength, ArticleModelConstants.Article.MaxSubtitleLength, nameof(Subtitle));
 
     private void ValidateText(string text)
         => Guard.ForStringLength(text, ArticleModelConstants.Article.MinTextLength, ArticleModelConstants.Article.MaxTextLength, nameof(Text));

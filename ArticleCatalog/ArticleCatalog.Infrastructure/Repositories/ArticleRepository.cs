@@ -22,8 +22,9 @@ internal class ArticleRepository : DataRepository<ArticleCatalogDbContext, Artic
 
     public async Task<List<ArticleResponse>> GetAll(CancellationToken cancellationToken = default)
         => (await mapper
-            .ProjectTo<ArticleResponse>(AllAsNoTracking())
-                .ToListAsync(cancellationToken));
+            .ProjectTo<ArticleResponse>(AllAsNoTracking()
+                .Where(x => x.Enabled))
+            .ToListAsync(cancellationToken));
 
     public async Task Delete(Guid id, CancellationToken cancellationToken = default)
     {
