@@ -1,4 +1,4 @@
-# BlogLab.API
+# BlogLab.Backend
 
 Domain => state core
 
