@@ -5,33 +5,26 @@ public class Article : Entity, IAggregateRoot
         string subtitle,
         string text,
         Guid categoryId,
-        Guid colorId,
         Guid thumbnailId,
-        bool enabled,
-        DateTime createdOnUTC)
+        Guid authorId)
     {
         Validate(title, subtitle, text);
         Title = title;
         Subtitle = subtitle;
         Text = text;
         CategoryId = categoryId;
-        ColorId = colorId;
         ThumbnailId = thumbnailId;
-        Enabled = enabled;
-        CreatedOnUTC = createdOnUTC;
+        AuthorId = authorId;
     }
 
     public string Title { get; private set; }
     public string Subtitle { get; private set; }
     public string Text { get; private set; }
     public Guid CategoryId { get; private set; }
-    public Guid ColorId { get; private set; }
     public Guid ThumbnailId { get; private set; }
-    public bool Enabled { get; set; }
-    public DateTime CreatedOnUTC { get; set; }
+    public Guid AuthorId { get; private set; }
 
     public virtual Category? Category { get; set; }
-    public virtual Color? Color { get; set; }
     public virtual Thumbnail? Thumbnail { get; set; }
 
     public Article UpdateTitle(string title)
@@ -61,12 +54,6 @@ public class Article : Entity, IAggregateRoot
         return this;
     }
 
-    public Article UpdateColor(Guid colorId)
-    {
-        ColorId = colorId;
-        return this;
-    }
-
     public Article UpdateThumbnail(Guid thumbnailId)
     {
         ThumbnailId = thumbnailId;
@@ -76,6 +63,12 @@ public class Article : Entity, IAggregateRoot
     public Article DisableArticle()
     {
         Enabled = false;
+        return this;
+    }
+
+    public Article UpdateAuthorId(Guid authorId)
+    {
+        AuthorId = authorId;
         return this;
     }
 
@@ -90,7 +83,7 @@ public class Article : Entity, IAggregateRoot
         => Guard.ForStringLength(title, ArticleModelConstants.Article.MinTitleLength, ArticleModelConstants.Article.MaxTitleLength, nameof(Title));
 
     private void ValidateSubtitle(string subtitle)
-        => Guard.ForStringLength(subtitle, ArticleModelConstants.Article.MinTextLength, ArticleModelConstants.Article.MaxTextLength, nameof(Subtitle));
+        => Guard.ForStringLength(subtitle, ArticleModelConstants.Article.MinSubtitleLength, ArticleModelConstants.Article.MaxSubtitleLength, nameof(Subtitle));
 
     private void ValidateText(string text)
         => Guard.ForStringLength(text, ArticleModelConstants.Article.MinTextLength, ArticleModelConstants.Article.MaxTextLength, nameof(Text));

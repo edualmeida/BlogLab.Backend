@@ -21,11 +21,11 @@ public static class InfrastructureConfiguration
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var secret = configuration
+        var configKey = configuration
             .GetSection(nameof(ApplicationSettings))
-            .GetValue<string>(nameof(ApplicationSettings.Secret));
+            .GetValue<string>(nameof(ApplicationSettings.JwtPrivateKey));
 
-        var key = Encoding.ASCII.GetBytes(secret);
+        var privateKey = Encoding.UTF8.GetBytes(configKey!);
 
         services
             .AddAuthentication(authentication =>
@@ -40,15 +40,27 @@ public static class InfrastructureConfiguration
                 bearer.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    IssuerSigningKey = new SymmetricSecurityKey(privateKey),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+            })
+            .AddScheme<ApiKeySchemeOptions, ApiKeyHandler>(ApiKey.SchemeName, options =>
+            {
+                configuration.GetRequiredSection("ApiKeyOptions").Bind(options);
             });
 
         services.AddHttpContextAccessor();
 
         return services;
+    }
+    public static void ConfigureApiKey(
+    this HttpClient httpClient,
+    IConfiguration configuration)
+    {
+        var options = configuration.GetApiKeySchemeOptions();
+        httpClient.DefaultRequestHeaders
+                .Add(options.HeaderName, options.ApiKey);
     }
 
     public static IHttpClientBuilder ConfigureDefaultHttpClientHandler(this IHttpClientBuilder builder)

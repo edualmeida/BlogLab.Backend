@@ -2,14 +2,24 @@
 
 public class ArticleGetAllQuery : IRequest<List<ArticleResponse>>
 {
-    public class ArticleAllQueryHandler : IRequestHandler<ArticleGetAllQuery, List<ArticleResponse>>
+    public class ArticleAllQueryHandler(
+        IArticleQueryRepository articleRepository,
+        IAuthorsHttpService authorsHttpService
+        ) : IRequestHandler<ArticleGetAllQuery, List<ArticleResponse>>
     {
-        private readonly IArticleQueryRepository articleRepository;
+        public async Task<List<ArticleResponse>> Handle(
+            ArticleGetAllQuery request, 
+            CancellationToken cancellationToken)
+        {
+            var articles = await articleRepository.GetAll(cancellationToken);
+            var authors = await authorsHttpService.GetAll(cancellationToken);
 
-        public ArticleAllQueryHandler(IArticleQueryRepository articleRepository)
-            => this.articleRepository = articleRepository;
+            articles.ForEach(article =>
+            {
+                article.Author = authors.FirstOrDefault(a => a.Id == article.AuthorId)?.FirstName ?? "ND";
+            });
 
-        public async Task<List<ArticleResponse>> Handle(ArticleGetAllQuery request, CancellationToken cancellationToken)
-            => await articleRepository.GetAll(cancellationToken);
+            return articles;
+        }
     }
 }

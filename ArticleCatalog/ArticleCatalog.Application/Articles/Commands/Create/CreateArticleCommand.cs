@@ -14,9 +14,8 @@ public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleRespon
                 .WithTitle(request.Title)
                 .WithSubtitle(request.Subtitle)
                 .WithText(request.Text)
-                .WithThumbnailId(request.ThumbnailId)
-                .WithColorId(request.ColorId)
                 .WithCategoryId(request.CategoryId)
+                .WithThumbnailId(new Guid("48AA27CA-2EAF-4CBD-B744-B84F045E066D"))
                 .Build();
 
             await articleRepository.Save(article, cancellationToken);

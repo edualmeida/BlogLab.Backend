@@ -23,17 +23,22 @@
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Article Shop v1"));
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Article Shop v1");
+                options.EnablePersistAuthorization();
+            });
             app.UseDeveloperExceptionPage();
         }
 
         return app;
     }
 
-    private static readonly bool _initializeDatabase = false;
-    public static IApplicationBuilder InitializeDatabase(this IApplicationBuilder app)
+    public static IApplicationBuilder InitializeDatabase(
+        this IApplicationBuilder app, 
+        IConfiguration configuration)
     {
-        if (!_initializeDatabase)
+        if (configuration.GetSection("InitializeDatabase").Value == "false")
             return app;
 
         using var serviceScope = app.ApplicationServices.CreateScope();

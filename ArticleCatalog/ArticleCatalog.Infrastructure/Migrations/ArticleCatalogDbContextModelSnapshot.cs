@@ -22,10 +22,10 @@ namespace Articles.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid>("AuthorId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ColorId")
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedOnUTC")
@@ -56,8 +56,6 @@ namespace Articles.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("ColorId");
-
                     b.HasIndex("ThumbnailId");
 
                     b.ToTable("Articles");
@@ -69,6 +67,12 @@ namespace Articles.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CreatedOnUTC")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -78,26 +82,17 @@ namespace Articles.Infrastructure.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Color", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Colors");
-                });
-
             modelBuilder.Entity("Thumbnail", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedOnUTC")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -116,12 +111,6 @@ namespace Articles.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Thumbnail", "Thumbnail")
                         .WithMany("Articles")
                         .HasForeignKey("ThumbnailId")
@@ -129,8 +118,6 @@ namespace Articles.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-
-                    b.Navigation("Color");
 
                     b.Navigation("Thumbnail");
                 });

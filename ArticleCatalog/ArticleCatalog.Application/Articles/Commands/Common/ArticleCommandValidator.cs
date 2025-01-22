@@ -22,10 +22,7 @@ public class ArticleCommandValidator : AbstractValidator<ArticleCommand>
         RuleFor(b => b.CategoryId)
             .NotEmpty().WithMessage("CategoryId is required.");
 
-        RuleFor(b => b.ColorId)
-            .NotEmpty().WithMessage("ColorId is required.");
-
-        RuleFor(b => b.ThumbnailId)
-            .NotEmpty().WithMessage("Thumbnail is required.");
+        //RuleFor(b => b.ThumbnailId)
+        //    .NotEmpty().WithMessage("Thumbnail is required.");
     }
 }

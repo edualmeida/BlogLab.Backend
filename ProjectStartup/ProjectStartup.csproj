@@ -16,6 +16,11 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Serilog" Version="4.2.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -27,5 +32,7 @@
       <ProjectReference Include="..\ArticleCatalog\ArticleCatalog.Web\ArticleCatalog.Web.csproj" />
       <ProjectReference Include="..\Bookmarks\Bookmarks.Infrastructure\Bookmarks.Infrastructure.csproj" />
       <ProjectReference Include="..\Bookmarks\Bookmarks.Web\Bookmarks.Web.csproj" />
+      <ProjectReference Include="..\Identity\Identity.Infrastructure\Identity.Infrastructure.csproj" />
+      <ProjectReference Include="..\Identity\Identity.Web\Identity.Web.csproj" />
     </ItemGroup>
 </Project>

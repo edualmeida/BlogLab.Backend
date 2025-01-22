@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-public class DeleteArticleCommand : ArticleCommand, IRequest<Result>
+public class DeleteArticleCommand : IRequest<Result>
 {
     public Guid Id { get; set; }
 
@@ -13,7 +13,7 @@ public class DeleteArticleCommand : ArticleCommand, IRequest<Result>
         {
             var article = await articleRepository.Find(request.Id, cancellationToken);
 
-            article.DisableArticle();
+            article!.DisableArticle();
 
             await articleRepository.Save(article, cancellationToken);
 

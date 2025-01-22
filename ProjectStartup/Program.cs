@@ -1,3 +1,5 @@
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder
@@ -14,19 +16,28 @@ builder
     .AddBookmarksInfrastructure(builder.Configuration)
     .AddBookmarksWebComponents();
 
-builder.Services
+builder
+    .Services
+    .AddIdentityDomain()
+    .AddIdentityApplication(builder.Configuration)
+    .AddIdentityInfrastructure(builder.Configuration)
+    .AddIdentityWebComponents();
+
+builder
+    .Services
     .AddTokenAuthentication(builder.Configuration)
     .AddModelBinders()
-    .AddSwaggerGen(c =>
-    {
-        c.SwaggerDoc("v1", new() { Title = "Blog API", Version = "v1" });
-    })
+    .AddSwagger()
     .AddHttpClient();
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 
 app
+    .UseSerilogRequestLogging()
     .UseWebService(app.Environment)
-    .InitializeDatabase();
+    .InitializeDatabase(builder.Configuration);
 
 app.Run();

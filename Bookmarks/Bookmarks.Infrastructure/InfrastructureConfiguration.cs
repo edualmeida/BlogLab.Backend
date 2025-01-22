@@ -20,6 +20,7 @@ public static class InfrastructureConfiguration
             {
                 var httpClientSettings = configuration.GetBookmarksSettings();
                 httpClient.BaseAddress = new Uri(httpClientSettings.ArticleCatalogAPIClientSettings.BaseUrl);
+                httpClient.ConfigureApiKey(configuration);
             })
             .ConfigureDefaultHttpClientHandler()
             .AddTypedClient<IArticleCatalogHttpService, ArticleCatalogHttpService>()

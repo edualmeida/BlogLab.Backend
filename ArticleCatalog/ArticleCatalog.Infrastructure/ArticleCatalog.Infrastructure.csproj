@@ -4,7 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Articles.Infrastructure</RootNamespace>
+        <RootNamespace>ArticleCatalog.Infrastructure</RootNamespace>
     </PropertyGroup>
     
     <ItemGroup>
