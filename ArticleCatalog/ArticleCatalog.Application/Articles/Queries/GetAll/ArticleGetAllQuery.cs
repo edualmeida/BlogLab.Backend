@@ -1,25 +1,34 @@
 ﻿using MediatR;
 
-public class ArticleGetAllQuery : IRequest<List<ArticleResponse>>
+public class ArticleGetAllQuery : IRequest<GetAllResult>
 {
+    public int PageNumber { get; set; } = 1;
+    public int PageSize { get; set; } = 5;
+
     public class ArticleAllQueryHandler(
         IArticleQueryRepository articleRepository,
         IAuthorsHttpService authorsHttpService
-        ) : IRequestHandler<ArticleGetAllQuery, List<ArticleResponse>>
+        ) : IRequestHandler<ArticleGetAllQuery, GetAllResult>
     {
-        public async Task<List<ArticleResponse>> Handle(
+        public async Task<GetAllResult> Handle(
             ArticleGetAllQuery request, 
             CancellationToken cancellationToken)
         {
-            var articles = await articleRepository.GetAll(cancellationToken);
-            var authors = await authorsHttpService.GetAll(cancellationToken);
+            var getResult = await articleRepository.GetAll(
+                request.PageNumber, 
+                request.PageSize, 
+                cancellationToken);
 
-            articles.ForEach(article =>
+            var authors = await authorsHttpService.GetAll(
+                cancellationToken);
+
+            getResult.Articles.ForEach(article =>
             {
-                article.Author = authors.FirstOrDefault(a => a.Id == article.AuthorId)?.FirstName ?? "ND";
+                article.Author = authors
+                    .FirstOrDefault(a => a.Id == article.AuthorId)?.FirstName ?? "ND";
             });
 
-            return articles;
+            return getResult;
         }
     }
 }

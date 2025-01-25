@@ -5,4 +5,5 @@ public interface IArticleBuilder : IBuilder<Article>
     IArticleBuilder WithText(string text);
     IArticleBuilder WithThumbnailId(Guid thumbnailId);
     IArticleBuilder WithCategoryId(Guid categoryId);
+    IArticleBuilder WithAuthorId(Guid authorId);
 }

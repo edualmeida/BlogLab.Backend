@@ -3,19 +3,17 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
-public class ValidationExceptionHandlerMiddleware
+public class ValidationExceptionHandlerMiddleware(
+    RequestDelegate next, 
+    ILogger<ValidationExceptionHandlerMiddleware> logger)
 {
-    private readonly RequestDelegate next;
-
-    public ValidationExceptionHandlerMiddleware(RequestDelegate next)
-        => this.next = next;
-
     public async Task Invoke(HttpContext context)
     {
         try
         {
-            await this.next(context);
+            await next(context);
         }
         catch (Exception ex)
         {
@@ -23,12 +21,12 @@ public class ValidationExceptionHandlerMiddleware
         }
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+    private Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         var code = HttpStatusCode.InternalServerError;
-
         var result = string.Empty;
 
+        logger.LogError(exception, context.TraceIdentifier);
         switch (exception)
         {
             case ModelValidationException modelValidationException:
