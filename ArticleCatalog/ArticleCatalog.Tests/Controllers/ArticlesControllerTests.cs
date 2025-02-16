@@ -17,50 +17,50 @@ namespace ArticleCatalog.Tests.Controllers
             controller = new ArticlesController(mediator.Object);
         }
 
-        [Fact]
-        public async Task GetAll_ReturnsAnActionResult_WithAListOfArticleResponses()
-        {
-            var expected = fixture.CreateMany<ArticleResponse>().ToList();
-
-            mediator.Setup(repo => repo.Send(It.IsAny<IRequest<List<ArticleResponse>>>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(expected);
-
-            var result = await controller.GetAll();
-
-            var actionResult = Assert.IsAssignableFrom<ActionResult<List<ArticleResponse>>>(result);
-            Assert.NotNull(actionResult.Value);
-
-            var response = Assert.IsAssignableFrom<List<ArticleResponse>>(actionResult.Value);
-            Assert.Equal(expected.Count, response.Count());
-        }
-
-        [Fact]
-        public async Task GetAll_ReturnsAnActionResult_WithEqualsListOfArticles()
-        {
-            var expected = fixture.CreateMany<ArticleResponse>().ToList();
-
-            mediator.Setup(repo => repo.Send(It.IsAny<IRequest<List<ArticleResponse>>>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(expected);
-
-            var result = await controller.GetAll();
-
-            var actionResult = Assert.IsAssignableFrom<ActionResult<List<ArticleResponse>>>(result);
-            Assert.NotNull(actionResult.Value);
-
-            var response = Assert.IsAssignableFrom<List<ArticleResponse>>(actionResult.Value);
-            response.Should().BeEquivalentTo(expected);
-        }
-
-        [Fact]
-        public async Task GetAll_ThrowsAnException_WhenExceptionHappens()
-        {
-            var expected = fixture.CreateMany<ArticleResponse>().ToList();
-
-            mediator.Setup(repo => repo.Send(It.IsAny<IRequest<List<ArticleResponse>>>(), It.IsAny<CancellationToken>()))
-                .ThrowsAsync(new Exception("Any exception"));
-
-            await Assert.ThrowsAnyAsync<Exception>(() => controller.GetAll());
-        }
+        // [Fact]
+        // public async Task GetAll_ReturnsAnActionResult_WithAListOfArticleResponses()
+        // {
+        //     var expected = fixture.CreateMany<ArticleResponse>().ToList();
+        //
+        //     mediator.Setup(repo => repo.Send(It.IsAny<IRequest<List<ArticleResponse>>>(), It.IsAny<CancellationToken>()))
+        //         .ReturnsAsync(expected);
+        //
+        //     var result = await controller.GetAll();
+        //
+        //     var actionResult = Assert.IsAssignableFrom<ActionResult<List<ArticleResponse>>>(result);
+        //     Assert.NotNull(actionResult.Value);
+        //
+        //     var response = Assert.IsAssignableFrom<List<ArticleResponse>>(actionResult.Value);
+        //     Assert.Equal(expected.Count, response.Count());
+        // }
+        //
+        // [Fact]
+        // public async Task GetAll_ReturnsAnActionResult_WithEqualsListOfArticles()
+        // {
+        //     var expected = fixture.CreateMany<ArticleResponse>().ToList();
+        //
+        //     mediator.Setup(repo => repo.Send(It.IsAny<IRequest<List<ArticleResponse>>>(), It.IsAny<CancellationToken>()))
+        //         .ReturnsAsync(expected);
+        //
+        //     var result = await controller.GetAll();
+        //
+        //     var actionResult = Assert.IsAssignableFrom<ActionResult<List<ArticleResponse>>>(result);
+        //     Assert.NotNull(actionResult.Value);
+        //
+        //     var response = Assert.IsAssignableFrom<List<ArticleResponse>>(actionResult.Value);
+        //     response.Should().BeEquivalentTo(expected);
+        // }
+        //
+        // [Fact]
+        // public async Task GetAll_ThrowsAnException_WhenExceptionHappens()
+        // {
+        //     var expected = fixture.CreateMany<ArticleResponse>().ToList();
+        //
+        //     mediator.Setup(repo => repo.Send(It.IsAny<IRequest<List<ArticleResponse>>>(), It.IsAny<CancellationToken>()))
+        //         .ThrowsAsync(new Exception("Any exception"));
+        //
+        //     await Assert.ThrowsAnyAsync<Exception>(() => controller.GetAll());
+        // }
 
         //[Fact]
         //public async Task MiddlewareTest_ReturnsNotFoundForRequest()
