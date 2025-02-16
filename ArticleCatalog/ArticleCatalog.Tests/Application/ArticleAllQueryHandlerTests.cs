@@ -8,11 +8,10 @@ namespace ArticleCatalog.Tests.Application
     {
         private readonly Fixture fixture = new();
         private readonly Mock<IArticleQueryRepository> repository = new();
-        private readonly Mock<IAuthorsHttpService> httpervice = new();
         private readonly ArticleAllQueryHandler handler;
         public ArticleAllQueryHandlerTests()
         {
-            handler = new ArticleAllQueryHandler(repository.Object, httpervice.Object);
+            handler = new ArticleAllQueryHandler(repository.Object);
         }
 
         [Fact]
