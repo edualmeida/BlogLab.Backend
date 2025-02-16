@@ -20,11 +20,30 @@ internal class ArticleRepository : DataRepository<ArticleCatalogDbContext, Artic
             .ProjectTo<ArticleResponse>(AllAsNoTracking())
                 .FirstAsync(b => b.Id == id, cancellationToken);
 
-    public async Task<List<ArticleResponse>> GetAll(CancellationToken cancellationToken = default)
-        => (await mapper
+    public async Task<GetAllResult> GetAll(
+        int pageNumber,
+        int pageSize,
+        CancellationToken cancellationToken = default)
+    {
+        var articles = await mapper
             .ProjectTo<ArticleResponse>(AllAsNoTracking()
-                .Where(x => x.Enabled))
-            .ToListAsync(cancellationToken));
+                .Where(x => x.Enabled)
+                .OrderBy(x => x.CreatedOnUTC)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize))
+            .ToListAsync(cancellationToken);
+
+        var totalCount = await AllAsNoTracking()
+            .Where(x => x.Enabled)
+            .CountAsync(cancellationToken);
+
+        return new GetAllResult
+        {
+            Articles = articles,
+            TotalCount = totalCount,
+            TotalPages = (int)Math.Ceiling((double)totalCount / pageSize)
+        };
+    }
 
     public async Task Delete(Guid id, CancellationToken cancellationToken = default)
     {

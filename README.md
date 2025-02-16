@@ -1,4 +1,4 @@
-# BlogLab.API
+# BlogLab.Backend
 
 Domain => state core
 
@@ -8,12 +8,12 @@ Infrastructure => repository access
 
 - Have Application reference 
 - Where the access to repositories is located
-- Provide the implementation on how to acces the database
+- Provide the implementation on how to access the database
 
 Application => business rules
 
 - Have Domain reference
-- Can create a article by using the IArticleBuilder, and then save it in the repository by using the infrastructure
+- Can create an article by using the IArticleBuilder, and then save it in the repository by using the infrastructure
 - It has the Mediatr handlers.
 
 Web => outside access

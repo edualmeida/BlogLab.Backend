@@ -1,0 +1,80 @@
+[
+  {
+    "id": "ad73ec52-0974-4198-810e-4840e1ad195a",
+    "category": "News",
+    "thumbnail": "pic01.jpg",
+    "createdOn": "0001-01-01T00:00:00+00:00",
+    "author": "Admin",
+    "authorId": "85c8e95d-c1d8-4e80-af00-f64589602764",
+    "title": "Magna sed adipiscing",
+    "subtitle": "Lorem ipsum dolor amet nullam consequat etiam feugiat",
+    "text": "Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.",
+    "categoryId": "803c62b1-c1ca-4c9b-bdb8-7da7485283d9",
+    "thumbnailId": "48aa27ca-2eaf-4cbd-b744-b84f045e066d"
+  },
+  {
+    "id": "92ed8d57-9e01-48c0-a34b-3f53f027c1d0",
+    "category": "Design Patterns",
+    "thumbnail": "pic01.jpg",
+    "createdOn": "2025-01-18T16:49:52.7737343+00:00",
+    "author": "Admin",
+    "authorId": "85c8e95d-c1d8-4e80-af00-f64589602764",
+    "title": "Paragraph test",
+    "subtitle": "Para",
+    "text": "Paragraph test\n\n<p>\nTestdsfsd\n<br>\n\n</p>\n\nfim pata",
+    "categoryId": "a74425bf-0f1a-46a1-84e7-8d3be4bb656e",
+    "thumbnailId": "48aa27ca-2eaf-4cbd-b744-b84f045e066d"
+  },
+  {
+    "id": "6d70ca49-8ec2-4383-9ff6-b7af43a1192d",
+    "category": "Design Patterns",
+    "thumbnail": "pic01.jpg",
+    "createdOn": "2025-01-25T20:49:16.809538+00:00",
+    "author": "Admin",
+    "authorId": "85c8e95d-c1d8-4e80-af00-f64589602764",
+    "title": "test3",
+    "subtitle": "3444",
+    "text": "3333",
+    "categoryId": "a74425bf-0f1a-46a1-84e7-8d3be4bb656e",
+    "thumbnailId": "48aa27ca-2eaf-4cbd-b744-b84f045e066d"
+  },
+  {
+    "id": "53df2f52-c5ed-421d-bd76-a614736d6d77",
+    "category": "Design Patterns",
+    "thumbnail": "pic01.jpg",
+    "createdOn": "2025-01-25T20:54:48.1843476+00:00",
+    "author": "Admin",
+    "authorId": "85c8e95d-c1d8-4e80-af00-f64589602764",
+    "title": "444",
+    "subtitle": "4444",
+    "text": "test4444",
+    "categoryId": "a74425bf-0f1a-46a1-84e7-8d3be4bb656e",
+    "thumbnailId": "48aa27ca-2eaf-4cbd-b744-b84f045e066d"
+  },
+  {
+    "id": "91b0f4e8-6c9f-4822-a4de-bf524e95ba91",
+    "category": "News",
+    "thumbnail": "pic01.jpg",
+    "createdOn": "2025-01-26T17:48:56.4995302+00:00",
+    "author": "Admin",
+    "authorId": "85c8e95d-c1d8-4e80-af00-f64589602764",
+    "title": "test5",
+    "subtitle": "test5",
+    "text": "test5test5test5test5test5test5",
+    "categoryId": "803c62b1-c1ca-4c9b-bdb8-7da7485283d9",
+    "thumbnailId": "48aa27ca-2eaf-4cbd-b744-b84f045e066d"
+  },
+  {
+    "id": "72cc0ca0-bf03-4a06-9686-fd6c28cc36f1",
+    "category": "News",
+    "thumbnail": "pic01.jpg",
+    "createdOn": "2025-02-02T10:57:30.1327317+00:00",
+    "author": "Admin",
+    "authorId": "85c8e95d-c1d8-4e80-af00-f64589602764",
+    "title": "Test7",
+    "subtitle": "Test 7",
+    "text": "Test7",
+    "categoryId": "803c62b1-c1ca-4c9b-bdb8-7da7485283d9",
+    "thumbnailId": "48aa27ca-2eaf-4cbd-b744-b84f045e066d"
+  }
+]

@@ -1,7 +1,7 @@
 @apiKey=JEXqpyi4cPGWgH
 
 # Get all
-GET {{HostAddress}}/{{Path}}
+GET {{HostAddress}}/{{Path}}?pageNumber=2&pageSize=1
 Accept: application/json
 X-Api-Key: {{apiKey}}
 
