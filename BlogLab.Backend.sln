@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmarks.Web", "Bookmarks\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8CFA537B-D77C-42F1-A3CB-150261BBBA30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleCatalog.Tests", "ArticleCatalog.Tests\ArticleCatalog.Tests.csproj", "{D17211FC-4866-49F6-9901-2DDFACB457A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleCatalog.Tests", "ArticleCatalog\ArticleCatalog.Tests\ArticleCatalog.Tests.csproj", "{D17211FC-4866-49F6-9901-2DDFACB457A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Application", "Identity\Identity.Application\Identity.Application.csproj", "{E7AD293D-CC62-4F2D-9237-9115E5789B6D}"
 EndProject
