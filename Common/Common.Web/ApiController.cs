@@ -1,10 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 [ApiController]
 [Route("api/[controller]")]
-public abstract class ApiController(IMediator mediator) : ControllerBase
+public abstract class ApiController(
+    IMediator mediator) : ControllerBase
 {
     protected const string Id = "{id}";
     protected const string PathSeparator = "/";
@@ -17,10 +17,4 @@ public abstract class ApiController(IMediator mediator) : ControllerBase
 
     protected Task<ActionResult> Send(IRequest<Result> request)
         => mediator.Send(request).ToActionResult();
-
-    protected Guid GetUserId()
-    {
-        var userId = User?.FindFirstValue(ClaimTypes.NameIdentifier);
-        return Guid.Parse(userId!);
-    }
 }

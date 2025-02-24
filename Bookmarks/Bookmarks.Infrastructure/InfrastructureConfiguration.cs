@@ -13,16 +13,20 @@ public static class InfrastructureConfiguration
                 Assembly.GetExecutingAssembly())
             .AddHttpClients(configuration);
 
-    public static IServiceCollection AddHttpClients(
+    private static IServiceCollection AddHttpClients(
         this IServiceCollection services,
         IConfiguration configuration)
-        => services.AddHttpClient<ArticleCatalogHttpService>(httpClient =>
+    {
+        var bookmarksConfiguration = configuration.GetBookmarksSettings();
+
+        services.AddSingleton<ArticleCatalogApiClientSettings>(bookmarksConfiguration.ArticleCatalogApiClientSettings); // TODO: organize
+        return services.AddHttpClient<ArticleCatalogHttpService>(httpClient =>
             {
-                var httpClientSettings = configuration.GetBookmarksSettings();
-                httpClient.BaseAddress = new Uri(httpClientSettings.ArticleCatalogAPIClientSettings.BaseUrl);
+                httpClient.BaseAddress = new Uri(bookmarksConfiguration.ArticleCatalogApiClientSettings.BaseUrl);
                 httpClient.ConfigureApiKey(configuration);
             })
             .ConfigureDefaultHttpClientHandler()
             .AddTypedClient<IArticleCatalogHttpService, ArticleCatalogHttpService>()
             .Services;
+    }
 }

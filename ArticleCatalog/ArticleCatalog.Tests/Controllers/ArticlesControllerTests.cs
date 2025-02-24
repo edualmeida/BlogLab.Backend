@@ -12,10 +12,10 @@ namespace ArticleCatalog.Tests.Controllers
         private readonly Mock<IMediator> mediator = new();
         private readonly ArticlesController controller;
 
-        public ArticlesControllerTests()
-        {
-            controller = new ArticlesController(mediator.Object);
-        }
+        // public ArticlesControllerTests()
+        // {
+        //     controller = new ArticlesController(mediator.Object);
+        // }
 
         // [Fact]
         // public async Task GetAll_ReturnsAnActionResult_WithAListOfArticleResponses()

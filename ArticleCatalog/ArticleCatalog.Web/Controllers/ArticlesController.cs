@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-public class ArticlesController(IMediator mediator) : ApiController(mediator)
+public class ArticlesController(IMediator mediator, IMapper mapper) : 
+    ApiController(mediator)
 {
     [HttpGet]
     [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
@@ -18,7 +20,7 @@ public class ArticlesController(IMediator mediator) : ApiController(mediator)
     [Authorize]
     [HttpPost]
     public async Task<ActionResult<CreateArticleResponse>> Create(CreateArticleRequest request)
-        => await Send(request.ToCommand(GetUserId()));
+        => await Send(request.Map(mapper, HttpContext));
 
     [Authorize]
     [HttpPut]

@@ -5,11 +5,13 @@ public static class ConfigurationExtensions
     public static BookmarksSettings GetBookmarksSettings(
         this IConfiguration configuration)
     {
-        var bookmarkManagementSettings = configuration.GetSection(nameof(BookmarksSettings));
-        var articleCatalogAPIClientSettings = bookmarkManagementSettings.GetSection(nameof(ArticleCatalogAPIClientSettings));
+        var bookmarkManagementSettings = configuration.GetRequiredSection(nameof(BookmarksSettings));
+        var articleCatalogApiClientSettings = bookmarkManagementSettings.GetRequiredSection(nameof(ArticleCatalogApiClientSettings));
 
-        return new BookmarksSettings(
-                new(articleCatalogAPIClientSettings.GetValue<string>(nameof(ArticleCatalogAPIClientSettings.BaseUrl)))
-            );
+        return new BookmarksSettings(new ArticleCatalogApiClientSettings(
+            articleCatalogApiClientSettings.GetValue<string>(nameof(ArticleCatalogApiClientSettings.BaseUrl))!, 
+            articleCatalogApiClientSettings.GetValue<string>(nameof(ArticleCatalogApiClientSettings.GetArticlesByIdsPath))!
+            )
+        );
     }
 }

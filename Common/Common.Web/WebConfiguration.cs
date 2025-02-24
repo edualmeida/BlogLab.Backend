@@ -1,18 +1,22 @@
-﻿using FluentValidation;
+﻿using System.Reflection;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class WebConfiguration
 {
-    public static IServiceCollection AddWebComponents(this IServiceCollection services,
-        Type applicationConfigurationType)
+    public static IServiceCollection AddWebComponents(
+        this IServiceCollection services,
+        Type applicationConfigurationType,
+        Assembly assembly)
     {
         services
             .AddValidatorsFromAssemblyContaining(applicationConfigurationType)
             .AddFluentValidationAutoValidation()
             .AddFluentValidationClientsideAdapters()
-            .AddScoped<ICurrentUser, CurrentUserService>();
+            .AddScoped<ICurrentUser, CurrentUserService>()
+            .AddAutoMapperProfile(assembly);
 
         return services;
     }
@@ -25,4 +29,10 @@ public static class WebConfiguration
 
         return services;
     }
+    
+    private static IServiceCollection AddAutoMapperProfile(
+        this IServiceCollection services, Assembly assembly)
+        => services
+            .AddAutoMapper((_, config) => config
+                .AddProfile(new MappingProfile(assembly)), Array.Empty<Assembly>());
 }

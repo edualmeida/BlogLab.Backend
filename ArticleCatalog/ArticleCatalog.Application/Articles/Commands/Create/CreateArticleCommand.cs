@@ -1,8 +1,8 @@
 using MediatR;
 
-public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleResponse>
+public class CreateArticleCommand : ArticleCommand, IRequest<Result<CreateArticleResponse>>
 {
-    public Guid AuthorId { get; set; }
+    public Guid AuthorId { get; private set; }
     public CreateArticleCommand SetAuthorId(Guid authorId)
     {
         AuthorId = authorId;
@@ -10,9 +10,9 @@ public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleRespon
     }
     public class CreateArticleCommandHandler(
         IArticleDomainRepository articleRepository,
-        IArticleBuilder articleBuilder) : IRequestHandler<CreateArticleCommand, CreateArticleResponse>
+        IArticleBuilder articleBuilder) : IRequestHandler<CreateArticleCommand, Result<CreateArticleResponse>>
     {
-        public async Task<CreateArticleResponse> Handle(
+        public async Task<Result<CreateArticleResponse>> Handle(
             CreateArticleCommand request,
             CancellationToken cancellationToken)
         {

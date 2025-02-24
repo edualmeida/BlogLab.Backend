@@ -1,19 +1,15 @@
 using System.Net.Http.Json;
 
-public sealed class ArticleCatalogHttpService : IArticleCatalogHttpService
+public sealed class ArticleCatalogHttpService(
+    HttpClient client,
+    ArticleCatalogApiClientSettings settings
+    ) : IArticleCatalogHttpService
 {
-    private readonly HttpClient client;
-
-    public ArticleCatalogHttpService(HttpClient client)
-    {
-        this.client = client;
-    }
-
     public async Task<List<ArticleResponse>> GetArticlesByIds(IEnumerable<string> ids)
     {
         //var idsUri = string.Join("&", ids);
 
         //return await client.GetFromJsonAsync<List<ArticleResponse>>(idsUri) ?? [];
-        return await client.GetFromJsonAsync<List<ArticleResponse>>("/api/articles") ?? [];
+        return await client.GetFromJsonAsync<List<ArticleResponse>>(settings.GetArticlesByIdsPath) ?? [];
     }
 }

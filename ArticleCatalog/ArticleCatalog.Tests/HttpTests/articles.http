@@ -1,6 +1,6 @@
 @apiKey=JEXqpyi4cPGWgH
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI4NWM4ZTk1ZC1jMWQ4LTRlODAtYWYwMC1mNjQ1ODk2MDI3NjQiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDA0MDQ3NzksImV4cCI6MTc0MTAwOTU3OSwiaWF0IjoxNzQwNDA0Nzc5fQ.MIuZn0q3D7sYf1wnjI0PCvCcJftZ8lkNCci-eRt0z4k
 
-# Get all
 GET {{HostAddress}}/{{Path}}?pageNumber=2&pageSize=1
 Accept: application/json
 X-Api-Key: {{apiKey}}
@@ -14,11 +14,12 @@ X-Api-Key: {{apiKey}}
 ### create article
 
 POST {{HostAddress}}/{{Path}}
-X-Api-Key: JEXqpyi4cPGWgH
+Authorization: Bearer {{token}}
 Content-Type: application/json
+
 {
-    "title": "Test",
-    "subtitle": "test",
+    "title": "Test6",
+    "subtitle": "test6",
     "text": "text",
     "categoryid": "803C62B1-C1CA-4C9B-BDB8-7DA7485283D9",
     "colorid": "0DE1AECF-3217-4AF5-87D7-0B48F5322022",

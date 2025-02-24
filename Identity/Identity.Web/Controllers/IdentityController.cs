@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-public class IdentityController(IMediator mediator) : ApiController(mediator)
+public class IdentityController(IMediator mediator) : 
+    ApiController(mediator)
 {
     [HttpGet]
     [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]

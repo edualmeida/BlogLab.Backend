@@ -3,22 +3,11 @@ using MediatR;
 
 public class BookmarkGetAllQuery : EntityCommand, IRequest<List<BookmarkArticleResponse>>
 {
-    public class BookmarkGetAllQueryHandler : IRequestHandler<BookmarkGetAllQuery, List<BookmarkArticleResponse>>
+    public class BookmarkGetAllQueryHandler(
+        IBookmarkQueryRepository bookmarkRepository,
+        IArticleCatalogHttpService articleCatalogHttpService,
+        IMapper mapper): IRequestHandler<BookmarkGetAllQuery, List<BookmarkArticleResponse>>
     {
-        private readonly IBookmarkQueryRepository bookmarkRepository;
-        private readonly IArticleCatalogHttpService articleCatalogHttpService;
-        private readonly IMapper mapper;
-
-        public BookmarkGetAllQueryHandler(
-            IBookmarkQueryRepository bookmarkRepository,
-            IArticleCatalogHttpService articleCatalogHttpService,
-            IMapper mapper)
-        {
-            this.bookmarkRepository = bookmarkRepository;
-            this.articleCatalogHttpService = articleCatalogHttpService;
-            this.mapper = mapper;
-        }
-
         public async Task<List<BookmarkArticleResponse>> Handle(
             BookmarkGetAllQuery request, 
             CancellationToken cancellationToken)
