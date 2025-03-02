@@ -1,20 +1,33 @@
-﻿using AutoMapper;
+﻿using ArticleCatalog.Application.Articles.Commands.Update;
+using ArticleCatalog.Application.Articles.Queries.Common;
+using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
+using ArticleCatalog.Application.Articles.Queries.GetById;
+using ArticleCatalog.Application.Articles.Queries.GetByIds;
+using ArticleCatalog.Web.Models;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+namespace ArticleCatalog.Web.Controllers;
 public class ArticlesController(IMediator mediator, IMapper mapper) : 
     ApiController(mediator)
 {
     [HttpGet]
     [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
-    public async Task<ActionResult<GetAllResult>> GetAll([FromQuery] ArticleGetAllQuery query)
-        => await Send(query);
+    public async Task<ActionResult<ArticleGetAllPaginatedResult>> GetAllPaginated(
+        [FromQuery] ArticleGetAllPaginatedQuery paginatedQuery)
+        => await Send(paginatedQuery);
 
     [HttpGet]
     [Route(Id)]
     [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
-    public async Task<ActionResult<ArticleResponse>> GetById([FromRoute] ArticleGetByIdQuery query)
+    public async Task<ActionResult<ArticleQueryResponse>> GetById([FromRoute] ArticleGetByIdQuery query)
+        => await Send(query);
+    
+    [HttpPost]
+    [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
+    public async Task<ActionResult<List<ArticleQueryResponse>>> GetByIds(ArticleGetByIdsQuery query)
         => await Send(query);
 
     [Authorize]

@@ -1,10 +1,7 @@
-﻿public class AuthorsAPIClientSettings(string baseUrl)
-{
-    public string BaseUrl { get; set; } = baseUrl;
-}
+﻿namespace ArticleCatalog.Application.Settings;
 
-public class ArticleCatalogSettings(AuthorsAPIClientSettings authorsAPIClientSettings)
+public class ArticleCatalogSettings(AuthorsApiClientSettings authorsApiClientSettings)
 {
-    public AuthorsAPIClientSettings AuthorsAPIClientSettings { get; set; }
-        = authorsAPIClientSettings;
+    public AuthorsApiClientSettings AuthorsApiClientSettings { get; set; }
+        = authorsApiClientSettings;
 }

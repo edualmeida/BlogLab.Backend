@@ -1,4 +1,5 @@
-﻿public class CategoryData : IInitialData
+﻿namespace ArticleCatalog.Domain.Models.Categories;
+public class CategoryData : IInitialData
 {
     public Type EntityType => typeof(Category);
 

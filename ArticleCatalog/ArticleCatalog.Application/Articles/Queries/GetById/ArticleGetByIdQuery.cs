@@ -1,12 +1,15 @@
-﻿using MediatR;
+﻿using ArticleCatalog.Application.Articles.Queries.Common;
+using MediatR;
 
-public class ArticleGetByIdQuery : EntityCommand, IRequest<ArticleResponse>
+namespace ArticleCatalog.Application.Articles.Queries.GetById;
+
+public class ArticleGetByIdQuery : EntityCommand, IRequest<ArticleQueryResponse>
 {
     public class ArticleDetailsQueryHandler(
         IArticleQueryRepository articleRepository,
-        IAuthorsHttpService authorsHttpService) : IRequestHandler<ArticleGetByIdQuery, ArticleResponse>
+        IAuthorsHttpService authorsHttpService) : IRequestHandler<ArticleGetByIdQuery, ArticleQueryResponse>
     {
-        public async Task<ArticleResponse> Handle(
+        public async Task<ArticleQueryResponse> Handle(
             ArticleGetByIdQuery request,
             CancellationToken cancellationToken)
         {

@@ -1,5 +1,7 @@
+using Bookmarks.Domain.Repositories;
 using MediatR;
 
+namespace Bookmarks.Application.Bookmarks.Commands.Delete;
 public class DeleteBookmarkCommand : IRequest<Result>
 {
     public Guid ArticleId { get; set; }

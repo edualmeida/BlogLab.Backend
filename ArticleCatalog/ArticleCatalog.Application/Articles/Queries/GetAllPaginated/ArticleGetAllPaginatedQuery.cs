@@ -1,6 +1,7 @@
 ﻿using MediatR;
 
-public class ArticleGetAllQuery : IRequest<GetAllResult>
+namespace ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
+public class ArticleGetAllPaginatedQuery : IRequest<ArticleGetAllPaginatedResult>
 {
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 5;
@@ -8,10 +9,10 @@ public class ArticleGetAllQuery : IRequest<GetAllResult>
     public class ArticleAllQueryHandler(
         IArticleQueryRepository articleRepository,
         IAuthorsHttpService authorsHttpService
-        ) : IRequestHandler<ArticleGetAllQuery, GetAllResult>
+        ) : IRequestHandler<ArticleGetAllPaginatedQuery, ArticleGetAllPaginatedResult>
     {
-        public async Task<GetAllResult> Handle(
-            ArticleGetAllQuery request, 
+        public async Task<ArticleGetAllPaginatedResult> Handle(
+            ArticleGetAllPaginatedQuery request, 
             CancellationToken cancellationToken)
         {
             var getResult = await articleRepository.GetAll(

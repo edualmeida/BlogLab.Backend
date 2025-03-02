@@ -1,8 +1,8 @@
-using System.Security.Claims;
 using AutoMapper;
 using Common.Web.Extensions;
 using Microsoft.AspNetCore.Http;
 
+namespace ArticleCatalog.Web.Models;
 public class CreateArticleRequest : ArticleCommand, IMapTo<CreateArticleCommand>
 {
     public CreateArticleCommand Map(IMapper mapper, HttpContext httpContext)

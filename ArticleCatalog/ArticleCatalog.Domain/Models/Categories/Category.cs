@@ -1,4 +1,7 @@
-﻿public class Category : Entity, IAggregateRoot
+﻿using Common.Domain.Models;
+
+namespace ArticleCatalog.Domain.Models.Categories;
+public class Category : Entity, IAggregateRoot
 {
     internal Category(
         string name)

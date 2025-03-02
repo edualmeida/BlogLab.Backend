@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ArticleCatalog.Domain.Repositories;
+using MediatR;
 
 public class DeleteArticleCommand : IRequest<Result>
 {

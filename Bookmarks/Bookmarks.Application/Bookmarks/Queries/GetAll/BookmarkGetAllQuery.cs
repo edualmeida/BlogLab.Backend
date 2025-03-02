@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
+using Bookmarks.Application.Bookmarks.Queries.Common;
+using Bookmarks.Application.Services;
 using MediatR;
 
-public class BookmarkGetAllQuery : EntityCommand, IRequest<List<BookmarkArticleResponse>>
+namespace Bookmarks.Application.Bookmarks.Queries.GetAll;
+public class BookmarkGetAllQuery : EntityCommand, IRequest<List<BookmarkArticleQueryResponse>>
 {
     public class BookmarkGetAllQueryHandler(
         IBookmarkQueryRepository bookmarkRepository,
         IArticleCatalogHttpService articleCatalogHttpService,
-        IMapper mapper): IRequestHandler<BookmarkGetAllQuery, List<BookmarkArticleResponse>>
+        IMapper mapper): IRequestHandler<BookmarkGetAllQuery, List<BookmarkArticleQueryResponse>>
     {
-        public async Task<List<BookmarkArticleResponse>> Handle(
+        public async Task<List<BookmarkArticleQueryResponse>> Handle(
             BookmarkGetAllQuery request, 
             CancellationToken cancellationToken)
         {
@@ -18,9 +21,20 @@ public class BookmarkGetAllQuery : EntityCommand, IRequest<List<BookmarkArticleR
                 return [];
             }
 
-            var articles = await articleCatalogHttpService.GetArticlesByIds(bookmarks.Select(x => x.ArticleId.ToString()));
+            var articles = await articleCatalogHttpService
+                .GetArticlesByIds(bookmarks
+                    .Select(x => x.ArticleId.ToString()));
+            
+            var response = new List<BookmarkArticleQueryResponse>();
 
-            return mapper.Map<List<BookmarkArticleResponse>>(articles.Where(x=> bookmarks.Exists(f=>f.ArticleId == x.Id)));
+            foreach (var bookmark in bookmarks)
+            {
+                response.Add(new BookmarkArticleQueryResponse(bookmark,
+                    mapper.Map<ArticleQueryResponse>(
+                        articles.Single(x => x.Id == bookmark.ArticleId))));
+            }
+
+            return mapper.Map<List<BookmarkArticleQueryResponse>>(response);
         }
     }
 }

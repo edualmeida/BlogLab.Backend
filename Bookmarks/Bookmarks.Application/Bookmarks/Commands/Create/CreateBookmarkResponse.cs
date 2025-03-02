@@ -1,9 +1,5 @@
-public class CreateBookmarkResponse
+namespace Bookmarks.Application.Bookmarks.Commands.Create;
+public class CreateBookmarkResponse(Guid bookmarkId)
 {
-    public CreateBookmarkResponse(Guid customerId)
-    {
-        CustomerId = customerId;
-    }
-
-    public Guid CustomerId { get; }
+    public Guid BookmarkId => bookmarkId;
 }

@@ -1,3 +1,8 @@
+using ArticleCatalog.Domain.Models.Categories;
+using ArticleCatalog.Domain.Models.Thumbnails;
+using Common.Domain.Models;
+
+namespace ArticleCatalog.Domain.Models.Articles;
 public class Article : Entity, IAggregateRoot
 {
     internal Article(

@@ -1,3 +1,5 @@
+using ArticleCatalog.Infrastructure;
+using Bookmarks.Infrastructure;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,4 +42,4 @@ app
     .UseWebService(app.Environment)
     .InitializeDatabase(builder.Configuration);
 
-app.Run();
+await app.RunAsync();

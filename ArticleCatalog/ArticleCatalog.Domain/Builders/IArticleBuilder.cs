@@ -1,3 +1,6 @@
+using ArticleCatalog.Domain.Models.Articles;
+
+namespace ArticleCatalog.Domain.Builders;
 public interface IArticleBuilder : IBuilder<Article>
 {
     IArticleBuilder WithTitle(string title);

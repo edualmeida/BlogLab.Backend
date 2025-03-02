@@ -1,5 +1,8 @@
+using Bookmarks.Application.Bookmarks.Commands.Common;
+using Bookmarks.Domain.Repositories;
 using MediatR;
 
+namespace Bookmarks.Application.Bookmarks.Commands.Update;
 public class UpdateBookmarkCommand : BookmarkCommand, IRequest<Result>
 {
     public Guid Id { get; set; }
@@ -8,9 +11,9 @@ public class UpdateBookmarkCommand : BookmarkCommand, IRequest<Result>
     {
         private readonly IBookmarkDomainRepository bookmarksRepository;
 
-        public UpdateBookmarkCommandHandler(IBookmarkDomainRepository BookmarkRepository)
+        public UpdateBookmarkCommandHandler(IBookmarkDomainRepository bookmarkRepository)
         {
-            this.bookmarksRepository = BookmarkRepository;
+            this.bookmarksRepository = bookmarkRepository;
         }
 
         public async Task<Result> Handle(UpdateBookmarkCommand request, CancellationToken cancellationToken)

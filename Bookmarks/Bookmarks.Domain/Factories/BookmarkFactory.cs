@@ -1,3 +1,6 @@
+using Bookmarks.Domain.Models.Bookmarks;
+
+namespace Bookmarks.Domain.Factories;
 internal class BookmarkFactory : IBookmarkFactory
 {
     private Guid customerId = default!;

@@ -1,3 +1,4 @@
+using ArticleCatalog.Domain.Models.Articles;
 using AutoMapper;
 
 public class ArticleModel : IMapFrom<Article>

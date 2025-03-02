@@ -1,34 +1,46 @@
-﻿using AutoMapper;
+﻿using ArticleCatalog.Application.Articles.Queries;
+using ArticleCatalog.Application.Articles.Queries.Common;
+using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
+using ArticleCatalog.Domain.Models.Articles;
+using ArticleCatalog.Domain.Repositories;
+using ArticleCatalog.Infrastructure.Persistence;
+using AutoMapper;
+using Common.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-internal class ArticleRepository : DataRepository<ArticleCatalogDbContext, Article>,
-    IArticleDomainRepository,
-    IArticleQueryRepository
+namespace ArticleCatalog.Infrastructure.Repositories;
+internal class ArticleRepository(
+    ArticleCatalogDbContext db, 
+    IMapper mapper) 
+    : DataRepository<ArticleCatalogDbContext, Article>(db),
+    IArticleDomainRepository, IArticleQueryRepository
 {
-    private readonly IMapper mapper;
-
-    public ArticleRepository(ArticleCatalogDbContext db, IMapper mapper)
-        : base(db)
-        => this.mapper = mapper;
-
     public async Task<Article?> Find(Guid id, CancellationToken cancellationToken = default)
         => await All()
-            .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
-    public async Task<ArticleResponse> GetById(Guid id, CancellationToken cancellationToken = default)
+    public async Task<ArticleQueryResponse?> GetById(Guid id, CancellationToken cancellationToken = default)
         => await mapper
-            .ProjectTo<ArticleResponse>(AllAsNoTracking())
-                .FirstAsync(b => b.Id == id, cancellationToken);
+            .ProjectTo<ArticleQueryResponse?>(AllAsNoTracking()
+                .Where(x => x.Id == id))
+            .FirstOrDefaultAsync(cancellationToken);
+    
+    public async Task<List<ArticleQueryResponse>> GetByIds(
+        List<Guid> ids, CancellationToken cancellationToken = default)
+        => await mapper
+            .ProjectTo<ArticleQueryResponse>(AllAsNoTracking()
+                .Where(b => ids.Contains(b.Id)))
+            .ToListAsync(cancellationToken);
 
-    public async Task<GetAllResult> GetAll(
+    public async Task<ArticleGetAllPaginatedResult> GetAll(
         int pageNumber,
         int pageSize,
         CancellationToken cancellationToken = default)
     {
         var articles = await mapper
-            .ProjectTo<ArticleResponse>(AllAsNoTracking()
+            .ProjectTo<ArticleQueryResponse>(AllAsNoTracking()
                 .Where(x => x.Enabled)
-                .OrderBy(x => x.CreatedOnUTC)
+                .OrderBy(x => x.CreatedOnUtc)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize))
             .ToListAsync(cancellationToken);
@@ -37,7 +49,7 @@ internal class ArticleRepository : DataRepository<ArticleCatalogDbContext, Artic
             .Where(x => x.Enabled)
             .CountAsync(cancellationToken);
 
-        return new GetAllResult
+        return new ArticleGetAllPaginatedResult
         {
             Articles = articles,
             TotalCount = totalCount,
@@ -47,7 +59,7 @@ internal class ArticleRepository : DataRepository<ArticleCatalogDbContext, Artic
 
     public async Task Delete(Guid id, CancellationToken cancellationToken = default)
     {
-        var article = await Data.Articles.FindAsync(id);
+        var article = await Data.Articles.FindAsync(id, cancellationToken);
 
         if (article == null)
             throw new ArgumentException("Article does not exist");

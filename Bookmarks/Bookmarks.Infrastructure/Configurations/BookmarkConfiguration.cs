@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bookmarks.Domain.Models.Bookmarks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+namespace Bookmarks.Infrastructure.Configurations;
 internal class BookmarkConfiguration : IEntityTypeConfiguration<Bookmark>
 {
     public void Configure(EntityTypeBuilder<Bookmark> builder)
@@ -11,14 +13,14 @@ internal class BookmarkConfiguration : IEntityTypeConfiguration<Bookmark>
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(o => o.CreatedBy)
+            .Property(o => o.UserId)
             .IsRequired();
 
         builder
             .Property(o => o.ArticleId)
             .IsRequired();
 
-        builder.HasIndex(p => new { p.CreatedBy, p.ArticleId }).IsUnique();
+        builder.HasIndex(p => new { p.UserId, p.ArticleId }).IsUnique();
 
         builder.ToTable("Bookmarks");
     }

@@ -1,3 +1,6 @@
+using ArticleCatalog.Domain.Models.Articles;
+
+namespace ArticleCatalog.Domain.Builders;
 internal class ArticleBuilder : IArticleBuilder
 {
     private string articleTitle = default!;

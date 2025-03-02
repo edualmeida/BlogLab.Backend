@@ -1,5 +1,8 @@
 using System.Net.Http.Json;
+using Bookmarks.Application.Services;
+using Bookmarks.Application.Services.Contracts.Articles;
 
+namespace Bookmarks.Infrastructure.HttpServices;
 public sealed class ArticleCatalogHttpService(
     HttpClient client,
     ArticleCatalogApiClientSettings settings
@@ -7,9 +10,11 @@ public sealed class ArticleCatalogHttpService(
 {
     public async Task<List<ArticleResponse>> GetArticlesByIds(IEnumerable<string> ids)
     {
-        //var idsUri = string.Join("&", ids);
+        var articleIds = string.Join("&", ids);
+        var response = await client.PostAsJsonAsync(settings.GetArticlesByIdsPath, articleIds);
 
-        //return await client.GetFromJsonAsync<List<ArticleResponse>>(idsUri) ?? [];
-        return await client.GetFromJsonAsync<List<ArticleResponse>>(settings.GetArticlesByIdsPath) ?? [];
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadFromJsonAsync<List<ArticleResponse>>();
     }
 }

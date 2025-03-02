@@ -1,7 +1,11 @@
 ﻿using System.Reflection;
+using Bookmarks.Application.Services;
+using Bookmarks.Infrastructure.HttpServices;
+using Bookmarks.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+namespace Bookmarks.Infrastructure;
 public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddBookmarksInfrastructure(
@@ -19,8 +23,9 @@ public static class InfrastructureConfiguration
     {
         var bookmarksConfiguration = configuration.GetBookmarksSettings();
 
-        services.AddSingleton<ArticleCatalogApiClientSettings>(bookmarksConfiguration.ArticleCatalogApiClientSettings); // TODO: organize
-        return services.AddHttpClient<ArticleCatalogHttpService>(httpClient =>
+        return services
+            .AddHttpClientSettings(bookmarksConfiguration)
+            .AddHttpClient<ArticleCatalogHttpService>(httpClient =>
             {
                 httpClient.BaseAddress = new Uri(bookmarksConfiguration.ArticleCatalogApiClientSettings.BaseUrl);
                 httpClient.ConfigureApiKey(configuration);
@@ -28,5 +33,13 @@ public static class InfrastructureConfiguration
             .ConfigureDefaultHttpClientHandler()
             .AddTypedClient<IArticleCatalogHttpService, ArticleCatalogHttpService>()
             .Services;
+    }
+    
+    private static IServiceCollection AddHttpClientSettings(
+        this IServiceCollection services,
+        BookmarksSettings settings)
+    {
+        services.AddSingleton(settings.ArticleCatalogApiClientSettings);
+        return services;
     }
 }

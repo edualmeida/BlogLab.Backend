@@ -1,6 +1,8 @@
+using ArticleCatalog.Domain.Models.Articles;
 using AutoMapper;
 
-public class ArticleResponse : ArticleModel
+namespace ArticleCatalog.Application.Articles.Queries.Common;
+public class ArticleQueryResponse : ArticleModel
 {
     public Guid Id { get; set; }
     public string Category { get; set; } = "";
@@ -11,10 +13,10 @@ public class ArticleResponse : ArticleModel
 
     public override void Mapping(Profile mapper)
         => mapper
-            .CreateMap<Article, ArticleResponse>()
+            .CreateMap<Article, ArticleQueryResponse>()
             .ForMember(p => p.Category, opt => opt.MapFrom(src => src.Category!.Name))
             .ForMember(p => p.Thumbnail, opt => opt.MapFrom(src => src.Thumbnail!.Name))
-            .ForMember(p => p.CreatedOn, opt => opt.MapFrom(src => src.CreatedOnUTC.ToLocalTime()))
+            .ForMember(p => p.CreatedOn, opt => opt.MapFrom(src => src.CreatedOnUtc.ToLocalTime()))
             .ForMember(p => p.Author, opt => opt.MapFrom(src =>""))
             .IncludeBase<Article, ArticleModel>();
 }
