@@ -3,7 +3,7 @@ using Bookmarks.Application.Services.Contracts.Articles;
 
 namespace Bookmarks.Application.Bookmarks.Queries.Common;
 
-public class ArticleQueryResponse: IMapFrom<ArticleResponse>
+public class ArticleResponse: IMapFrom<HttpArticleResponse>
 {
     public Guid Id { get; set; }
     public string Category { get; set; } = "";
@@ -14,5 +14,5 @@ public class ArticleQueryResponse: IMapFrom<ArticleResponse>
     
     public void Mapping(Profile mapper)
         => mapper
-            .CreateMap<ArticleResponse, ArticleQueryResponse>();
+            .CreateMap<HttpArticleResponse, ArticleResponse>();
 }

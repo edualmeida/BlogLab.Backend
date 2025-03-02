@@ -8,13 +8,14 @@ public sealed class ArticleCatalogHttpService(
     ArticleCatalogApiClientSettings settings
     ) : IArticleCatalogHttpService
 {
-    public async Task<List<ArticleResponse>> GetArticlesByIds(IEnumerable<string> ids)
+    public async Task<List<HttpArticleResponse>> GetArticlesByIds(IEnumerable<Guid> ids)
     {
-        var articleIds = string.Join("&", ids);
-        var response = await client.PostAsJsonAsync(settings.GetArticlesByIdsPath, articleIds);
+        var response = await client.PostAsJsonAsync(
+            settings.GetArticlesByIdsPath, 
+            new { articleIds = ids});
 
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync<List<ArticleResponse>>();
+        return await response.Content.ReadFromJsonAsync<List<HttpArticleResponse>>();
     }
 }

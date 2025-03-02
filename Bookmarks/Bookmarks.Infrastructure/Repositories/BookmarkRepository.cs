@@ -25,12 +25,12 @@ internal class BookmarkRepository : DataRepository<BookmarksDbContext, Bookmark>
         throw new NotImplementedException();
     }
 
-    public async Task Delete(Guid articleId, CancellationToken cancellationToken = default)
+    public async Task Delete(Guid bookmarkId, CancellationToken cancellationToken = default)
     {
-        var article = await AllAsNoTracking().FirstOrDefaultAsync(x => x.ArticleId == articleId) 
-            ?? throw new InvalidOperationException("Article not found for delete, id: " + articleId);
+        var bookmark = await AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == bookmarkId) 
+            ?? throw new InvalidOperationException("Bookmark not found for delete, id: " + bookmarkId);
 
-        Data.Remove(article);
+        Data.Remove(bookmark);
         await Data.SaveChangesAsync(cancellationToken);
     }
 

@@ -23,18 +23,20 @@ public class BookmarkGetAllQuery : EntityCommand, IRequest<List<BookmarkArticleQ
 
             var articles = await articleCatalogHttpService
                 .GetArticlesByIds(bookmarks
-                    .Select(x => x.ArticleId.ToString()));
+                    .Select(x => x.ArticleId));
             
             var response = new List<BookmarkArticleQueryResponse>();
 
             foreach (var bookmark in bookmarks)
             {
-                response.Add(new BookmarkArticleQueryResponse(bookmark,
-                    mapper.Map<ArticleQueryResponse>(
-                        articles.Single(x => x.Id == bookmark.ArticleId))));
+                response.Add(new BookmarkArticleQueryResponse()
+                    {
+                        Bookmark    = bookmark,
+                        Article = mapper.Map<ArticleResponse>(articles.Single(x => x.Id == bookmark.ArticleId))
+                    });
             }
 
-            return mapper.Map<List<BookmarkArticleQueryResponse>>(response);
+            return response;
         }
     }
 }

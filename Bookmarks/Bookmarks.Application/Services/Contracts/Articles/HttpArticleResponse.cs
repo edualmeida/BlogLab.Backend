@@ -1,5 +1,5 @@
 namespace Bookmarks.Application.Services.Contracts.Articles;
-public class ArticleResponse
+public class HttpArticleResponse
 {
     public Guid Id { get; set; }
     public string Category { get; set; } = "";

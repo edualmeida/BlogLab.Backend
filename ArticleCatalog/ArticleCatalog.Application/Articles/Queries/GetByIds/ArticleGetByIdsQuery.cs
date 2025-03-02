@@ -5,7 +5,7 @@ namespace ArticleCatalog.Application.Articles.Queries.GetByIds;
 
 public class ArticleGetByIdsQuery : IRequest<List<ArticleQueryResponse>>
 {
-    public List<Guid> Ids { get; set; } = [];
+    public List<Guid> ArticleIds { get; set; } = [];
     
     public class ArticleGetByIdsQueryHandler(
         IArticleQueryRepository articleRepository,
@@ -15,7 +15,7 @@ public class ArticleGetByIdsQuery : IRequest<List<ArticleQueryResponse>>
             ArticleGetByIdsQuery request,
             CancellationToken cancellationToken)
         {
-            var articles = await articleRepository.GetByIds(request.Ids, cancellationToken);
+            var articles = await articleRepository.GetByIds(request.ArticleIds, cancellationToken);
             var authors = await authorsHttpService.GetAll(cancellationToken);
             var response = new List<ArticleQueryResponse>();
 
