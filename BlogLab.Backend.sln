@@ -57,6 +57,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{86136459
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Tests", "Identity.Tests\Identity.Tests.csproj", "{02F83827-3E0C-4F5A-A3FB-0F35CB56F71D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_HttpTests", "_HttpTests", "{A4F0F5E5-49D8-4D24-AA5F-A361A9E4C968}"
+	ProjectSection(SolutionItems) = preProject
+		articles.http = articles.http
+		categories.http = categories.http
+		http-client.env.json = http-client.env.json
+		bookmarks.http = bookmarks.http
+		identity.http = identity.http
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

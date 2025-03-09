@@ -27,7 +27,7 @@ internal class BookmarkRepository : DataRepository<BookmarksDbContext, Bookmark>
 
     public async Task Delete(Guid bookmarkId, CancellationToken cancellationToken = default)
     {
-        var bookmark = await AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == bookmarkId) 
+        var bookmark = await AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == bookmarkId, cancellationToken) 
             ?? throw new InvalidOperationException("Bookmark not found for delete, id: " + bookmarkId);
 
         Data.Remove(bookmark);

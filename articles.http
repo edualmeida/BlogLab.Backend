@@ -1,19 +1,19 @@
 @apiKey=JEXqpyi4cPGWgH
 @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI4NWM4ZTk1ZC1jMWQ4LTRlODAtYWYwMC1mNjQ1ODk2MDI3NjQiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDA0MDQ3NzksImV4cCI6MTc0MTAwOTU3OSwiaWF0IjoxNzQwNDA0Nzc5fQ.MIuZn0q3D7sYf1wnjI0PCvCcJftZ8lkNCci-eRt0z4k
 
-GET {{HostAddress}}/{{Path}}?pageNumber=2&pageSize=1
+GET {{HostAddress}}/{{ArticlesPath}}?pageNumber=2&pageSize=1
 Accept: application/json
 X-Api-Key: {{apiKey}}
 
 ### get by id
 
-GET {{HostAddress}}/{{Path}}/ad73ec52-0974-4198-810e-4840e1ad195a
+GET {{HostAddress}}/{{ArticlesPath}}/ad73ec52-0974-4198-810e-4840e1ad195a
 Accept: application/json
 X-Api-Key: {{apiKey}}
 
 ### create article
 
-POST {{HostAddress}}/{{Path}}
+POST {{HostAddress}}/{{ArticlesPath}}
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -28,7 +28,7 @@ Content-Type: application/json
 
 ### update article
 
-PUT {{HostAddress}}/{{Path}}/ad73ec52-0974-4198-810e-4840e1ad195a
+PUT {{HostAddress}}/{{ArticlesPath}}/ad73ec52-0974-4198-810e-4840e1ad195a
 Content-Type: application/json
 {
     "title": "Title update2",
@@ -41,7 +41,7 @@ Content-Type: application/json
 
 ### delete article (logically)
 
-DELETE {{HostAddress}}/{{Path}}/ad73ec52-0974-4198-810e-4840e1ad195a
+DELETE {{HostAddress}}/{{ArticlesPath}}/ad73ec52-0974-4198-810e-4840e1ad195a
 Content-Type: application/json
 
 ###
@@ -50,7 +50,7 @@ GET https://localhost:7190/api/articles
 
 ###
 
-GET {{HostAddress}}/{{Path}}
+GET {{HostAddress}}/{{ArticlesPath}}
 Accept: application/json
 
 ###

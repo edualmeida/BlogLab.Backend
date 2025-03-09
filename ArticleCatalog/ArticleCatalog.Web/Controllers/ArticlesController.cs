@@ -26,7 +26,7 @@ public class ArticlesController(IMediator mediator, IMapper mapper) :
         => await Send(query);
     
     [HttpPost]
-    [Route("get/multiple")]
+    [Route("GetMany")]
     [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
     public async Task<ActionResult<List<ArticleQueryResponse>>> GetByIds(ArticleGetByIdsQuery query)
         => await Send(query);
