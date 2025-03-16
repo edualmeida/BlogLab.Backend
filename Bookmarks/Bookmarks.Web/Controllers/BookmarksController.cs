@@ -14,8 +14,8 @@ public class BookmarksController(IMediator mediator, IMapper mapper)
     : ApiController(mediator)
 {
     [HttpGet]
-    public async Task<ActionResult<List<BookmarkArticleQueryResponse>>> GetAll()
-        => await Send(new BookmarkGetAllQuery());
+    public async Task<ActionResult<List<BookmarkArticleQueryResponse>>> GetByUserId(Guid userId)
+        => await Send(new BookmarkGetByUserIdQuery(userId));
 
     [HttpPost]
     public async Task<ActionResult> Create(CreateBookmarkRequest request)

@@ -1,4 +1,5 @@
 ﻿using ArticleCatalog.Application.Articles.Queries.Common;
+using ArticleCatalog.Application.Services;
 using MediatR;
 
 namespace ArticleCatalog.Application.Articles.Queries.GetByIds;

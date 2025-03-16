@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using ArticleCatalog.Application.Services;
 using ArticleCatalog.Infrastructure.Extensions;
+using ArticleCatalog.Infrastructure.HttpServices;
 using ArticleCatalog.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,16 +16,27 @@ public static class InfrastructureConfiguration
             .AddTransient<IDbInitializer, ArticleCatalogDbInitializer>()
             .AddHttpClients(configuration);
 
-    public static IServiceCollection AddHttpClients(
+    private static IServiceCollection AddHttpClients(
         this IServiceCollection services,
         IConfiguration configuration)
-        => services.AddHttpClient<AuthorsHttpService>(httpClient =>
-        {
-            var httpClientSettings = configuration.GetArticleCatalogSettings();
-            httpClient.BaseAddress = new Uri(httpClientSettings.AuthorsApiClientSettings.BaseUrl);
-            httpClient.ConfigureApiKey(configuration);
-        })
-        .ConfigureDefaultHttpClientHandler()
-        .AddTypedClient<IAuthorsHttpService, AuthorsHttpService>()
-        .Services;
+    {
+        var httpClientSettings = configuration.GetArticleCatalogSettings();
+        services.AddHttpClient<AuthorsHttpService>(httpClient =>
+            {
+                httpClient.BaseAddress = new Uri(httpClientSettings.AuthorsApiClientSettings.BaseUrl);
+                httpClient.ConfigureApiKey(configuration);
+            })
+            .ConfigureDefaultHttpClientHandler()
+            .AddTypedClient<IAuthorsHttpService, AuthorsHttpService>();
+        
+        services.AddHttpClient<BookmarksHttpService>(httpClient =>
+            {
+                httpClient.BaseAddress = new Uri(httpClientSettings.BookmarksApiClientSettings.BaseUrl);
+                httpClient.ConfigureApiKey(configuration);
+            })
+            .ConfigureDefaultHttpClientHandler()
+            .AddTypedClient<IBookmarksHttpService, BookmarksHttpService>();
+        
+        return services;
+    }
 }

@@ -1,14 +1,17 @@
-﻿using MediatR;
+﻿using ArticleCatalog.Application.Services;
+using MediatR;
 
 namespace ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
 public class ArticleGetAllPaginatedQuery : IRequest<ArticleGetAllPaginatedResult>
 {
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 5;
+    public Guid? UserId { get; set; }
 
     public class ArticleAllQueryHandler(
         IArticleQueryRepository articleRepository,
-        IAuthorsHttpService authorsHttpService
+        IAuthorsHttpService authorsHttpService,
+        IBookmarksHttpService bookmarksHttpService
         ) : IRequestHandler<ArticleGetAllPaginatedQuery, ArticleGetAllPaginatedResult>
     {
         public async Task<ArticleGetAllPaginatedResult> Handle(
@@ -23,10 +26,19 @@ public class ArticleGetAllPaginatedQuery : IRequest<ArticleGetAllPaginatedResult
             var authors = await authorsHttpService.GetAll(
                 cancellationToken);
 
+            List<UserBookmarkResponse> userBookmarks = null;
+            
+            if (request.UserId.HasValue)
+            {
+                userBookmarks = await bookmarksHttpService.GetUserBookmarks(request.UserId.Value);
+            }
+
             getResult.Articles.ForEach(article =>
             {
                 article.Author = authors
                     .FirstOrDefault(a => a.Id == article.AuthorId)?.FirstName ?? "ND";
+
+                article.IsUserBookmarked = userBookmarks?.Any(x => x.ArticleId == article.Id);
             });
 
             return getResult;

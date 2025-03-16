@@ -9,9 +9,13 @@ public static class ConfigurationExtensions
     {
         var articleCatalogSettings = configuration.GetSection(nameof(ArticleCatalogSettings));
         var authorsApiClientSettings = articleCatalogSettings.GetSection(nameof(AuthorsApiClientSettings));
+        var bookmarksApiClientSettings = articleCatalogSettings.GetSection(nameof(BookmarksApiClientSettings));
 
         return new ArticleCatalogSettings(
-            new AuthorsApiClientSettings(authorsApiClientSettings.GetValue<string>(nameof(AuthorsApiClientSettings.BaseUrl))!)
+            new AuthorsApiClientSettings(
+                authorsApiClientSettings.GetValue<string>(nameof(AuthorsApiClientSettings.BaseUrl))!),
+            new BookmarksApiClientSettings(
+                bookmarksApiClientSettings.GetValue<string>(nameof(BookmarksApiClientSettings.BaseUrl))!)
         );
     }
 }

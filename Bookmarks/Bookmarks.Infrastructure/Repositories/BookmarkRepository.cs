@@ -34,8 +34,10 @@ internal class BookmarkRepository : DataRepository<BookmarksDbContext, Bookmark>
         await Data.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<List<BookmarkQueryResponse>> GetAll(CancellationToken cancellationToken = default)
+    public async Task<List<BookmarkQueryResponse>> GetByUserId(Guid userid, CancellationToken cancellationToken = default)
         => await mapper
-            .ProjectTo<BookmarkQueryResponse>(AllAsNoTracking())
+            .ProjectTo<BookmarkQueryResponse>(AllAsNoTracking()
+                .Where(x => x.UserId == userid)
+            )
             .ToListAsync();
 }

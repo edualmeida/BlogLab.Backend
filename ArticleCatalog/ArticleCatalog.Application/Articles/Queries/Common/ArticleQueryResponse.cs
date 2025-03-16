@@ -10,6 +10,7 @@ public class ArticleQueryResponse : ArticleModel
     public DateTime CreatedOn { get; set; }
     public string Author { get; set; } = "";
     public Guid AuthorId { get; set; }
+    public bool? IsUserBookmarked { get; set; } = null;
 
     public override void Mapping(Profile mapper)
         => mapper
@@ -18,5 +19,6 @@ public class ArticleQueryResponse : ArticleModel
             .ForMember(p => p.Thumbnail, opt => opt.MapFrom(src => src.Thumbnail!.Name))
             .ForMember(p => p.CreatedOn, opt => opt.MapFrom(src => src.CreatedOnUtc.ToLocalTime()))
             .ForMember(p => p.Author, opt => opt.MapFrom(src =>""))
+            .ForMember(p => p.IsUserBookmarked, opt => opt.Ignore())
             .IncludeBase<Article, ArticleModel>();
 }

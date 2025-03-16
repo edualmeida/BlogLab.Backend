@@ -4,18 +4,19 @@ using Bookmarks.Application.Services;
 using MediatR;
 
 namespace Bookmarks.Application.Bookmarks.Queries.GetAll;
-public class BookmarkGetAllQuery : EntityCommand, IRequest<List<BookmarkArticleQueryResponse>>
+public class BookmarkGetByUserIdQuery(Guid userId) : IRequest<List<BookmarkArticleQueryResponse>>
 {
+    public Guid UserId { get; private set; } = userId;
     public class BookmarkGetAllQueryHandler(
         IBookmarkQueryRepository bookmarkRepository,
         IArticleCatalogHttpService articleCatalogHttpService,
-        IMapper mapper): IRequestHandler<BookmarkGetAllQuery, List<BookmarkArticleQueryResponse>>
+        IMapper mapper): IRequestHandler<BookmarkGetByUserIdQuery, List<BookmarkArticleQueryResponse>>
     {
         public async Task<List<BookmarkArticleQueryResponse>> Handle(
-            BookmarkGetAllQuery request, 
+            BookmarkGetByUserIdQuery request, 
             CancellationToken cancellationToken)
         {
-            var bookmarks = await bookmarkRepository.GetAll(cancellationToken);
+            var bookmarks = await bookmarkRepository.GetByUserId(request.UserId, cancellationToken);
             if(bookmarks.Count == 0)
             {
                 return [];

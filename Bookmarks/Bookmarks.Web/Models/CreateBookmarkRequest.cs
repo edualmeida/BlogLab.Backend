@@ -5,8 +5,9 @@ using Common.Web.Extensions;
 using Microsoft.AspNetCore.Http;
 
 namespace Bookmarks.Web.Models;
-public class CreateBookmarkRequest: BookmarkCommand, IMapTo<CreateBookmarkCommand>
+public class CreateBookmarkRequest: IMapTo<CreateBookmarkCommand>
 {
+    public Guid ArticleId { get; set; }
     public CreateBookmarkCommand Map(IMapper mapper, HttpContext httpContext)
     {
         var result = mapper.Map<CreateBookmarkCommand>(this);
