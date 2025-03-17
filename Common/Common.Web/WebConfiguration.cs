@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Common.Web.Converters;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,12 @@ public static class WebConfiguration
        this IServiceCollection services)
     {
         services
-            .AddControllers();
+            .AddControllers()
+            // .AddJsonOptions(options =>
+            // {
+            //     options.JsonSerializerOptions.Converters.Add(new StringToGuidConverter());
+            // })
+            ;
 
         return services;
     }

@@ -1,7 +1,9 @@
 @apiKey=JEXqpyi4cPGWgH
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI4NWM4ZTk1ZC1jMWQ4LTRlODAtYWYwMC1mNjQ1ODk2MDI3NjQiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDA0MDQ3NzksImV4cCI6MTc0MTAwOTU3OSwiaWF0IjoxNzQwNDA0Nzc5fQ.MIuZn0q3D7sYf1wnjI0PCvCcJftZ8lkNCci-eRt0z4k
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2M2M1YjE0ZS02MDdiLTQwMTYtODM1OC02YTM1ZWE5NmMwNWUiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDIyMDg2MzYsImV4cCI6MTc0MjgxMzQzNiwiaWF0IjoxNzQyMjA4NjM2fQ.fkgrpkjNmG4HItInIvFEa6vmVTLdfV8awKvu_8SXoa0
 
-GET {{HostAddress}}/{{ArticlesPath}}?pageNumber=2&pageSize=1
+### Get paginated
+
+GET {{HostAddress}}/{{ArticlesPath}}?pageNumber=1&pageSize=3
 Accept: application/json
 X-Api-Key: {{apiKey}}
 
@@ -18,12 +20,11 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "title": "Test6",
-    "subtitle": "test6",
+    "title": "Test1",
+    "subtitle": "test1",
     "text": "text",
-    "categoryid": "803C62B1-C1CA-4C9B-BDB8-7DA7485283D9",
-    "colorid": "0DE1AECF-3217-4AF5-87D7-0B48F5322022",
-    "thumbnailid": "48AA27CA-2EAF-4CBD-B744-B84F045E066D"
+    "categoryid": "0195a3aa-ab0f-72e5-864a-ceacda58a5c1",
+    "thumbnailid": "0195a3aa-ab35-78a3-90ea-c90b4668e35e"
 }
 
 ### update article

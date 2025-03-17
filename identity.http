@@ -8,7 +8,7 @@ X-Api-Key: {{apiKey}}
 
 {
   "email": "admin@eduardolab.com",
-  "password": "0DE1AECF-3217-4AF5-87D7-0B48F5322022"
+  "password": "1q2w3e4r"
 }
 
 ### Get all
@@ -27,13 +27,14 @@ X-Api-Key: {{apiKey}}
 POST {{HostAddress}}/{{IdentityPath}}/Register
 X-Api-Key: JEXqpyi4cPGWgH
 Content-Type: application/json
+
 {
     "FirstName": "Admin",
     "MiddleName": "",
     "Surname": "Admin",
     "email": "admin@eduardolab.com",
-    "password": "0DE1AECF-3217-4AF5-87D7-0B48F5322022",
-    "ConfirmPassword": "0DE1AECF-3217-4AF5-87D7-0B48F5322022",
+    "password": "1q2w3e4r",
+    "ConfirmPassword": "1q2w3e4r",
     "Role": 1
 }
 

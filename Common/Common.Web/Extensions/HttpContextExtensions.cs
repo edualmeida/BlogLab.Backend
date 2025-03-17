@@ -7,11 +7,14 @@ public static class HttpContextExtensions
 {
     public static string? GetUserId(this HttpContext httpContext)
     {
-        return httpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        return httpContext?.User?
+            .FindFirstValue(ClaimTypes.NameIdentifier)?
+            .ToUpperInvariant();
     }
     
     public static Guid GetRequiredUserId(this HttpContext httpContext)
     {
-        return new Guid(httpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var userId = httpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        return new Guid(userId.ToUpperInvariant());
     }
 }

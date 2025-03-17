@@ -78,7 +78,7 @@ public static class InfrastructureConfiguration
         => services
             .AddScoped<DbContext, TDbContext>()
             .AddDbContext<TDbContext>(options => options
-                .UseSqlite(configuration.GetDefaultConnectionString(), sqlOptions => sqlOptions
+                .UseNpgsql(configuration.GetDefaultConnectionString(), sqlOptions => sqlOptions
                         .MigrationsAssembly(typeof(TDbContext).Assembly.FullName)));
 
     internal static IServiceCollection AddRepositories(

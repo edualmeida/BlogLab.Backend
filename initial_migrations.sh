@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# Install EF tool
 #dotnet tool update --global dotnet-ef
 
-#Navigate to solution root, example: F:\Projects\BlogLab.Backend
+#Navigate to solution root to apply the commands, example: F:\Projects\BlogLab.Backend
+
+# InitialMigrations
 
 dotnet ef migrations add InitialMigration --context "ArticleCatalogDbContext" --project ArticleCatalog/ArticleCatalog.Infrastructure --startup-project ProjectStartup
 
@@ -10,9 +13,14 @@ dotnet ef migrations add InitialMigration --context "BookmarksDbContext" --proje
 
 dotnet ef migrations add InitialMigration --context "IdentityDbContext" --project Identity/Identity.Infrastructure --startup-project ProjectStartup
 
+# Update database
 
+dotnet ef database update --context "ArticleCatalogDbContext" --project ArticleCatalog/ArticleCatalog.Infrastructure --startup-project ProjectStartup
 dotnet ef database update --context "BookmarksDbContext" --project Bookmarks/Bookmarks.Infrastructure --startup-project ProjectStartup
+dotnet ef database update --context "IdentityDbContext" --project Identity/Identity.Infrastructure --startup-project ProjectStartup
 
+
+# MISC
 
 #dotnet ef migrations add ChangeColumnName --context "ArticleCatalogDbContext" --project ArticleCatalog/ArticleCatalog.Infrastructure --startup-project ProjectStartup
 
