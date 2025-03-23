@@ -33,7 +33,7 @@ internal class IdentityService(
         return Result<bool>.SuccessWith(true);
     }
 
-    public async Task<Result<UserResponseModel>> Login(UserRequestModel userRequest)
+    public async Task<Result<LoginResponseModel>> Login(UserRequestModel userRequest)
     {
         var user = await userManager.FindByEmailAsync(userRequest.Email);
         if (user == null)
@@ -50,9 +50,22 @@ internal class IdentityService(
             return InvalidErrorMessage;
         }
 
-        var token = await jwtGenerator.GenerateToken(user);
+        var isAdministrator = await userManager
+            .IsInRoleAsync(user, CommonModelConstants.Common.AdministratorRoleName);
+        var roles = new List<string>();
+        if (isAdministrator)
+        {
+            roles.Add(CommonModelConstants.Common.AdministratorRoleName);
+        }
+        
+        var token = await jwtGenerator.GenerateToken(user, roles);
 
-        return new UserResponseModel(token);
+        return new LoginResponseModel(token)
+        {
+            UserId = user.Id,
+            Username = user.UserName!,
+            IsAdmin = isAdministrator,
+        };
     }
 
     public async Task<Result> ChangePassword(ChangePasswordRequestModel changePasswordRequest)

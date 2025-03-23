@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Identity.Domain.Models.Users;
+using Microsoft.AspNetCore.Identity;
 
 internal class IdentityDbInitializer : DbInitializer
 {
     private readonly UserManager<User> userManager;
-    private readonly RoleManager<IdentityRole> roleManager;
+    private readonly RoleManager<Role> roleManager;
 
     public IdentityDbInitializer(
         IdentityDbContext db,
         UserManager<User> userManager,
-        RoleManager<IdentityRole> roleManager)
+        RoleManager<Role> roleManager)
         : base(db)
     {
         this.userManager = userManager;
@@ -28,17 +29,17 @@ internal class IdentityDbInitializer : DbInitializer
             {
                 if (await roleManager.FindByNameAsync(CommonModelConstants.Common.AdministratorRoleName) == null)
                 {
-                    await roleManager.CreateAsync(new IdentityRole(CommonModelConstants.Common.AdministratorRoleName));
+                    await roleManager.CreateAsync(new Role(CommonModelConstants.Common.AdministratorRoleName));
                 }
 
                 if (await roleManager.FindByNameAsync(CommonModelConstants.Common.UserRoleName) == null)
                 {
-                    await roleManager.CreateAsync(new IdentityRole(CommonModelConstants.Common.UserRoleName));
+                    await roleManager.CreateAsync(new Role(CommonModelConstants.Common.UserRoleName));
                 }
 
                 if(await roleManager.FindByNameAsync(CommonModelConstants.Common.AuthorRoleName) == null)
                 {
-                    await roleManager.CreateAsync(new IdentityRole(CommonModelConstants.Common.AuthorRoleName));
+                    await roleManager.CreateAsync(new Role(CommonModelConstants.Common.AuthorRoleName));
                 }
 
                 //var adminUser = new UserData().GetData();

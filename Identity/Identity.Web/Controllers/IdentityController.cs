@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Identity.Application.Commands.LoginUser;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace Identity.Web.Controllers;
@@ -25,7 +26,7 @@ public class IdentityController(IMediator mediator) :
 
     [HttpPost]
     [Route(nameof(Login))]
-    public async Task<ActionResult<UserResponseModel>> Login(
+    public async Task<ActionResult<LoginResponseModel>> Login(
         LoginUserCommand command)
         => await Send(command);
 

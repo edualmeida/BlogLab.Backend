@@ -18,8 +18,10 @@ internal class JwtGeneratorService : IJwtGenerator
         this.applicationSettings = applicationSettings.Value;
     }
 
-    public async Task<string> GenerateToken(User user)
+    public async Task<string> GenerateToken(User user, IEnumerable<string> roles)
     {
+        ArgumentNullException.ThrowIfNull(user);
+        
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(applicationSettings.JwtPrivateKey);
 
@@ -27,8 +29,8 @@ internal class JwtGeneratorService : IJwtGenerator
         {
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.Email)
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Email!)
             }),
             Expires = DateTime.UtcNow.AddDays(7),
             SigningCredentials = new SigningCredentials(
@@ -36,14 +38,11 @@ internal class JwtGeneratorService : IJwtGenerator
                 SecurityAlgorithms.HmacSha256Signature)
         };
 
-        var isAdministrator = await userManager
-            .IsInRoleAsync(user, CommonModelConstants.Common.AdministratorRoleName);
-
-        if (isAdministrator)
+        foreach (var role in roles)
         {
             tokenDescriptor.Subject.AddClaim(new Claim(
                 ClaimTypes.Role,
-                CommonModelConstants.Common.AdministratorRoleName));
+                role));
         }
 
         var token = tokenHandler.CreateToken(tokenDescriptor);

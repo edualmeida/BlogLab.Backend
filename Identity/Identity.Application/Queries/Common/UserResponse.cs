@@ -7,7 +7,6 @@ public class UserResponse : IMapFrom<User>
 
     public void Mapping(Profile mapper)
         => mapper
-            .CreateMap<User, UserResponse>()
-            .ForMember(p => p.Id, opt => opt.MapFrom(src => new Guid(src.Id)));
+            .CreateMap<User, UserResponse>();
             //.IncludeBase<User, UserModel>();
 }

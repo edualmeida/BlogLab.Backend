@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-public class User : IdentityUser, IEntity, IAggregateRoot
+public class User : IdentityUser<Guid>, IEntity, IAggregateRoot
 {
     internal User(
         string email,
