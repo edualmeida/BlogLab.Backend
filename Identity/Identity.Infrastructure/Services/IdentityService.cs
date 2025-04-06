@@ -6,7 +6,7 @@ internal class IdentityService(
     IUserBuilder builder
     ) : IIdentity
 {
-    private const string InvalidErrorMessage = "Invalid credentials.";
+    private const string InvalidCredentialsErrorMessage = "Invalid credentials.";
 
     public async Task<Result<bool>> Register(RegisterUserCommand request)
     {
@@ -38,7 +38,7 @@ internal class IdentityService(
         var user = await userManager.FindByEmailAsync(userRequest.Email);
         if (user == null)
         {
-            return InvalidErrorMessage;
+            return Result<LoginResponseModel>.Failure(InvalidCredentialsErrorMessage);
         }
 
         var passwordValid = await userManager.CheckPasswordAsync(
@@ -47,7 +47,7 @@ internal class IdentityService(
 
         if (!passwordValid)
         {
-            return InvalidErrorMessage;
+            return Result<LoginResponseModel>.Failure(InvalidCredentialsErrorMessage);
         }
 
         var isAdministrator = await userManager
@@ -74,7 +74,7 @@ internal class IdentityService(
 
         if (user == null)
         {
-            return InvalidErrorMessage;
+            return Result<LoginResponseModel>.Failure(InvalidCredentialsErrorMessage);
         }
 
         var identityResult = await userManager.ChangePasswordAsync(
