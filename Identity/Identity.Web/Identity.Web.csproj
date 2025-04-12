@@ -5,6 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>Identity.Web</RootNamespace>
+        <LangVersion>13</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>

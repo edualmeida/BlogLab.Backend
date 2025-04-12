@@ -1,4 +1,5 @@
 using Bookmarks.Domain.Repositories;
+using Common.Application;
 using MediatR;
 
 namespace Bookmarks.Application.Bookmarks.Commands.Delete;

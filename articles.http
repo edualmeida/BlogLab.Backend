@@ -1,5 +1,5 @@
 @apiKey=JEXqpyi4cPGWgH
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk1YzM0NC05ZjhmLTdmODMtYWIwMy0xOTJmMjQ3MDc0MWYiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwibmJmIjoxNzQyNzM3ODU5LCJleHAiOjE3NDMzNDI2NTksImlhdCI6MTc0MjczNzg1OX0.Ck_wqkx9PjK4fGXrCSx4SVkUxlJkbt7ES_XsW77j220
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk2MTBmNS0wZDdlLTc1YWUtOWJiNy02ZmI3ZjYwYjFmNTIiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDQzMTI3NDcsImV4cCI6MTc0NDkxNzU0NywiaWF0IjoxNzQ0MzEyNzQ3fQ.x_bscHQy9NvetekmDVvrc6Z2b0v_UNasaYS83vGIFPY
 
 ### Get paginated
 
@@ -9,7 +9,7 @@ X-Api-Key: {{apiKey}}
 
 ### get by id
 
-GET {{HostAddress}}/{{ArticlesPath}}/ad73ec52-0974-4198-810e-4840e1ad195a
+GET {{HostAddress}}/{{ArticlesPath}}/0195c351-2ab5-78ba-bd2a-0ac915dc5f4f
 Accept: application/json
 X-Api-Key: {{apiKey}}
 

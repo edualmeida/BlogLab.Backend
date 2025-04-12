@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Common.Application;
+using MediatR;
 namespace Identity.Application.Commands.LoginUser;
 public class LoginUserCommand : UserRequestModel, IRequest<Result<LoginResponseModel>>
 {

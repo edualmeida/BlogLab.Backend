@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using MediatR;
 
+namespace Common.Application.Behaviours;
+
 public class RequestValidationBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

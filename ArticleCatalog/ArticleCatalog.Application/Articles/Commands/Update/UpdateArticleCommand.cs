@@ -1,4 +1,5 @@
 using ArticleCatalog.Domain.Repositories;
+using Common.Application;
 using MediatR;
 
 namespace ArticleCatalog.Application.Articles.Commands.Update;

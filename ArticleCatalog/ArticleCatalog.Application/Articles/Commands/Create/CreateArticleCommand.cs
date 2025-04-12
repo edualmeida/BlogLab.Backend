@@ -1,5 +1,6 @@
 using ArticleCatalog.Domain.Builders;
 using ArticleCatalog.Domain.Repositories;
+using Common.Application;
 using MediatR;
 
 public class CreateArticleCommand : ArticleCommand, IRequest<Result<CreateArticleResponse>>

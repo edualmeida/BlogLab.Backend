@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Common.Application;
+using Microsoft.AspNetCore.Identity;
 
 internal class IdentityService(
     UserManager<User> userManager,

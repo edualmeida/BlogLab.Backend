@@ -1,4 +1,6 @@
-﻿public interface IIdentity
+﻿using Common.Application;
+
+public interface IIdentity
 {
     Task<Result<bool>> Register(RegisterUserCommand userRequest);
 

@@ -6,6 +6,7 @@ using ArticleCatalog.Application.Articles.Queries.GetByIds;
 using ArticleCatalog.Web.Models;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,9 +22,9 @@ public class ArticlesController(IMediator mediator, IMapper mapper) :
 
     [HttpGet]
     [Route(Id)]
-    [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
-    public async Task<ActionResult<ArticleQueryResponse>> GetById([FromRoute] ArticleGetByIdQuery query)
-        => await Send(query);
+    [Authorize(AuthenticationSchemes = $"{ApiKey.SchemeName}, {JwtBearerDefaults.AuthenticationScheme}")]
+    public async Task<ActionResult<ArticleQueryResponse>> GetById([FromRoute] GetArticleByIdRequest request)
+        => await Send(request.Map(mapper, HttpContext));
     
     [HttpPost]
     [Route("GetMany")]

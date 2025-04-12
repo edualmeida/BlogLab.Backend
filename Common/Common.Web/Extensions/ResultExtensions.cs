@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using Common.Application;
 using Microsoft.AspNetCore.Mvc;
 
 public static class ResultExtensions

@@ -1,5 +1,6 @@
 using Bookmarks.Application.Bookmarks.Commands.Common;
 using Bookmarks.Domain.Repositories;
+using Common.Application;
 using MediatR;
 
 namespace Bookmarks.Application.Bookmarks.Commands.Create;

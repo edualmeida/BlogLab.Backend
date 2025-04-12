@@ -1,5 +1,11 @@
+using ArticleCatalog.Application;
 using ArticleCatalog.Infrastructure;
+using ArticleCatalog.Web;
+using Bookmarks.Application;
 using Bookmarks.Infrastructure;
+using Bookmarks.Web;
+using Identity.Application;
+using Identity.Web;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +33,7 @@ builder
 
 builder
     .Services
-    .AddTokenAuthentication(builder.Configuration)
+    .AddAuthenticationHandlers(builder.Configuration)
     .AddModelBinders()
     .AddSwagger()
     .AddHttpClient();
