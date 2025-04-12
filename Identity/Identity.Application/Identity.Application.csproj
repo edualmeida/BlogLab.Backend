@@ -4,7 +4,8 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Identity.Application</RootNamespace>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
+		<RootNamespace>Identity.Application</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

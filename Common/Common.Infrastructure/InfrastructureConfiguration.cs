@@ -1,12 +1,11 @@
 ﻿using System.Reflection;
-using System.Text;
 using Common.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 
+namespace Common.Infrastructure;
 public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddDabaseStorage<TDbContext>(
@@ -59,7 +58,7 @@ public static class InfrastructureConfiguration
         => services
             .AddScoped<DbContext, TDbContext>()
             .AddDbContext<TDbContext>(options => options
-                .UseNpgsql(configuration.GetDefaultConnectionString(), sqlOptions => sqlOptions
+                .UseNpgsql(configuration.GetConnectionString("DefaultConnection")!, sqlOptions => sqlOptions
                         .MigrationsAssembly(typeof(TDbContext).Assembly.FullName)));
 
     internal static IServiceCollection AddRepositories(

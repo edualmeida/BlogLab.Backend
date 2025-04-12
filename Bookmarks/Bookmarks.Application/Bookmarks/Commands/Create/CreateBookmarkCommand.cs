@@ -1,4 +1,5 @@
 using Bookmarks.Application.Bookmarks.Commands.Common;
+using Bookmarks.Domain.Factories;
 using Bookmarks.Domain.Repositories;
 using Common.Application;
 using MediatR;

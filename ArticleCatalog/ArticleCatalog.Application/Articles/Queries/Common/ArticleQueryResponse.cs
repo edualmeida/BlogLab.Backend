@@ -1,3 +1,4 @@
+using ArticleCatalog.Application.Articles.Common;
 using ArticleCatalog.Domain.Models.Articles;
 using AutoMapper;
 

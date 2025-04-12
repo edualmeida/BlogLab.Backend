@@ -22,6 +22,6 @@ public sealed class ArticleCatalogHttpService(
         }
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync<List<HttpArticleResponse>>();
+        return (await response.Content.ReadFromJsonAsync<List<HttpArticleResponse>>()) ?? [];
     }
 }

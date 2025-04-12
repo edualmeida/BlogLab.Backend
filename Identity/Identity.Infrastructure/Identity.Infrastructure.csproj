@@ -3,7 +3,8 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Identity.Infrastructure</RootNamespace>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
+		<RootNamespace>Identity.Infrastructure</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

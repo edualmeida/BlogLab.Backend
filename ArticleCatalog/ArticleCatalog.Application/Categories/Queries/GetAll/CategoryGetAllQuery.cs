@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using ArticleCatalog.Application.Categories.Queries.Common;
+using MediatR;
 
+namespace ArticleCatalog.Application.Categories.Queries.GetAll;
 public class CategoryGetAllQuery : IRequest<List<CategoryResponse>>
 {
     public class CategoryGetAllQueryHandler(

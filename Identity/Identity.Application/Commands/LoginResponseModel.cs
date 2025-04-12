@@ -1,9 +1,11 @@
-﻿public class LoginResponseModel
+﻿
+namespace Identity.Application.Commands;
+public class LoginResponseModel
 {
     public LoginResponseModel(string token) => Token = token;
 
     public string Token { get; }
-    public Guid UserId { get; set; }
-    public string Username { get; set; }
-    public bool IsAdmin { get; set; }
+    public required Guid UserId { get; set; }
+    public required string Username { get; set; }
+    public required bool IsAdmin { get; set; }
 }

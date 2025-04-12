@@ -1,4 +1,6 @@
 ﻿using Common.Application;
+using Identity.Application;
+using Identity.Application.Commands;
 using Microsoft.AspNetCore.Identity;
 
 internal class IdentityService(

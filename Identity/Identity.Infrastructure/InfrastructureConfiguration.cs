@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
+using Common.Infrastructure;
+using Identity.Application;
 using Identity.Domain.Models.Users;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

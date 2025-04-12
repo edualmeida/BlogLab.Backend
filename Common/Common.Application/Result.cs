@@ -17,13 +17,13 @@ public class Result
             : errors;
 
     public static Result Success
-        => new(true, new List<string>());
+        => new(true, []);
 
     public static Result Failure(IEnumerable<string> errors)
-        => new(false, errors.ToList());
+        => new(false, [.. errors]);
 
     public static Result Failure(string error)
-        => Failure(new List<string> { error });
+        => Failure([error]);
 }
 
 public class Result<TData> : Result
@@ -41,13 +41,13 @@ public class Result<TData> : Result
                 $"{nameof(this.Data)} is not available with a failed result. Use {this.Errors} instead.");
 
     public static Result<TData> SuccessWith(TData data)
-        => new(true, data, new List<string>());
+        => new(true, data, []);
 
     public new static Result<TData> Failure(IEnumerable<string> errors)
-        => new(false, default!, errors.ToList());
+        => new(false, default!, [.. errors]);
 
-    public static Result<TData> Failure(string error)
-        => Failure(new List<string> { error });
+    public new static Result<TData> Failure(string error)
+        => Failure([error]);
     
     public static implicit operator Result<TData>(TData data)
         => SuccessWith(data);

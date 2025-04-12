@@ -1,3 +1,4 @@
+using ArticleCatalog.Application.Articles.Commands.Common;
 using ArticleCatalog.Domain.Repositories;
 using Common.Application;
 using MediatR;

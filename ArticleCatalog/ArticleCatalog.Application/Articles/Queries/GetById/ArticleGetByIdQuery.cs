@@ -17,25 +17,17 @@ public class ArticleGetByIdQuery : EntityCommand, IRequest<ArticleQueryResponse>
             ArticleGetByIdQuery request,
             CancellationToken cancellationToken)
         {
-            var article = await articleRepository.GetById(request.Id, cancellationToken);
-
-            if (article == null)
-            {
+            var article = await articleRepository.GetById(request.Id, cancellationToken) ??
                 throw new ArticleNotFoundException(request.Id);
-            }
-
-            var author = await authorsHttpService.GetById(article.AuthorId, cancellationToken);
-            if (author == null)
-            {
+            var author = await authorsHttpService.GetById(article.AuthorId, cancellationToken) ??
                 throw new AuthorNotFoundException(article.AuthorId);
-            }
 
             article.Author = author.FirstName;
 
-            List<UserBookmarkResponse> userBookmarks = new();
+            List<UserBookmarkResponse> userBookmarks = [];
             if (request.UserId.HasValue)
             {
-                userBookmarks = await bookmarksHttpService.GetUserBookmarks(request.UserId.Value);
+                userBookmarks = await bookmarksHttpService.GetUserBookmarks(request.UserId.Value, cancellationToken);
             }
 
             article.IsBookmarked = userBookmarks?.Any(x => x.ArticleId == article.Id);

@@ -3,7 +3,8 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-    </PropertyGroup>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
+	</PropertyGroup>
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
@@ -17,5 +18,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Common.Infrastructure\Common.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Services\" />
     </ItemGroup>
 </Project>

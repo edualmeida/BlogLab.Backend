@@ -12,7 +12,7 @@ public class CurrentUserService : ICurrentUser
             throw new InvalidOperationException("This request does not have an authenticated user.");
         }
 
-        UserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+        UserId = user.FindFirstValue(ClaimTypes.NameIdentifier)!;
     }
 
     public string UserId { get; }

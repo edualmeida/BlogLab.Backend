@@ -2,6 +2,7 @@
 using Bookmarks.Application.Services;
 using Bookmarks.Infrastructure.HttpServices;
 using Bookmarks.Infrastructure.Persistence;
+using Common.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

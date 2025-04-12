@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using ArticleCatalog.Application.Contracts.Authors;
 using ArticleCatalog.Application.Services;
 using Common.Infrastructure.Extensions;
 

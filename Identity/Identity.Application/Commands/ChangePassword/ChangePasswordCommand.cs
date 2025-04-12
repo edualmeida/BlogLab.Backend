@@ -1,4 +1,5 @@
 ﻿using Common.Application;
+using Identity.Application;
 using MediatR;
 
 public class ChangePasswordCommand : IRequest<Result>

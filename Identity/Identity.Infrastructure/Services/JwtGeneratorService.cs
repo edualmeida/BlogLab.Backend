@@ -18,7 +18,7 @@ internal class JwtGeneratorService : IJwtGenerator
         this.applicationSettings = applicationSettings.Value;
     }
 
-    public async Task<string> GenerateToken(User user, IEnumerable<string> roles)
+    public Task<string> GenerateToken(User user, IEnumerable<string> roles)
     {
         ArgumentNullException.ThrowIfNull(user);
         
@@ -48,6 +48,6 @@ internal class JwtGeneratorService : IJwtGenerator
         var token = tokenHandler.CreateToken(tokenDescriptor);
         var encryptedToken = tokenHandler.WriteToken(token);
 
-        return encryptedToken;
+        return Task.FromResult(encryptedToken);
     }
 }

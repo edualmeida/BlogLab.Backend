@@ -4,7 +4,8 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>ArticleCatalog.Infrastructure</RootNamespace>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
+		<RootNamespace>ArticleCatalog.Infrastructure</RootNamespace>
     </PropertyGroup>
     
     <ItemGroup>

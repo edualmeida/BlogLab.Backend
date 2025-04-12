@@ -1,19 +1,16 @@
-﻿using ArticleCatalog.Domain.Models.Categories;
+﻿using ArticleCatalog.Application.Categories.Queries;
+using ArticleCatalog.Application.Categories.Queries.Common;
+using ArticleCatalog.Domain.Models.Categories;
 using ArticleCatalog.Infrastructure.Persistence;
 using AutoMapper;
 using Common.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArticleCatalog.Infrastructure.Repositories;
-internal class CategoriesRepository : DataRepository<ArticleCatalogDbContext, Category>,
+internal class CategoriesRepository(ArticleCatalogDbContext db, IMapper mapper)
+    : DataRepository<ArticleCatalogDbContext, Category>(db),
     ICategoriesQueryRepository
 {
-    private readonly IMapper mapper;
-
-    public CategoriesRepository(ArticleCatalogDbContext db, IMapper mapper)
-        : base(db)
-        => this.mapper = mapper;
-
     public async Task<CategoryResponse> GetById(Guid id, CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<CategoryResponse>(AllAsNoTracking())

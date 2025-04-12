@@ -1,8 +1,10 @@
+using ArticleCatalog.Application.Articles.Commands.Common;
 using ArticleCatalog.Domain.Builders;
 using ArticleCatalog.Domain.Repositories;
 using Common.Application;
 using MediatR;
 
+namespace ArticleCatalog.Application.Articles.Commands.Create;
 public class CreateArticleCommand : ArticleCommand, IRequest<Result<CreateArticleResponse>>
 {
     public Guid AuthorId { get; private set; }

@@ -1,7 +1,10 @@
-﻿using MediatR;
+﻿using ArticleCatalog.Application.Categories.Queries.Common;
+using ArticleCatalog.Application.Categories.Queries.GetAll;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+namespace ArticleCatalog.Web.Controllers;
 [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
 public class CategoriesController(IMediator mediator) : ApiController(mediator)
 {

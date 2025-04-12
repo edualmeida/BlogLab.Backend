@@ -3,7 +3,7 @@ using Bookmarks.Application.Bookmarks.Queries.Common;
 using Bookmarks.Application.Services;
 using MediatR;
 
-namespace Bookmarks.Application.Bookmarks.Queries.GetAll;
+namespace Bookmarks.Application.Bookmarks.Queries.GetByUserId;
 public class BookmarkGetByUserIdQuery(Guid userId) : IRequest<List<BookmarkArticleQueryResponse>>
 {
     public Guid UserId { get; private set; } = userId;

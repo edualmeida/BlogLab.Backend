@@ -1,4 +1,6 @@
-﻿namespace ArticleCatalog.Application.Services;
+﻿using ArticleCatalog.Application.Contracts.Authors;
+
+namespace ArticleCatalog.Application.Services;
 public interface IAuthorsHttpService
 {
     public Task<List<AuthorResponse>> GetAll(CancellationToken cancellationToken = default);

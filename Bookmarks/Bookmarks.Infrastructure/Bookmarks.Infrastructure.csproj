@@ -4,7 +4,8 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Bookmarks.Infrastructure</RootNamespace>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
+		<RootNamespace>Bookmarks.Infrastructure</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

@@ -4,6 +4,7 @@ using ArticleCatalog.Web;
 using Bookmarks.Application;
 using Bookmarks.Infrastructure;
 using Bookmarks.Web;
+using Common.Infrastructure;
 using Identity.Application;
 using Identity.Web;
 using Serilog;

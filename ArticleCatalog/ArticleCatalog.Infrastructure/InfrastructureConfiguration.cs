@@ -3,6 +3,7 @@ using ArticleCatalog.Application.Services;
 using ArticleCatalog.Infrastructure.Extensions;
 using ArticleCatalog.Infrastructure.HttpServices;
 using ArticleCatalog.Infrastructure.Persistence;
+using Common.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

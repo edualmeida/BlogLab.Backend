@@ -1,5 +1,7 @@
+using ArticleCatalog.Application.Articles.Commands.Common;
 using FluentValidation;
 
+namespace ArticleCatalog.Application.Articles.Commands.Common;
 public class ArticleCommandValidator : AbstractValidator<ArticleCommand>
 {
     public ArticleCommandValidator()

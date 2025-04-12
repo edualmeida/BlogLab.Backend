@@ -4,7 +4,8 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-    </PropertyGroup>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
+	</PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Scrutor" Version="5.0.2" />

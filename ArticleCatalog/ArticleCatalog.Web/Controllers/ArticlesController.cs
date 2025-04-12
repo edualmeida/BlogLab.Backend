@@ -1,7 +1,7 @@
-﻿using ArticleCatalog.Application.Articles.Commands.Update;
+﻿using ArticleCatalog.Application.Articles.Commands.Common;
+using ArticleCatalog.Application.Articles.Commands.Update;
 using ArticleCatalog.Application.Articles.Queries.Common;
 using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
-using ArticleCatalog.Application.Articles.Queries.GetById;
 using ArticleCatalog.Application.Articles.Queries.GetByIds;
 using ArticleCatalog.Web.Models;
 using AutoMapper;

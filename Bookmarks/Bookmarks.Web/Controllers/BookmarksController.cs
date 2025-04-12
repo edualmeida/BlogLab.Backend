@@ -2,7 +2,7 @@
 using Bookmarks.Application.Bookmarks.Commands.Delete;
 using Bookmarks.Application.Bookmarks.Commands.Update;
 using Bookmarks.Application.Bookmarks.Queries.Common;
-using Bookmarks.Application.Bookmarks.Queries.GetAll;
+using Bookmarks.Application.Bookmarks.Queries.GetByUserId;
 using Bookmarks.Web.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

@@ -4,7 +4,8 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>ArticleCatalog.Web</RootNamespace>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
+		<RootNamespace>ArticleCatalog.Web</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

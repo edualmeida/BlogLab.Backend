@@ -26,12 +26,8 @@ public class ArticleGetAllPaginatedQuery : IRequest<ArticleGetAllPaginatedResult
             var authors = await authorsHttpService.GetAll(
                 cancellationToken);
 
-            List<UserBookmarkResponse> userBookmarks = null;
-            
-            if (request.UserId.HasValue)
-            {
-                userBookmarks = await bookmarksHttpService.GetUserBookmarks(request.UserId.Value);
-            }
+            var userBookmarks = request.UserId.HasValue ? 
+                await bookmarksHttpService.GetUserBookmarks(request.UserId.Value, cancellationToken) : [];
 
             getResult.Articles.ForEach(article =>
             {
