@@ -1,18 +1,12 @@
-﻿public class ChangePasswordRequestModel
-{
-    public ChangePasswordRequestModel(
-        string userId,
+﻿namespace Identity.Application.Commands.ChangePassword;
+public class ChangePasswordRequestModel(
+        Guid userId,
         string currentPassword,
         string newPassword)
-    {
-        UserId = userId;
-        CurrentPassword = currentPassword;
-        NewPassword = newPassword;
-    }
+{
+    public Guid UserId { get; } = userId;
 
-    public string UserId { get; }
+    public string CurrentPassword { get; } = currentPassword;
 
-    public string CurrentPassword { get; }
-
-    public string NewPassword { get; }
+    public string NewPassword { get; } = newPassword;
 }

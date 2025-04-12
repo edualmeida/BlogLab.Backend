@@ -2,6 +2,7 @@
 using ArticleCatalog.Application.Articles.Commands.Update;
 using ArticleCatalog.Application.Articles.Queries.Common;
 using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
+using ArticleCatalog.Application.Articles.Queries.GetById;
 using ArticleCatalog.Application.Articles.Queries.GetByIds;
 using ArticleCatalog.Web.Models;
 using AutoMapper;
@@ -23,8 +24,8 @@ public class ArticlesController(IMediator mediator, IMapper mapper) :
     [HttpGet]
     [Route(Id)]
     [Authorize(AuthenticationSchemes = $"{ApiKey.SchemeName}, {JwtBearerDefaults.AuthenticationScheme}")]
-    public async Task<ActionResult<ArticleQueryResponse>> GetById([FromRoute] GetArticleByIdRequest request)
-        => await Send(request.Map(mapper, HttpContext));
+    public async Task<ActionResult<ArticleQueryResponse>> GetById([FromRoute] ArticleGetByIdQuery query)
+        => await Send(query);
     
     [HttpPost]
     [Route("GetMany")]

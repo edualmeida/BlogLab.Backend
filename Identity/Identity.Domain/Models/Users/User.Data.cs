@@ -1,4 +1,7 @@
-﻿public class UserData
+﻿using Identity.Domain.Factories;
+
+namespace Identity.Domain.Models.Users;
+public class UserData
 {
     public Type EntityType => typeof(User);
 

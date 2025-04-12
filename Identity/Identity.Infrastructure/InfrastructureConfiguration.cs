@@ -1,10 +1,17 @@
 ﻿using System.Reflection;
 using Common.Infrastructure;
 using Identity.Application;
+using Identity.Application.Queries;
+using Identity.Domain;
 using Identity.Domain.Models.Users;
+using Identity.Infrastructure.Persistence;
+using Identity.Infrastructure.Repositories;
+using Identity.Infrastructure.Services;
+using Identity.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+namespace Identity.Infrastructure;
 public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddIdentityInfrastructure(

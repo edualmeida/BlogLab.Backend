@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Identity.Domain;
 
+namespace Identity.Application.Queries.Common;
 public class UserResponse : IMapFrom<User>
 {
     public required Guid Id { get; set; }

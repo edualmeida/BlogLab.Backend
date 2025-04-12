@@ -1,6 +1,8 @@
-﻿using Identity.Domain.Models.Users;
+﻿using Identity.Domain;
+using Identity.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 
+namespace Identity.Infrastructure.Persistence;
 internal class IdentityDbInitializer : DbInitializer
 {
     private readonly UserManager<User> userManager;

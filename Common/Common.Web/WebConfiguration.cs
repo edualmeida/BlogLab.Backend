@@ -1,10 +1,11 @@
 ﻿using System.Reflection;
-using Common.Web.Converters;
+using Common.Application.Contracts;
+using Common.Web.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
+namespace Common.Web;
 public static class WebConfiguration
 {
     public static IServiceCollection AddWebComponents(
@@ -16,7 +17,7 @@ public static class WebConfiguration
             .AddValidatorsFromAssemblyContaining(applicationConfigurationType)
             .AddFluentValidationAutoValidation()
             .AddFluentValidationClientsideAdapters()
-            .AddScoped<ICurrentUser, CurrentUserService>()
+            .AddScoped<ICurrentUserService, CurrentUserService>()
             .AddAutoMapperProfile(assembly);
 
         return services;

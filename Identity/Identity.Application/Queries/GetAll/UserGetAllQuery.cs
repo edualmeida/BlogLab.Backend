@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using Identity.Application.Queries.Common;
+using MediatR;
 
+namespace Identity.Application.Queries.GetAll;
 public class UserGetAllQuery : IRequest<List<UserResponse>>
 {
     public class UserGetAllQueryHandler(

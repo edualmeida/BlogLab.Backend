@@ -1,8 +1,13 @@
 ﻿using Identity.Application.Commands;
+using Identity.Application.Commands.ChangePassword;
 using Identity.Application.Commands.LoginUser;
+using Identity.Application.Queries.Common;
+using Identity.Application.Queries.GetAll;
+using Identity.Application.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 namespace Identity.Web.Controllers;
 public class IdentityController(IMediator mediator) : 
     ApiController(mediator)

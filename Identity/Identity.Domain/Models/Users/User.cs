@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
+namespace Identity.Domain;
 public class User : IdentityUser<Guid>, IEntity, IAggregateRoot
 {
     internal User(
@@ -40,7 +41,7 @@ public class User : IdentityUser<Guid>, IEntity, IAggregateRoot
         return Id.GetHashCode();
     }
 
-    private void Validate(
+    private static void Validate(
         string email,
         string firstName,
         string middleName,
@@ -48,10 +49,11 @@ public class User : IdentityUser<Guid>, IEntity, IAggregateRoot
     {
         ValidateEmail(email);
         ValidateName(firstName, "First Name");
+        ValidateName(middleName, "Middle Name");
         ValidateName(lastName, "Last Name");
     }
-    private void ValidateEmail(string email)
+    private static void ValidateEmail(string email)
         => Guard.ForStringLength(email, UserModelConstants.Identity.MinEmailLength, UserModelConstants.Identity.MaxEmailLength, nameof(Email));
-    private void ValidateName(string name, string propertyName)
+    private static void ValidateName(string name, string propertyName)
         => Guard.ForStringLength(name, UserModelConstants.Identity.MinNameLength, UserModelConstants.Identity.MaxNameLength, propertyName);
 }

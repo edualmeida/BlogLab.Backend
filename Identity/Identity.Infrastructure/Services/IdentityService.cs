@@ -1,8 +1,13 @@
 ﻿using Common.Application;
 using Identity.Application;
 using Identity.Application.Commands;
+using Identity.Application.Commands.ChangePassword;
+using Identity.Domain;
+using Identity.Domain.Factories;
+using Identity.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 
+namespace Identity.Services;
 internal class IdentityService(
     UserManager<User> userManager,
     IJwtGenerator jwtGenerator,
@@ -11,18 +16,18 @@ internal class IdentityService(
 {
     private const string InvalidCredentialsErrorMessage = "Invalid credentials.";
 
-    public async Task<Result<bool>> Register(RegisterUserCommand request)
+    public async Task<Result<bool>> Register(RegisterUserCommand userRequest)
     {
         var user = builder
-                .WithFirstName(request.FirstName)
-                .WithMiddleName(request.MiddleName)
-                .WithSurname(request.Surname)
-                .WithEmail(request.Email)
+                .WithFirstName(userRequest.FirstName)
+                .WithMiddleName(userRequest.MiddleName)
+                .WithSurname(userRequest.Surname)
+                .WithEmail(userRequest.Email)
                 .Build();
 
         var identityResult = await userManager.CreateAsync(
             user,
-            request.Password);
+            userRequest.Password);
 
         var errors = identityResult.Errors.Select(e => e.Description);
 
@@ -31,7 +36,7 @@ internal class IdentityService(
             return Result<bool>.Failure(errors);
         }
 
-        await userManager.AddToRoleAsync(user, GetRoleName(request.Role));
+        await userManager.AddToRoleAsync(user, GetRoleName(userRequest.Role));
 
         return Result<bool>.SuccessWith(true);
     }
@@ -73,7 +78,7 @@ internal class IdentityService(
 
     public async Task<Result> ChangePassword(ChangePasswordRequestModel changePasswordRequest)
     {
-        var user = await userManager.FindByIdAsync(changePasswordRequest.UserId);
+        var user = await userManager.FindByIdAsync(changePasswordRequest.UserId.ToString());
 
         if (user == null)
         {
@@ -93,7 +98,7 @@ internal class IdentityService(
     }
 
 
-    private string GetRoleName(RegisterUserRole userRole)
+    private static string GetRoleName(RegisterUserRole userRole)
         => userRole switch
         {
             RegisterUserRole.Administrator => CommonModelConstants.Common.AdministratorRoleName,

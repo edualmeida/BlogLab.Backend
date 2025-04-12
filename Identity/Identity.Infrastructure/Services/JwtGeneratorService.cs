@@ -1,10 +1,12 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Identity.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
+namespace Identity.Infrastructure.Services;
 internal class JwtGeneratorService : IJwtGenerator
 {
     private readonly UserManager<User> userManager;

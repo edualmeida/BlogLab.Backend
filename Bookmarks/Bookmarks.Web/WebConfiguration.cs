@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Bookmarks.Application;
+using Common.Web;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookmarks.Web;

@@ -1,4 +1,5 @@
-﻿public interface IUserBuilder : IBuilder<User>
+﻿namespace Identity.Domain.Factories;
+public interface IUserBuilder : IBuilder<User>
 {
     IUserBuilder WithEmail(string email);
     IUserBuilder WithFirstName(string name);

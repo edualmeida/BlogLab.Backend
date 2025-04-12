@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using Identity.Application.Queries.Common;
+using MediatR;
 
+namespace Identity.Application.Queries.GetById;
 public class UserGetByIdQuery : EntityCommand, IRequest<UserResponse>
 {
     public class UserGetByIdQueryHandler(IIdentityQueryRepository repository) 

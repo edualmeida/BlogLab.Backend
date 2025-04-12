@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using Identity.Application.Queries;
+using Identity.Application.Queries.Common;
+using Identity.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+namespace Identity.Infrastructure.Repositories;
 internal class IdentityRepository(
     UserManager<User> userManager, 
     IMapper mapper) : IIdentityQueryRepository

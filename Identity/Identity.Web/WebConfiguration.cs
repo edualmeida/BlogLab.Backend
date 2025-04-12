@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Common.Web;
 using Identity.Application;
 using Microsoft.Extensions.DependencyInjection;
 

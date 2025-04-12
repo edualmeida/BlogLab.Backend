@@ -1,19 +1,35 @@
 ﻿using System.Security.Claims;
+using Common.Application.Contracts;
+using Common.Web.Exceptions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 
-public class CurrentUserService : ICurrentUser
+namespace Common.Web.Services;
+public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : 
+    ICurrentUserService
 {
-    public CurrentUserService(IHttpContextAccessor httpContextAccessor)
+    public Guid? GetUserId()
     {
         var user = httpContextAccessor.HttpContext?.User;
-
-        if (user == null)
+        if (user?.Identity?.AuthenticationType != JwtBearerDefaults.AuthenticationScheme)
         {
-            throw new InvalidOperationException("This request does not have an authenticated user.");
+            return null;
         }
 
-        UserId = user.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        var nameIdentifier = user.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!Guid.TryParse(nameIdentifier, out Guid userId))
+        {
+            throw new UserIdGuidIsInvalidException(nameIdentifier);
+        }
+
+        return userId;
     }
 
-    public string UserId { get; }
+    public Guid GetRequiredUserId()
+    {
+        var user = (httpContextAccessor.HttpContext?.User) ?? 
+            throw new InvalidOperationException("This request does not have an authenticated user.");
+        var userId = user.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        return new Guid(userId);
+    }
 }
