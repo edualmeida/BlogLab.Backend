@@ -1,30 +1,30 @@
+using ArticleCatalog.Domain.Repositories;
+using Common.Application;
 using MediatR;
 
-public class UpdateArticleCommand(Guid id, ArticleCommand command) : IRequest<Result>
+namespace ArticleCatalog.Application.Articles.Commands.Update;
+public class UpdateArticleCommand(Guid id, ArticleCommand articleCommand) 
+    : IRequest<Result>
 {
     public Guid Id => id;
-    public ArticleCommand Article => command;
+    public ArticleCommand Article => articleCommand;
 
-    public class UpdateArticleCommandHandler : IRequestHandler<UpdateArticleCommand, Result>
+    public class UpdateArticleCommandHandler(IArticleDomainRepository articleRepository) 
+        : IRequestHandler<UpdateArticleCommand, Result>
     {
-        private readonly IArticleDomainRepository articleRepository;
-
-        public UpdateArticleCommandHandler(IArticleDomainRepository articleRepository)
+        public async Task<Result> Handle(
+            UpdateArticleCommand updateArticleCommand, 
+            CancellationToken cancellationToken)
         {
-            this.articleRepository = articleRepository;
-        }
+            var domainArticle = (await articleRepository.Find(updateArticleCommand.Id, cancellationToken))!;
 
-        public async Task<Result> Handle(UpdateArticleCommand request, CancellationToken cancellationToken)
-        {
-            var article = await articleRepository.Find(request.Id, cancellationToken);
+            domainArticle.UpdateTitle(updateArticleCommand.Article.Title);
+            domainArticle.UpdateSubtitle(updateArticleCommand.Article.Subtitle);
+            domainArticle.UpdateText(updateArticleCommand.Article.Text);
+            domainArticle.UpdateCategory(updateArticleCommand.Article.CategoryId);
+            domainArticle.UpdateThumbnail(updateArticleCommand.Article.ThumbnailId);
 
-            article.UpdateTitle(request.Article.Title);
-            article.UpdateSubtitle(request.Article.Subtitle);
-            article.UpdateText(request.Article.Text);
-            article.UpdateCategory(request.Article.CategoryId);
-            article.UpdateThumbnail(request.Article.ThumbnailId);
-
-            await articleRepository.Save(article, cancellationToken);
+            await articleRepository.Save(domainArticle, cancellationToken);
 
             return Result.Success;
         }

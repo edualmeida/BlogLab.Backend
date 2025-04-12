@@ -1,0 +1,24 @@
+@apiKey=JEXqpyi4cPGWgH
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2M2M1YjE0ZS02MDdiLTQwMTYtODM1OC02YTM1ZWE5NmMwNWUiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDIyMDg2MzYsImV4cCI6MTc0MjgxMzQzNiwiaWF0IjoxNzQyMjA4NjM2fQ.fkgrpkjNmG4HItInIvFEa6vmVTLdfV8awKvu_8SXoa0
+
+# Get all
+GET {{HostAddress}}/{{BookmarksPath}}
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### get by id
+
+GET {{HostAddress}}/{{BookmarksPath}}/ad73ec52-0974-4198-810e-4840e1ad195a
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### create
+
+POST {{HostAddress}}/{{BookmarksPath}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "UserId": "85C8E95D-C1D8-4E80-AF00-F64589602764",
+  "ArticleId": "6D70CA49-8EC2-4383-9FF6-B7AF43A1192D"
+}

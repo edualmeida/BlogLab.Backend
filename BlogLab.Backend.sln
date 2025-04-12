@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmarks.Web", "Bookmarks\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8CFA537B-D77C-42F1-A3CB-150261BBBA30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleCatalog.Tests", "ArticleCatalog.Tests\ArticleCatalog.Tests.csproj", "{D17211FC-4866-49F6-9901-2DDFACB457A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleCatalog.Tests", "ArticleCatalog\ArticleCatalog.Tests\ArticleCatalog.Tests.csproj", "{D17211FC-4866-49F6-9901-2DDFACB457A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Application", "Identity\Identity.Application\Identity.Application.csproj", "{E7AD293D-CC62-4F2D-9237-9115E5789B6D}"
 EndProject
@@ -48,6 +48,23 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Infrastructure", "Identity\Identity.Infrastructure\Identity.Infrastructure.csproj", "{FC995CCD-944E-4485-8F6B-9C6213FE9C3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Web", "Identity\Identity.Web\Identity.Web.csproj", "{7A054086-4F33-4D41-BDE9-6815DD8DBF05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8C9B2212-22DA-4258-9147-07ECC33DE48B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmarks.Tests", "Bookmarks.Tests\Bookmarks.Tests.csproj", "{58BB4D07-61A1-45DC-B261-6355E540943A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{86136459-3668-4BD5-9F08-16B1A55DF0E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Tests", "Identity.Tests\Identity.Tests.csproj", "{02F83827-3E0C-4F5A-A3FB-0F35CB56F71D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_HttpTests", "_HttpTests", "{A4F0F5E5-49D8-4D24-AA5F-A361A9E4C968}"
+	ProjectSection(SolutionItems) = preProject
+		articles.http = articles.http
+		categories.http = categories.http
+		http-client.env.json = http-client.env.json
+		bookmarks.http = bookmarks.http
+		identity.http = identity.http
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,6 +144,14 @@ Global
 		{7A054086-4F33-4D41-BDE9-6815DD8DBF05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A054086-4F33-4D41-BDE9-6815DD8DBF05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A054086-4F33-4D41-BDE9-6815DD8DBF05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58BB4D07-61A1-45DC-B261-6355E540943A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58BB4D07-61A1-45DC-B261-6355E540943A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58BB4D07-61A1-45DC-B261-6355E540943A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58BB4D07-61A1-45DC-B261-6355E540943A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02F83827-3E0C-4F5A-A3FB-0F35CB56F71D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02F83827-3E0C-4F5A-A3FB-0F35CB56F71D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02F83827-3E0C-4F5A-A3FB-0F35CB56F71D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02F83827-3E0C-4F5A-A3FB-0F35CB56F71D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,6 +175,10 @@ Global
 		{35F135F2-E71F-4415-B0BB-60F71923BE62} = {A046903F-17EB-4DF0-A76A-F0CD646F0A23}
 		{FC995CCD-944E-4485-8F6B-9C6213FE9C3E} = {A046903F-17EB-4DF0-A76A-F0CD646F0A23}
 		{7A054086-4F33-4D41-BDE9-6815DD8DBF05} = {A046903F-17EB-4DF0-A76A-F0CD646F0A23}
+		{8C9B2212-22DA-4258-9147-07ECC33DE48B} = {30B1EEC8-9168-465D-A114-9EC240FF617F}
+		{58BB4D07-61A1-45DC-B261-6355E540943A} = {8C9B2212-22DA-4258-9147-07ECC33DE48B}
+		{86136459-3668-4BD5-9F08-16B1A55DF0E6} = {A046903F-17EB-4DF0-A76A-F0CD646F0A23}
+		{02F83827-3E0C-4F5A-A3FB-0F35CB56F71D} = {86136459-3668-4BD5-9F08-16B1A55DF0E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {373E3D57-D4E0-4D3E-87C5-0F2C128E98FF}

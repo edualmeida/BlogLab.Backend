@@ -1,7 +1,11 @@
 ﻿using System.Reflection;
+using Bookmarks.Application.Services;
+using Bookmarks.Infrastructure.HttpServices;
+using Bookmarks.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+namespace Bookmarks.Infrastructure;
 public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddBookmarksInfrastructure(
@@ -13,16 +17,29 @@ public static class InfrastructureConfiguration
                 Assembly.GetExecutingAssembly())
             .AddHttpClients(configuration);
 
-    public static IServiceCollection AddHttpClients(
+    private static IServiceCollection AddHttpClients(
         this IServiceCollection services,
         IConfiguration configuration)
-        => services.AddHttpClient<ArticleCatalogHttpService>(httpClient =>
+    {
+        var bookmarksConfiguration = configuration.GetBookmarksSettings();
+
+        return services
+            .AddHttpClientSettings(bookmarksConfiguration)
+            .AddHttpClient<ArticleCatalogHttpService>(httpClient =>
             {
-                var httpClientSettings = configuration.GetBookmarksSettings();
-                httpClient.BaseAddress = new Uri(httpClientSettings.ArticleCatalogAPIClientSettings.BaseUrl);
+                httpClient.BaseAddress = new Uri(bookmarksConfiguration.ArticleCatalogApiClientSettings.BaseUrl);
                 httpClient.ConfigureApiKey(configuration);
             })
             .ConfigureDefaultHttpClientHandler()
             .AddTypedClient<IArticleCatalogHttpService, ArticleCatalogHttpService>()
             .Services;
+    }
+    
+    private static IServiceCollection AddHttpClientSettings(
+        this IServiceCollection services,
+        BookmarksSettings settings)
+    {
+        services.AddSingleton(settings.ArticleCatalogApiClientSettings);
+        return services;
+    }
 }

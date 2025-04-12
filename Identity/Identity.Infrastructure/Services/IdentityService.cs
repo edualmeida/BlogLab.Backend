@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Common.Application;
+using Microsoft.AspNetCore.Identity;
 
 internal class IdentityService(
     UserManager<User> userManager,
@@ -6,7 +7,7 @@ internal class IdentityService(
     IUserBuilder builder
     ) : IIdentity
 {
-    private const string InvalidErrorMessage = "Invalid credentials.";
+    private const string InvalidCredentialsErrorMessage = "Invalid credentials.";
 
     public async Task<Result<bool>> Register(RegisterUserCommand request)
     {
@@ -33,12 +34,12 @@ internal class IdentityService(
         return Result<bool>.SuccessWith(true);
     }
 
-    public async Task<Result<UserResponseModel>> Login(UserRequestModel userRequest)
+    public async Task<Result<LoginResponseModel>> Login(UserRequestModel userRequest)
     {
         var user = await userManager.FindByEmailAsync(userRequest.Email);
         if (user == null)
         {
-            return InvalidErrorMessage;
+            return Result<LoginResponseModel>.Failure(InvalidCredentialsErrorMessage);
         }
 
         var passwordValid = await userManager.CheckPasswordAsync(
@@ -47,12 +48,25 @@ internal class IdentityService(
 
         if (!passwordValid)
         {
-            return InvalidErrorMessage;
+            return Result<LoginResponseModel>.Failure(InvalidCredentialsErrorMessage);
         }
 
-        var token = await jwtGenerator.GenerateToken(user);
+        var isAdministrator = await userManager
+            .IsInRoleAsync(user, CommonModelConstants.Common.AdministratorRoleName);
+        var roles = new List<string>();
+        if (isAdministrator)
+        {
+            roles.Add(CommonModelConstants.Common.AdministratorRoleName);
+        }
+        
+        var token = await jwtGenerator.GenerateToken(user, roles);
 
-        return new UserResponseModel(token);
+        return new LoginResponseModel(token)
+        {
+            UserId = user.Id,
+            Username = user.UserName!,
+            IsAdmin = isAdministrator,
+        };
     }
 
     public async Task<Result> ChangePassword(ChangePasswordRequestModel changePasswordRequest)
@@ -61,7 +75,7 @@ internal class IdentityService(
 
         if (user == null)
         {
-            return InvalidErrorMessage;
+            return Result<LoginResponseModel>.Failure(InvalidCredentialsErrorMessage);
         }
 
         var identityResult = await userManager.ChangePasswordAsync(

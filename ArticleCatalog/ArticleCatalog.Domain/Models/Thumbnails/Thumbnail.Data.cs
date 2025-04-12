@@ -1,4 +1,5 @@
-﻿public class ThumbnailData : IInitialData
+﻿namespace ArticleCatalog.Domain.Models.Thumbnails;
+public class ThumbnailData : IInitialData
 {
     public Type EntityType => typeof(Thumbnail);
 

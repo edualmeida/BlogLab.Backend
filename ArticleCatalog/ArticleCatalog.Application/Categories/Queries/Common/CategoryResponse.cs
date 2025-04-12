@@ -1,3 +1,5 @@
+using ArticleCatalog.Application.Categories.Common;
+using ArticleCatalog.Domain.Models.Categories;
 using AutoMapper;
 
 public class CategoryResponse : CategoryModel

@@ -1,0 +1,62 @@
+@apiKey=JEXqpyi4cPGWgH
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk2MTBmNS0wZDdlLTc1YWUtOWJiNy02ZmI3ZjYwYjFmNTIiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDQzMTI3NDcsImV4cCI6MTc0NDkxNzU0NywiaWF0IjoxNzQ0MzEyNzQ3fQ.x_bscHQy9NvetekmDVvrc6Z2b0v_UNasaYS83vGIFPY
+
+### Get paginated
+
+GET {{HostAddress}}/{{ArticlesPath}}?pageNumber=1&pageSize=3
+Accept: application/json
+X-Api-Key: {{apiKey}}
+
+### get by id
+
+GET {{HostAddress}}/{{ArticlesPath}}/0195c351-2ab5-78ba-bd2a-0ac915dc5f4f
+Accept: application/json
+X-Api-Key: {{apiKey}}
+
+### create article
+
+POST {{HostAddress}}/{{ArticlesPath}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "title": "Test1",
+    "subtitle": "test1",
+    "text": "text",
+    "categoryid": "0195c34c-0b24-7f1d-b502-e7bee888734e",
+    "thumbnailid": "0195c34c-0b46-79e1-ae55-cf8fe370ff17"
+}
+
+### update article
+
+PUT {{HostAddress}}/{{ArticlesPath}}/ad73ec52-0974-4198-810e-4840e1ad195a
+Content-Type: application/json
+{
+    "title": "Title update2",
+    "subtitle": "subtitle update2",
+    "text": "text update 2",
+    "categoryid": "803C62B1-C1CA-4C9B-BDB8-7DA7485283D9",
+    "colorid": "0DE1AECF-3217-4AF5-87D7-0B48F5322022",
+    "thumbnailid": "48AA27CA-2EAF-4CBD-B744-B84F045E066D"
+}
+
+### delete article (logically)
+
+DELETE {{HostAddress}}/{{ArticlesPath}}/ad73ec52-0974-4198-810e-4840e1ad195a
+Content-Type: application/json
+
+###
+
+GET https://localhost:7190/api/articles
+
+###
+
+GET {{HostAddress}}/{{ArticlesPath}}
+Accept: application/json
+
+###
+
+@hostname=localhost
+@port=7190
+@host={{hostname}}:{{port}}
+GET https://{{host}}/api/articles

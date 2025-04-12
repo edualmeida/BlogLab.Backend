@@ -1,8 +1,11 @@
+using ArticleCatalog.Domain.Builders;
+using ArticleCatalog.Domain.Repositories;
+using Common.Application;
 using MediatR;
 
-public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleResponse>
+public class CreateArticleCommand : ArticleCommand, IRequest<Result<CreateArticleResponse>>
 {
-    public Guid AuthorId { get; set; }
+    public Guid AuthorId { get; private set; }
     public CreateArticleCommand SetAuthorId(Guid authorId)
     {
         AuthorId = authorId;
@@ -10,9 +13,9 @@ public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleRespon
     }
     public class CreateArticleCommandHandler(
         IArticleDomainRepository articleRepository,
-        IArticleBuilder articleBuilder) : IRequestHandler<CreateArticleCommand, CreateArticleResponse>
+        IArticleBuilder articleBuilder) : IRequestHandler<CreateArticleCommand, Result<CreateArticleResponse>>
     {
-        public async Task<CreateArticleResponse> Handle(
+        public async Task<Result<CreateArticleResponse>> Handle(
             CreateArticleCommand request,
             CancellationToken cancellationToken)
         {
@@ -21,7 +24,7 @@ public class CreateArticleCommand : ArticleCommand, IRequest<CreateArticleRespon
                 .WithSubtitle(request.Subtitle)
                 .WithText(request.Text)
                 .WithCategoryId(request.CategoryId)
-                .WithThumbnailId(new Guid("48AA27CA-2EAF-4CBD-B744-B84F045E066D"))
+                .WithThumbnailId(request.ThumbnailId)
                 .WithAuthorId(request.AuthorId)
                 .Build();
 

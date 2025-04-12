@@ -1,13 +1,11 @@
-public class Bookmark : Entity, IAggregateRoot
+using Common.Domain.Models;
+
+namespace Bookmarks.Domain.Models.Bookmarks;
+public class Bookmark(
+    Guid userId, 
+    Guid articleId) 
+    : Entity, IAggregateRoot
 {
-    public Bookmark(Guid createdBy, Guid articleId)
-    {
-        CreatedBy = createdBy;
-        ArticleId = articleId;
-
-        //RaiseEvent(new BookmarkAddedEvent());
-    }
-
-    public Guid CreatedBy { get; private set; }
-    public Guid ArticleId { get; private set; }
+    public Guid UserId => userId;
+    public Guid ArticleId => articleId;
 }

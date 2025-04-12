@@ -1,6 +1,13 @@
 ﻿using AutoMapper;
+using Bookmarks.Application.Bookmarks.Queries;
+using Bookmarks.Application.Bookmarks.Queries.Common;
+using Bookmarks.Domain.Models.Bookmarks;
+using Bookmarks.Domain.Repositories;
+using Bookmarks.Infrastructure.Persistence;
+using Common.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
+namespace Bookmarks.Infrastructure.Repositories;
 internal class BookmarkRepository : DataRepository<BookmarksDbContext, Bookmark>,
     IBookmarkDomainRepository,
     IBookmarkQueryRepository
@@ -18,17 +25,19 @@ internal class BookmarkRepository : DataRepository<BookmarksDbContext, Bookmark>
         throw new NotImplementedException();
     }
 
-    public async Task Delete(Guid articleId, CancellationToken cancellationToken = default)
+    public async Task Delete(Guid bookmarkId, CancellationToken cancellationToken = default)
     {
-        var article = AllAsNoTracking().FirstOrDefault(x => x.ArticleId == articleId) 
-            ?? throw new InvalidOperationException("Article not found for delete, id: " + articleId);
+        var bookmark = await AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == bookmarkId, cancellationToken) 
+            ?? throw new InvalidOperationException("Bookmark not found for delete, id: " + bookmarkId);
 
-        Data.Remove(article);
+        Data.Remove(bookmark);
         await Data.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<List<BookmarkResponse>> GetAll(CancellationToken cancellationToken = default)
+    public async Task<List<BookmarkQueryResponse>> GetByUserId(Guid userid, CancellationToken cancellationToken = default)
         => await mapper
-            .ProjectTo<BookmarkResponse>(AllAsNoTracking())
+            .ProjectTo<BookmarkQueryResponse>(AllAsNoTracking()
+                .Where(x => x.UserId == userid)
+            )
             .ToListAsync();
 }

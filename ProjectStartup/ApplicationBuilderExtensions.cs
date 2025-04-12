@@ -38,7 +38,7 @@
         this IApplicationBuilder app, 
         IConfiguration configuration)
     {
-        if (configuration.GetSection("InitializeDatabase").Value == "false")
+        if (configuration.GetSection("InitializeDatabase").Value!.ToLowerInvariant() == "false")
             return app;
 
         using var serviceScope = app.ApplicationServices.CreateScope();

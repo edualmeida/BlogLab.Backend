@@ -1,3 +1,4 @@
+namespace Common.Application;
 public class Result
 {
     private readonly List<string> errors;
@@ -21,17 +22,8 @@ public class Result
     public static Result Failure(IEnumerable<string> errors)
         => new(false, errors.ToList());
 
-    public static implicit operator Result(string error)
+    public static Result Failure(string error)
         => Failure(new List<string> { error });
-
-    public static implicit operator Result(List<string> errors)
-        => Failure(errors.ToList());
-
-    public static implicit operator Result(bool success)
-        => success ? Success : Failure(new[] { "Unsuccessful operation." });
-
-    public static implicit operator bool(Result result)
-        => result.Succeeded;
 }
 
 public class Result<TData> : Result
@@ -54,15 +46,9 @@ public class Result<TData> : Result
     public new static Result<TData> Failure(IEnumerable<string> errors)
         => new(false, default!, errors.ToList());
 
-    public static implicit operator Result<TData>(string error)
+    public static Result<TData> Failure(string error)
         => Failure(new List<string> { error });
-
-    public static implicit operator Result<TData>(List<string> errors)
-        => Failure(errors);
-
+    
     public static implicit operator Result<TData>(TData data)
         => SuccessWith(data);
-
-    public static implicit operator bool(Result<TData> result)
-        => result.Succeeded;
 }

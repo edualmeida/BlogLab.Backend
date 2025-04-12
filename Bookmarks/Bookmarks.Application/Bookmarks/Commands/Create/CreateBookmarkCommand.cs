@@ -1,32 +1,28 @@
+using Bookmarks.Application.Bookmarks.Commands.Common;
+using Bookmarks.Domain.Repositories;
+using Common.Application;
 using MediatR;
 
-public class CreateBookmarkCommand : BookmarkCommand, IRequest<CreateBookmarkResponse>
+namespace Bookmarks.Application.Bookmarks.Commands.Create;
+public class CreateBookmarkCommand : BookmarkCommand, IRequest<Result>
 {
-    public class CreateBookmarkCommandHandler : IRequestHandler<CreateBookmarkCommand, CreateBookmarkResponse>
+    public class CreateBookmarkCommandHandler(
+        IBookmarkDomainRepository bookmarkRepository,
+        IBookmarkFactory bookmarkFactory)
+        : IRequestHandler<CreateBookmarkCommand, Result>
     {
-        private readonly IBookmarkDomainRepository bookmarksRepository;
-        private readonly IBookmarkFactory bookmarkFactory;
-
-        public CreateBookmarkCommandHandler(
-            IBookmarkDomainRepository bookmarkRepository,
-            IBookmarkFactory bookmarkFactory)
-        {
-            this.bookmarksRepository = bookmarkRepository;
-            this.bookmarkFactory = bookmarkFactory;
-        }
-
-        public async Task<CreateBookmarkResponse> Handle(
+        public async Task<Result> Handle(
             CreateBookmarkCommand request,
             CancellationToken cancellationToken)
         {
             var bookmark = bookmarkFactory
                 .WithArticleId(request.ArticleId)
-                .WithCustomerId(request.CustomerId)
+                .WithCustomerId(request.UserId)
                 .Build();
             
-            await bookmarksRepository.Save(bookmark, cancellationToken);
+            await bookmarkRepository.Save(bookmark, cancellationToken);
 
-            return new CreateBookmarkResponse(bookmark.Id);
+            return Result.Success;
         }
     }
 }

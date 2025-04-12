@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using Identity.Application.Commands.LoginUser;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-public class IdentityController(IMediator mediator) : ApiController(mediator)
+namespace Identity.Web.Controllers;
+public class IdentityController(IMediator mediator) : 
+    ApiController(mediator)
 {
     [HttpGet]
     [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
@@ -24,7 +26,7 @@ public class IdentityController(IMediator mediator) : ApiController(mediator)
 
     [HttpPost]
     [Route(nameof(Login))]
-    public async Task<ActionResult<UserResponseModel>> Login(
+    public async Task<ActionResult<LoginResponseModel>> Login(
         LoginUserCommand command)
         => await Send(command);
 

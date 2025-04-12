@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
+using Bookmarks.Domain.Models.Bookmarks;
 using Microsoft.EntityFrameworkCore;
 
+namespace Bookmarks.Infrastructure.Persistence;
 internal class BookmarksDbContext : BaseDbContext<BookmarksDbContext>
 {
     public BookmarksDbContext(

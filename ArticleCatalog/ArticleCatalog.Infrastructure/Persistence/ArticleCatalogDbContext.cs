@@ -1,6 +1,10 @@
 ﻿using System.Reflection;
+using ArticleCatalog.Domain.Models.Articles;
+using ArticleCatalog.Domain.Models.Categories;
+using ArticleCatalog.Domain.Models.Thumbnails;
 using Microsoft.EntityFrameworkCore;
 
+namespace ArticleCatalog.Infrastructure.Persistence;
 internal class ArticleCatalogDbContext : BaseDbContext<ArticleCatalogDbContext>
 {
     public ArticleCatalogDbContext(

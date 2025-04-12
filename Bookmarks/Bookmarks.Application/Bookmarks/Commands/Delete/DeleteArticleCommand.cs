@@ -1,8 +1,11 @@
+using Bookmarks.Domain.Repositories;
+using Common.Application;
 using MediatR;
 
+namespace Bookmarks.Application.Bookmarks.Commands.Delete;
 public class DeleteBookmarkCommand : IRequest<Result>
 {
-    public Guid ArticleId { get; set; }
+    public Guid BookmarkId { get; set; }
     
     public class DeleteBookmarkCommandHandler : IRequestHandler<DeleteBookmarkCommand, Result>
     {
@@ -15,7 +18,7 @@ public class DeleteBookmarkCommand : IRequest<Result>
 
         public async Task<Result> Handle(DeleteBookmarkCommand request, CancellationToken cancellationToken)
         {
-            await bookmarksRepository.Delete(request.ArticleId, cancellationToken);
+            await bookmarksRepository.Delete(request.BookmarkId, cancellationToken);
 
             return Result.Success;
         }

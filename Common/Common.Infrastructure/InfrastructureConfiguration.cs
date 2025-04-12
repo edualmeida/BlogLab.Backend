@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Text;
+using Common.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,38 +18,18 @@ public static class InfrastructureConfiguration
             .AddDatabase<TDbContext>(configuration)
             .AddRepositories(assembly);
 
-    public static IServiceCollection AddTokenAuthentication(
+    public static IServiceCollection AddAuthenticationHandlers(
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var configKey = configuration
-            .GetSection(nameof(ApplicationSettings))
-            .GetValue<string>(nameof(ApplicationSettings.JwtPrivateKey));
-
-        var privateKey = Encoding.UTF8.GetBytes(configKey!);
-
         services
             .AddAuthentication(authentication =>
             {
                 authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(bearer =>
-            {
-                bearer.RequireHttpsMetadata = false;
-                bearer.SaveToken = true;
-                bearer.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(privateKey),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            })
-            .AddScheme<ApiKeySchemeOptions, ApiKeyHandler>(ApiKey.SchemeName, options =>
-            {
-                configuration.GetRequiredSection("ApiKeyOptions").Bind(options);
-            });
+            .AddJwtAuthenticationScheme(configuration)
+            .AddApiKeyAuthenticationScheme(configuration);
 
         services.AddHttpContextAccessor();
 
@@ -78,7 +59,7 @@ public static class InfrastructureConfiguration
         => services
             .AddScoped<DbContext, TDbContext>()
             .AddDbContext<TDbContext>(options => options
-                .UseSqlite(configuration.GetDefaultConnectionString(), sqlOptions => sqlOptions
+                .UseNpgsql(configuration.GetDefaultConnectionString(), sqlOptions => sqlOptions
                         .MigrationsAssembly(typeof(TDbContext).Assembly.FullName)));
 
     internal static IServiceCollection AddRepositories(

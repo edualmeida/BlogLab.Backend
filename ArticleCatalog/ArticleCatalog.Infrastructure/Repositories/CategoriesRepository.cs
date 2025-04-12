@@ -1,6 +1,10 @@
-﻿using AutoMapper;
+﻿using ArticleCatalog.Domain.Models.Categories;
+using ArticleCatalog.Infrastructure.Persistence;
+using AutoMapper;
+using Common.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
+namespace ArticleCatalog.Infrastructure.Repositories;
 internal class CategoriesRepository : DataRepository<ArticleCatalogDbContext, Category>,
     ICategoriesQueryRepository
 {

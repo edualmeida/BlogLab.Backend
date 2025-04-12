@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Identity.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,7 @@ public static class InfrastructureConfiguration
         services
             .AddTransient<IIdentity, IdentityService>()
             .AddTransient<IJwtGenerator, JwtGeneratorService>()
-            .AddIdentity<User, IdentityRole>(options =>
+            .AddIdentity<User, Role>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;

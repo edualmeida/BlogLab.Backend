@@ -1,4 +1,8 @@
-﻿public class Thumbnail : Entity, IAggregateRoot
+﻿using ArticleCatalog.Domain.Models.Articles;
+using Common.Domain.Models;
+
+namespace ArticleCatalog.Domain.Models.Thumbnails;
+public class Thumbnail : Entity, IAggregateRoot
 {
     internal Thumbnail(
         string name)

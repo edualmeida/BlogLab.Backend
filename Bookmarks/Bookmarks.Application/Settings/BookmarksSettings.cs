@@ -1,10 +1,13 @@
-﻿public class ArticleCatalogAPIClientSettings(string baseUrl)
+﻿public class ArticleCatalogApiClientSettings(
+    string baseUrl,
+    string getArticlesByIdsPath)
 {
-    public string BaseUrl { get; set; } = baseUrl;
+    public string BaseUrl { get; private set; } = baseUrl;
+    public string GetArticlesByIdsPath { get; private set; } = getArticlesByIdsPath;
 }
 
-public class BookmarksSettings(ArticleCatalogAPIClientSettings articleCatalogAPIClientSettings)
+public class BookmarksSettings(ArticleCatalogApiClientSettings articleCatalogApiClientSettings)
 {
-    public ArticleCatalogAPIClientSettings ArticleCatalogAPIClientSettings { get; set; } 
-        = articleCatalogAPIClientSettings;
+    public ArticleCatalogApiClientSettings ArticleCatalogApiClientSettings { get; private set; } 
+        = articleCatalogApiClientSettings;
 }

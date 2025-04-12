@@ -35,4 +35,20 @@
       <ProjectReference Include="..\Identity\Identity.Infrastructure\Identity.Infrastructure.csproj" />
       <ProjectReference Include="..\Identity\Identity.Web\Identity.Web.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Logs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Logs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Logs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Logs\**" />
+    </ItemGroup>
 </Project>

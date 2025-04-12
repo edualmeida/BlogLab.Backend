@@ -1,7 +1,12 @@
 ﻿using System.Reflection;
+using ArticleCatalog.Application.Services;
+using ArticleCatalog.Infrastructure.Extensions;
+using ArticleCatalog.Infrastructure.HttpServices;
+using ArticleCatalog.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+namespace ArticleCatalog.Infrastructure;
 public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddArticleCatalogInfrastructure(
@@ -11,16 +16,27 @@ public static class InfrastructureConfiguration
             .AddTransient<IDbInitializer, ArticleCatalogDbInitializer>()
             .AddHttpClients(configuration);
 
-    public static IServiceCollection AddHttpClients(
-    this IServiceCollection services,
-    IConfiguration configuration)
-        => services.AddHttpClient<AuthorsHttpService>(httpClient =>
-        {
-            var httpClientSettings = configuration.GetArticleCatalogSettings();
-            httpClient.BaseAddress = new Uri(httpClientSettings.AuthorsAPIClientSettings.BaseUrl);
-            httpClient.ConfigureApiKey(configuration);
-        })
-        .ConfigureDefaultHttpClientHandler()
-        .AddTypedClient<IAuthorsHttpService, AuthorsHttpService>()
-        .Services;
+    private static IServiceCollection AddHttpClients(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var httpClientSettings = configuration.GetArticleCatalogSettings();
+        services.AddHttpClient<AuthorsHttpService>(httpClient =>
+            {
+                httpClient.BaseAddress = new Uri(httpClientSettings.AuthorsApiClientSettings.BaseUrl);
+                httpClient.ConfigureApiKey(configuration);
+            })
+            .ConfigureDefaultHttpClientHandler()
+            .AddTypedClient<IAuthorsHttpService, AuthorsHttpService>();
+        
+        services.AddHttpClient<BookmarksHttpService>(httpClient =>
+            {
+                httpClient.BaseAddress = new Uri(httpClientSettings.BookmarksApiClientSettings.BaseUrl);
+                httpClient.ConfigureApiKey(configuration);
+            })
+            .ConfigureDefaultHttpClientHandler()
+            .AddTypedClient<IBookmarksHttpService, BookmarksHttpService>();
+        
+        return services;
+    }
 }

@@ -1,19 +1,27 @@
+using System.Net;
 using System.Net.Http.Json;
+using Bookmarks.Application.Services;
+using Bookmarks.Application.Services.Contracts.Articles;
+using Bookmarks.Infrastructure.HttpServices.Exceptions;
 
-public sealed class ArticleCatalogHttpService : IArticleCatalogHttpService
+namespace Bookmarks.Infrastructure.HttpServices;
+public sealed class ArticleCatalogHttpService(
+    HttpClient client,
+    ArticleCatalogApiClientSettings settings
+    ) : IArticleCatalogHttpService
 {
-    private readonly HttpClient client;
-
-    public ArticleCatalogHttpService(HttpClient client)
+    public async Task<List<HttpArticleResponse>> GetArticlesByIds(IEnumerable<Guid> ids)
     {
-        this.client = client;
-    }
+        var response = await client.PostAsJsonAsync(
+            settings.GetArticlesByIdsPath, 
+            new { articleIds = ids});
 
-    public async Task<List<ArticleResponse>> GetArticlesByIds(IEnumerable<string> ids)
-    {
-        //var idsUri = string.Join("&", ids);
+        if (response.StatusCode == HttpStatusCode.NotFound)
+        {
+            throw new ArticlesNotFoundException();
+        }
+        response.EnsureSuccessStatusCode();
 
-        //return await client.GetFromJsonAsync<List<ArticleResponse>>(idsUri) ?? [];
-        return await client.GetFromJsonAsync<List<ArticleResponse>>("/api/articles") ?? [];
+        return await response.Content.ReadFromJsonAsync<List<HttpArticleResponse>>();
     }
 }

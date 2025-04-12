@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
-public abstract class DataRepository<TDbContext, TEntity>(TDbContext db) : IDomainRepository<TEntity>
+namespace Common.Infrastructure.Repositories;
+public abstract class DataRepository<TDbContext, TEntity>(TDbContext db) 
+    : IDomainRepository<TEntity>
     where TDbContext : DbContext
     where TEntity : Entity, IAggregateRoot
 {
