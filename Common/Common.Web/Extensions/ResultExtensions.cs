@@ -2,17 +2,12 @@
 using Common.Application;
 using Microsoft.AspNetCore.Mvc;
 
+namespace Common.Web.Extensions;
 public static class ResultExtensions
 {
     public static async Task<ActionResult<TData>> ToActionResult<TData>(this Task<TData> resultTask)
     {
         var result = await resultTask;
-
-        if (result == null)
-        {
-            return new NotFoundResult();
-        }
-
         return result;
     }
 

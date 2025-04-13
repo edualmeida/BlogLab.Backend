@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
 		<WarningsAsErrors>nullable</WarningsAsErrors>
-		<RootNamespace>WebApplication1</RootNamespace>
+		<RootNamespace>ProjectStartup</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

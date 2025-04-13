@@ -1,10 +1,15 @@
-﻿public static class ApplicationBuilderExtensions
+﻿using Common.Web.Extensions;
+using Serilog;
+
+namespace ProjectStartup;
+public static class ApplicationBuilderExtensions
 {
-    public static IApplicationBuilder UseWebService(
+    public static IApplicationBuilder SetupWebApplication(
         this IApplicationBuilder app, IWebHostEnvironment env)
         => app
-            .UseExceptionHandling(env)
-            .UseValidationExceptionHandler()
+            .UseSerilogRequestLogging()
+            .SetupDevelopmentStage(env)
+            .SetupExceptionHandling()
             .UseHttpsRedirection()
             .UseRouting()
             .UseCors(options => options
@@ -16,7 +21,7 @@
             .UseEndpoints(endpoints => endpoints
                 .MapControllers());
 
-    private static IApplicationBuilder UseExceptionHandling(
+    private static IApplicationBuilder SetupDevelopmentStage(
         this IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())

@@ -9,6 +9,7 @@ using Common.Web;
 using Identity.Application;
 using Identity.Infrastructure;
 using Identity.Web;
+using ProjectStartup;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,8 +48,7 @@ builder.Host.UseSerilog((context, configuration) =>
 var app = builder.Build();
 
 app
-    .UseSerilogRequestLogging()
-    .UseWebService(app.Environment)
+    .SetupWebApplication(app.Environment)
     .InitializeDatabase(builder.Configuration);
 
 await app.RunAsync();

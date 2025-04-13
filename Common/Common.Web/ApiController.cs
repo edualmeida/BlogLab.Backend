@@ -1,6 +1,9 @@
 using Common.Application;
+using Common.Web.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+
+namespace Common.Web;
 
 [ApiController]
 [Route("api/[controller]")]

@@ -1,4 +1,5 @@
-﻿using Identity.Application.Commands;
+﻿using Common.Web;
+using Identity.Application.Commands;
 using Identity.Application.Commands.ChangePassword;
 using Identity.Application.Commands.LoginUser;
 using Identity.Application.Queries.Common;

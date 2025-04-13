@@ -1,5 +1,6 @@
 ﻿using ArticleCatalog.Application.Categories.Queries.Common;
 using ArticleCatalog.Application.Categories.Queries.GetAll;
+using Common.Web;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

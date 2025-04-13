@@ -1,13 +1,14 @@
 ﻿using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Builder;
+using Common.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-public class ValidationExceptionHandlerMiddleware(
+namespace Common.Web.Middleware;
+public class ExceptionHandlerMiddleware(
     RequestDelegate next, 
-    ILogger<ValidationExceptionHandlerMiddleware> logger)
+    ILogger<ExceptionHandlerMiddleware> logger)
 {
     public async Task Invoke(HttpContext context)
     {
@@ -77,11 +78,4 @@ public class ValidationExceptionHandlerMiddleware(
 
         return JsonSerializer.Serialize(obj, options);
     }
-}
-
-public static class ValidationExceptionHandlerMiddlewareExtensions
-{
-    public static IApplicationBuilder UseValidationExceptionHandler(
-        this IApplicationBuilder builder)
-        => builder.UseMiddleware<ValidationExceptionHandlerMiddleware>();
 }

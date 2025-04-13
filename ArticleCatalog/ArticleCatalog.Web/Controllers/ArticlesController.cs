@@ -5,6 +5,7 @@ using ArticleCatalog.Application.Articles.Queries.Common;
 using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
 using ArticleCatalog.Application.Articles.Queries.GetById;
 using ArticleCatalog.Application.Articles.Queries.GetByIds;
+using Common.Web;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
