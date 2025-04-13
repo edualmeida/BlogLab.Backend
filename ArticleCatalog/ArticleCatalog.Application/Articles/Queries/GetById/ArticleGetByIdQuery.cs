@@ -20,6 +20,7 @@ public class ArticleGetByIdQuery : EntityCommand, IRequest<ArticleQueryResponse>
         {
             var article = await articleRepository.GetById(request.Id, cancellationToken) ??
                 throw new ArticleNotFoundException(request.Id);
+
             var author = await authorsHttpService.GetById(article.AuthorId, cancellationToken) ??
                 throw new AuthorNotFoundException(article.AuthorId);
 
@@ -29,7 +30,7 @@ public class ArticleGetByIdQuery : EntityCommand, IRequest<ArticleQueryResponse>
             if (userId.HasValue)
             {
                 var userBookmarks = await bookmarksHttpService.GetUserBookmarks(cancellationToken);
-                article.IsBookmarked = userBookmarks?.Any(x => x.ArticleId == article.Id);
+                article.IsBookmarked = userBookmarks?.Any(x => x.Bookmark.ArticleId == article.Id);
             }
             
             return article;

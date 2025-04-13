@@ -1,5 +1,5 @@
-﻿public class UserBookmarkResponse
+﻿namespace ArticleCatalog.Application.Contracts.Bookmarks;
+public sealed class UserBookmarkResponse
 {
-    public Guid BookmarkId { get; set; }
-    public Guid ArticleId { get; set; }
+    public required BookmarkResponse Bookmark { get; set; }
 }

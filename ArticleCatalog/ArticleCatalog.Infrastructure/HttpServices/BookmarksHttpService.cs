@@ -1,4 +1,5 @@
-﻿using ArticleCatalog.Application.Services;
+﻿using ArticleCatalog.Application.Contracts.Bookmarks;
+using ArticleCatalog.Application.Services;
 using Common.Infrastructure.Extensions;
 
 namespace ArticleCatalog.Infrastructure.HttpServices;

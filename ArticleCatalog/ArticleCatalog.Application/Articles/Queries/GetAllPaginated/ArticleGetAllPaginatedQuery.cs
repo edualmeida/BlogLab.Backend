@@ -34,7 +34,7 @@ public class ArticleGetAllPaginatedQuery : IRequest<ArticleGetAllPaginatedResult
                 article.Author = authors
                     .FirstOrDefault(a => a.Id == article.AuthorId)?.FirstName ?? "ND";
 
-                article.IsBookmarked = userBookmarks?.Any(x => x.ArticleId == article.Id);
+                article.IsBookmarked = userBookmarks?.Any(x => x.Bookmark.ArticleId == article.Id);
             });
 
             return getResult;
