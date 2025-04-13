@@ -1,5 +1,6 @@
 ﻿using ArticleCatalog.Application.Articles.Exceptions;
 using ArticleCatalog.Application.Articles.Queries.Common;
+using ArticleCatalog.Application.Contracts.Authors;
 using ArticleCatalog.Application.Services;
 using Common.Application.Contracts;
 using MediatR;
@@ -18,22 +19,36 @@ public class ArticleGetByIdQuery : EntityCommand, IRequest<ArticleQueryResponse>
             ArticleGetByIdQuery request,
             CancellationToken cancellationToken)
         {
-            var article = await articleRepository.GetById(request.Id, cancellationToken) ??
-                throw new ArticleNotFoundException(request.Id);
+            var article = await GetArticle(request.Id, cancellationToken);
 
-            var author = await authorsHttpService.GetById(article.AuthorId, cancellationToken) ??
-                throw new AuthorNotFoundException(article.AuthorId);
+            article.Author = await GetAuthorName(article.AuthorId, cancellationToken);
+            article.IsBookmarked = await GetIsBookmarked(article.Id, cancellationToken);
 
-            article.Author = author.FirstName;
+            return article;
+        }
 
+        private async Task<bool> GetIsBookmarked(Guid articleId, CancellationToken cancellationToken)
+        {
             var userId = currentUserService.GetUserId();
             if (userId.HasValue)
             {
                 var userBookmarks = await bookmarksHttpService.GetUserBookmarks(cancellationToken);
-                article.IsBookmarked = userBookmarks?.Any(x => x.Bookmark.ArticleId == article.Id);
+                return userBookmarks.Any(x => x.Bookmark.ArticleId == articleId);
             }
-            
-            return article;
+
+            return false;
+        }
+
+        private async Task<string> GetAuthorName(Guid authorId, CancellationToken cancellationToken)
+        {
+            return (await authorsHttpService.GetById(authorId, cancellationToken))?.FirstName ??
+                throw new AuthorNotFoundException(authorId);
+        }
+
+        private async Task<ArticleQueryResponse> GetArticle(Guid articleId, CancellationToken cancellationToken)
+        {
+            return await articleRepository.GetById(articleId, cancellationToken) ?? 
+                throw new ArticleNotFoundException(articleId);
         }
     }
 }
