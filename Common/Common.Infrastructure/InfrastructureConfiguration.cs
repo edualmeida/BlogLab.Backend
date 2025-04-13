@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Common.Infrastructure.Authentication.HttpMessageHandlers;
 using Common.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,8 @@ public static class InfrastructureConfiguration
             .AddApiKeyAuthenticationScheme(configuration);
 
         services.AddHttpContextAccessor();
+
+        services.AddTransient<FowardAuthorizationHeaderHandler>();
 
         return services;
     }

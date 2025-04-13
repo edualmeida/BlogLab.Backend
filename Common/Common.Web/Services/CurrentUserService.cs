@@ -11,15 +11,23 @@ public class CurrentUserService(IHttpContextAccessor httpContextAccessor) :
     public Guid? GetUserId()
     {
         var user = httpContextAccessor.HttpContext?.User;
-        if (user?.Identity?.AuthenticationType != JwtBearerDefaults.AuthenticationScheme)
+        
+        var identities = user?.Identities
+            .Where(x=>
+            x.AuthenticationType == JwtBearerDefaults.AuthenticationScheme ||
+            x.AuthenticationType == "AuthenticationTypes.Federation")?.ToList() ?? [];
+        
+        if (identities.Count == 0)
         {
             return null;
         }
 
-        var nameIdentifier = user.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (!Guid.TryParse(nameIdentifier, out Guid userId))
+        var nameIdentifierClaim = identities[0].Claims?
+            .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
+        if (!Guid.TryParse(nameIdentifierClaim?.Value, out Guid userId))
         {
-            throw new UserIdGuidIsInvalidException(nameIdentifier);
+            throw new UserIdGuidIsInvalidException(nameIdentifierClaim?.Value ?? "null or empty");
         }
 
         return userId;
