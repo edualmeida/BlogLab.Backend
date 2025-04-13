@@ -1,18 +1,17 @@
 ﻿using ArticleCatalog.Application.Articles.Commands.Common;
+using ArticleCatalog.Application.Articles.Commands.Create;
 using ArticleCatalog.Application.Articles.Commands.Update;
 using ArticleCatalog.Application.Articles.Queries.Common;
 using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
 using ArticleCatalog.Application.Articles.Queries.GetById;
 using ArticleCatalog.Application.Articles.Queries.GetByIds;
-using ArticleCatalog.Web.Models;
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArticleCatalog.Web.Controllers;
-public class ArticlesController(IMediator mediator, IMapper mapper) : 
+public class ArticlesController(IMediator mediator) : 
     ApiController(mediator)
 {
     [HttpGet]
@@ -35,8 +34,8 @@ public class ArticlesController(IMediator mediator, IMapper mapper) :
 
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult<CreateArticleResponse>> Create(CreateArticleRequest request)
-        => await Send(request.Map(mapper, HttpContext));
+    public async Task<ActionResult<CreateArticleResponse>> Create(CreateArticleCommand command)
+        => await Send(command);
 
     [Authorize]
     [HttpPut]

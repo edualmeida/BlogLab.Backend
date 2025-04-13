@@ -1,9 +1,9 @@
-﻿using System.Net.Http.Json;
-using ArticleCatalog.Application.Services;
+﻿using ArticleCatalog.Application.Services;
+using Common.Infrastructure.Extensions;
 
 namespace ArticleCatalog.Infrastructure.HttpServices;
 public sealed class BookmarksHttpService(HttpClient client) : IBookmarksHttpService
 {
-    public async Task<List<UserBookmarkResponse>> GetUserBookmarks(Guid userId, CancellationToken cancellationToken = default)
-        => await client.GetFromJsonAsync<List<UserBookmarkResponse>>($"/api/bookmark?userid="+userId, cancellationToken) ?? [];
+    public async Task<List<UserBookmarkResponse>> GetUserBookmarks(CancellationToken cancellationToken = default)
+        => await client.Get<List<UserBookmarkResponse>>($"/api/bookmarks", cancellationToken) ?? [];
 }

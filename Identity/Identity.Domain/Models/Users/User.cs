@@ -9,7 +9,7 @@ public class User : IdentityUser<Guid>, IEntity, IAggregateRoot
         string middleName,
         string lastName)
     {
-        Validate(email, firstName, middleName, lastName);
+        Validate(email, firstName, lastName);
 
         UserName = email;
         Email = email;
@@ -44,12 +44,10 @@ public class User : IdentityUser<Guid>, IEntity, IAggregateRoot
     private static void Validate(
         string email,
         string firstName,
-        string middleName,
         string lastName)
     {
         ValidateEmail(email);
         ValidateName(firstName, "First Name");
-        ValidateName(middleName, "Middle Name");
         ValidateName(lastName, "Last Name");
     }
     private static void ValidateEmail(string email)

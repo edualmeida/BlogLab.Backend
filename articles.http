@@ -12,6 +12,8 @@ X-Api-Key: {{apiKey}}
 GET {{HostAddress}}/{{ArticlesPath}}/0195c351-2ab5-78ba-bd2a-0ac915dc5f4f
 Accept: application/json
 X-Api-Key: {{apiKey}}
+Authorization: Bearer {{token}}
+
 
 ### create article
 

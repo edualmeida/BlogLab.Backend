@@ -1,8 +1,8 @@
 @apiKey=JEXqpyi4cPGWgH
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2M2M1YjE0ZS02MDdiLTQwMTYtODM1OC02YTM1ZWE5NmMwNWUiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDIyMDg2MzYsImV4cCI6MTc0MjgxMzQzNiwiaWF0IjoxNzQyMjA4NjM2fQ.fkgrpkjNmG4HItInIvFEa6vmVTLdfV8awKvu_8SXoa0
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk2MTBmNS0wZDdlLTc1YWUtOWJiNy02ZmI3ZjYwYjFmNTIiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDQzMTI3NDcsImV4cCI6MTc0NDkxNzU0NywiaWF0IjoxNzQ0MzEyNzQ3fQ.x_bscHQy9NvetekmDVvrc6Z2b0v_UNasaYS83vGIFPY
 
 # Get all
-GET {{HostAddress}}/{{BookmarksPath}}
+GET {{HostAddress}}/{{BookmarksPath}}?userId=019610f6-85ba-7be2-9bdf-360f1c5953b8
 Authorization: Bearer {{token}}
 Accept: application/json
 
@@ -19,6 +19,6 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "UserId": "85C8E95D-C1D8-4E80-AF00-F64589602764",
-  "ArticleId": "6D70CA49-8EC2-4383-9FF6-B7AF43A1192D"
+  "UserId": "019610f6-85ba-7be2-9bdf-360f1c5953b8",
+  "ArticleId": "0195c351-2ab5-78ba-bd2a-0ac915dc5f4f"
 }

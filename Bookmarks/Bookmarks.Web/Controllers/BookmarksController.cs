@@ -13,9 +13,9 @@ namespace Bookmarks.Web.Controllers;
 public class BookmarksController(IMediator mediator, IMapper mapper)
     : ApiController(mediator)
 {
-    [HttpGet]
-    public async Task<ActionResult<List<BookmarkArticleQueryResponse>>> GetByUserId(Guid userId)
-        => await Send(new BookmarkGetByUserIdQuery(userId));
+    [HttpGet()]
+    public async Task<ActionResult<List<BookmarkArticleQueryResponse>>> GetByUserId()
+        =>  await Send(new BookmarkGetByUserIdQuery());
 
     [HttpPost]
     public async Task<ActionResult> Create(CreateBookmarkRequest request)

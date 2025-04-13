@@ -19,6 +19,7 @@ public static class HttpClientExtensions
             {
                 return default;
             }
+            throw;
         }
         
         

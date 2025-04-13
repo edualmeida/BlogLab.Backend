@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Bookmarks.Application.Bookmarks.Queries.Common;
 using Bookmarks.Application.Services;
+using Common.Application.Contracts;
 using MediatR;
 
 namespace Bookmarks.Application.Bookmarks.Queries.GetByUserId;
-public class BookmarkGetByUserIdQuery(Guid userId) : IRequest<List<BookmarkArticleQueryResponse>>
+public class BookmarkGetByUserIdQuery() : IRequest<List<BookmarkArticleQueryResponse>>
 {
-    public Guid UserId { get; private set; } = userId;
     public class BookmarkGetAllQueryHandler(
+        ICurrentUserService currentUserService,
         IBookmarkQueryRepository bookmarkRepository,
         IArticleCatalogHttpService articleCatalogHttpService,
         IMapper mapper): IRequestHandler<BookmarkGetByUserIdQuery, List<BookmarkArticleQueryResponse>>
@@ -16,7 +17,7 @@ public class BookmarkGetByUserIdQuery(Guid userId) : IRequest<List<BookmarkArtic
             BookmarkGetByUserIdQuery request, 
             CancellationToken cancellationToken)
         {
-            var bookmarks = await bookmarkRepository.GetByUserId(request.UserId, cancellationToken);
+            var bookmarks = await bookmarkRepository.GetByUserId(currentUserService.GetRequiredUserId(), cancellationToken);
             if(bookmarks.Count == 0)
             {
                 return [];

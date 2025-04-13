@@ -9,6 +9,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Common\**" />
+      <EmbeddedResource Remove="Common\**" />
+      <None Remove="Common\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="FluentValidation" Version="11.11.0" />
         <PackageReference Include="MediatR" Version="12.4.1" />
     </ItemGroup>
@@ -16,10 +22,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Common\Common.Application\Common.Application.csproj" />
       <ProjectReference Include="..\Identity.Domain\Identity.Domain.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Common\" />
     </ItemGroup>
 
 </Project>

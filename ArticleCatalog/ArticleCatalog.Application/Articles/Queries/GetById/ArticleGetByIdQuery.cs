@@ -25,14 +25,12 @@ public class ArticleGetByIdQuery : EntityCommand, IRequest<ArticleQueryResponse>
 
             article.Author = author.FirstName;
 
-            List<UserBookmarkResponse> userBookmarks = [];
             var userId = currentUserService.GetUserId();
             if (userId.HasValue)
             {
-                userBookmarks = await bookmarksHttpService.GetUserBookmarks(userId.Value, cancellationToken);
+                var userBookmarks = await bookmarksHttpService.GetUserBookmarks(cancellationToken);
+                article.IsBookmarked = userBookmarks?.Any(x => x.ArticleId == article.Id);
             }
-
-            article.IsBookmarked = userBookmarks?.Any(x => x.ArticleId == article.Id);
             
             return article;
         }
