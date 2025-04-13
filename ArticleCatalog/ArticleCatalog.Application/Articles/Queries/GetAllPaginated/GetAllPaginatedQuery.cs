@@ -2,7 +2,7 @@
 using MediatR;
 
 namespace ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
-public class ArticleGetAllPaginatedQuery : IRequest<ArticleGetAllPaginatedResult>
+public class GetAllPaginatedQuery : IRequest<GetAllPaginatedResult>
 {
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 5;
@@ -12,10 +12,10 @@ public class ArticleGetAllPaginatedQuery : IRequest<ArticleGetAllPaginatedResult
         IArticleQueryRepository articleRepository,
         IAuthorsHttpService authorsHttpService,
         IBookmarksHttpService bookmarksHttpService
-        ) : IRequestHandler<ArticleGetAllPaginatedQuery, ArticleGetAllPaginatedResult>
+        ) : IRequestHandler<GetAllPaginatedQuery, GetAllPaginatedResult>
     {
-        public async Task<ArticleGetAllPaginatedResult> Handle(
-            ArticleGetAllPaginatedQuery request, 
+        public async Task<GetAllPaginatedResult> Handle(
+            GetAllPaginatedQuery request, 
             CancellationToken cancellationToken)
         {
             var getResult = await articleRepository.GetAll(
@@ -23,18 +23,16 @@ public class ArticleGetAllPaginatedQuery : IRequest<ArticleGetAllPaginatedResult
                 request.PageSize, 
                 cancellationToken);
 
-            var authors = await authorsHttpService.GetAll(
-                cancellationToken);
-
             var userBookmarks = request.UserId.HasValue ? 
                 await bookmarksHttpService.GetUserBookmarks(cancellationToken) : [];
 
+            var authors = await authorsHttpService.GetAll(cancellationToken);
             getResult.Articles.ForEach(article =>
             {
                 article.Author = authors
                     .FirstOrDefault(a => a.Id == article.AuthorId)?.FirstName ?? "ND";
 
-                article.IsBookmarked = userBookmarks?.Any(x => x.Bookmark.ArticleId == article.Id);
+                article.IsBookmarked = userBookmarks?.Any(x => x.Bookmark.ArticleId == article.Id) ?? false;
             });
 
             return getResult;

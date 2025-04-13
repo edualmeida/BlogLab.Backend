@@ -5,13 +5,13 @@ using AutoMapper;
 namespace ArticleCatalog.Application.Articles.Queries.Common;
 public class ArticleQueryResponse : ArticleModel
 {
-    public Guid Id { get; set; }
+    public required Guid Id { get; set; }
     public string Category { get; set; } = "";
     public string Thumbnail { get; set; } = "";
     public DateTime CreatedOn { get; set; }
     public string Author { get; set; } = "";
-    public Guid AuthorId { get; set; }
-    public bool? IsBookmarked { get; set; } = null;
+    public required Guid AuthorId { get; set; }
+    public bool IsBookmarked { get; set; } = false;
 
     public override void Mapping(Profile mapper)
         => mapper

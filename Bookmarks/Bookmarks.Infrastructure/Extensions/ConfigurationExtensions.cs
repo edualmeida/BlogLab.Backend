@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
+namespace Bookmarks.Infrastructure.Extensions;
 public static class ConfigurationExtensions
 {
     public static BookmarksSettings GetBookmarksSettings(

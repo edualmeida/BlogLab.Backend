@@ -1,5 +1,4 @@
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Http;
 
 namespace Common.Infrastructure.Extensions;
 
@@ -7,7 +6,7 @@ public static class HttpClientExtensions
 {
     public static async Task<TValue?> Get<TValue>(this HttpClient client, string url, CancellationToken cancellationToken = default)
     {
-        TValue? response = default;
+        TValue? response;
 
         try
         {

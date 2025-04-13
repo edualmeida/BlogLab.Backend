@@ -32,7 +32,7 @@ internal class ArticleRepository(
                 .Where(b => ids.Contains(b.Id)))
             .ToListAsync(cancellationToken);
 
-    public async Task<ArticleGetAllPaginatedResult> GetAll(
+    public async Task<GetAllPaginatedResult> GetAll(
         int pageNumber,
         int pageSize,
         CancellationToken cancellationToken = default)
@@ -49,7 +49,7 @@ internal class ArticleRepository(
             .Where(x => x.Enabled)
             .CountAsync(cancellationToken);
 
-        return new ArticleGetAllPaginatedResult
+        return new GetAllPaginatedResult
         {
             Articles = articles,
             TotalCount = totalCount,

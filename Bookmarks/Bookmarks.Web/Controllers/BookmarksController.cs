@@ -1,9 +1,8 @@
-﻿using AutoMapper;
+﻿using Bookmarks.Application.Bookmarks.Commands.Create;
 using Bookmarks.Application.Bookmarks.Commands.Delete;
 using Bookmarks.Application.Bookmarks.Commands.Update;
 using Bookmarks.Application.Bookmarks.Queries.Common;
 using Bookmarks.Application.Bookmarks.Queries.GetByUserId;
-using Bookmarks.Web.Models;
 using Common.Web;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bookmarks.Web.Controllers;
 [Authorize]
-public class BookmarksController(IMediator mediator, IMapper mapper)
+public class BookmarksController(IMediator mediator)
     : ApiController(mediator)
 {
     [HttpGet()]
@@ -19,8 +18,8 @@ public class BookmarksController(IMediator mediator, IMapper mapper)
         =>  await Send(new BookmarkGetByUserIdQuery());
 
     [HttpPost]
-    public async Task<ActionResult> Create(CreateBookmarkRequest request)
-        => await Send(request.Map(mapper, HttpContext));
+    public async Task<ActionResult> Create(CreateBookmarkCommand command)
+        => await Send(command);
 
     [HttpPut]
     [Route(Id)]

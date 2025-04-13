@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Bookmarks.Application.Services;
+using Bookmarks.Infrastructure.Extensions;
 using Bookmarks.Infrastructure.HttpServices;
 using Bookmarks.Infrastructure.Persistence;
 using Common.Infrastructure;

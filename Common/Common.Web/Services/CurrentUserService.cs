@@ -10,18 +10,41 @@ public class CurrentUserService(IHttpContextAccessor httpContextAccessor) :
 {
     public Guid? GetUserId()
     {
-        var user = httpContextAccessor.HttpContext?.User;
-        
-        var identities = user?.Identities
-            .Where(x=>
-            x.AuthenticationType == JwtBearerDefaults.AuthenticationScheme ||
-            x.AuthenticationType == "AuthenticationTypes.Federation")?.ToList() ?? [];
-        
+        var identities = GetClaimsIdentities();
+
         if (identities.Count == 0)
         {
             return null;
         }
 
+        return GetUserIdFromClaimsIdentities(identities);
+    }
+
+    public Guid GetRequiredUserId()
+    {
+        var identities = GetClaimsIdentities();
+
+        if (identities.Count == 0)
+        {
+            throw new NoValidAuthorizationIdentityFoundException("CurrentUserService->GetClaimsIdentities");
+        }
+
+        return GetUserIdFromClaimsIdentities(identities);
+    }
+
+    private List<ClaimsIdentity> GetClaimsIdentities()
+    {
+        var user = httpContextAccessor.HttpContext?.User;
+        var identities = user?.Identities
+            .Where(x =>
+            x.AuthenticationType == JwtBearerDefaults.AuthenticationScheme ||
+            x.AuthenticationType == "AuthenticationTypes.Federation")?.ToList() ?? [];
+
+        return identities;
+    }
+
+    private static Guid GetUserIdFromClaimsIdentities(List<ClaimsIdentity> identities)
+    {
         var nameIdentifierClaim = identities[0].Claims?
             .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
 
@@ -31,13 +54,5 @@ public class CurrentUserService(IHttpContextAccessor httpContextAccessor) :
         }
 
         return userId;
-    }
-
-    public Guid GetRequiredUserId()
-    {
-        var user = (httpContextAccessor.HttpContext?.User) ?? 
-            throw new InvalidOperationException("This request does not have an authenticated user.");
-        var userId = user.FindFirstValue(ClaimTypes.NameIdentifier)!;
-        return new Guid(userId);
     }
 }

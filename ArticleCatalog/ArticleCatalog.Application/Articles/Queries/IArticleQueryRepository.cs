@@ -11,7 +11,7 @@ public interface IArticleQueryRepository : IQueryRepository<Article>
     Task<List<ArticleQueryResponse>> GetByIds(
         List<Guid> ids, 
         CancellationToken cancellationToken = default);
-    Task<ArticleGetAllPaginatedResult> GetAll(
+    Task<GetAllPaginatedResult> GetAll(
         int pageNumber, 
         int pageSize, 
         CancellationToken cancellationToken = default);
