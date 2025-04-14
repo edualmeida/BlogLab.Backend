@@ -17,14 +17,14 @@ public class ArticlesController(IMediator mediator) :
 {
     [HttpGet]
     [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
-    public async Task<ActionResult<GetAllPaginatedResult>> GetAllPaginated(
-        [FromQuery] GetAllPaginatedQuery paginatedQuery)
+    public async Task<ActionResult<GetArticlesPaginatedResult>> GetAllPaginated(
+        [FromQuery] GetArticlesPaginatedQuery paginatedQuery)
         => await Send(paginatedQuery);
 
     [HttpGet]
     [Route(Id)]
     [Authorize(AuthenticationSchemes = $"{ApiKey.SchemeName}, {JwtBearerDefaults.AuthenticationScheme}")]
-    public async Task<ActionResult<ArticleQueryResponse>> GetById([FromRoute] GetByIdQuery query)
+    public async Task<ActionResult<ArticleQueryResponse>> GetById([FromRoute] GetArticleByIdQuery query)
         => await Send(query);
     
     [HttpPost]

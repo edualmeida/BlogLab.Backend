@@ -17,7 +17,7 @@ public class ArticleGetByIdsQuery : IRequest<List<ArticleQueryResponse>>
             CancellationToken cancellationToken)
         {
             var articles = await articleRepository.GetByIds(request.ArticleIds, cancellationToken);
-            var authors = await authorsHttpService.GetAll(cancellationToken);
+            var authors = (await authorsHttpService.GetAll(cancellationToken)) ?? [];
             var response = new List<ArticleQueryResponse>();
 
             foreach (var article in articles)

@@ -2,20 +2,20 @@
 using ArticleCatalog.Application.Services;
 using MediatR;
 
-namespace ArticleCatalog.Application.Articles.Queries.GetById;
-internal sealed class GetAuthorName : IRequest<string>
+namespace ArticleCatalog.Application.Authors.Queries;
+internal sealed class GetAuthorNameQuery : IRequest<string>
 {
     public Guid AuthorId { get; set; }
+
     public class GetAuthorNameQueryHandler(
-        IAuthorsHttpService authorsHttpService) : IRequestHandler<GetAuthorName, string>
+        IAuthorsHttpService authorsHttpService) : IRequestHandler<GetAuthorNameQuery, string>
     {
         public async Task<string> Handle(
-            GetAuthorName request,
+            GetAuthorNameQuery request,
             CancellationToken cancellationToken)
         {
             return (await authorsHttpService.GetById(request.AuthorId, cancellationToken))?.FirstName ??
                 throw new AuthorNotFoundException(request.AuthorId);
         }
     }
-
 }

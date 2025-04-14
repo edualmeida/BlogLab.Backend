@@ -1,16 +1,15 @@
 ﻿using ArticleCatalog.Application.Articles.Exceptions;
-using ArticleCatalog.Application.Articles.Queries.Common;
 using MediatR;
 
-namespace ArticleCatalog.Application.Articles.Queries.GetById;
-internal sealed class GetRepositoryArticle : IRequest<ArticleQueryResponse>
+namespace ArticleCatalog.Application.Articles.Queries.Common;
+internal sealed class GetRepositoryArticleQuery : IRequest<ArticleQueryResponse>
 {
     public Guid ArticleId { get; set; }
     public class GetArticleQueryHandler(
-        IArticleQueryRepository articleRepository) : IRequestHandler<GetRepositoryArticle, ArticleQueryResponse>
+        IArticleQueryRepository articleRepository) : IRequestHandler<GetRepositoryArticleQuery, ArticleQueryResponse>
     {
         public async Task<ArticleQueryResponse> Handle(
-            GetRepositoryArticle request,
+            GetRepositoryArticleQuery request,
             CancellationToken cancellationToken)
         {
             return await articleRepository.GetById(request.ArticleId, cancellationToken) ??
