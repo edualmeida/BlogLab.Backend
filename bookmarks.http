@@ -1,14 +1,8 @@
 @apiKey=JEXqpyi4cPGWgH
 @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk2MTBmNS0wZDdlLTc1YWUtOWJiNy02ZmI3ZjYwYjFmNTIiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDQzMTI3NDcsImV4cCI6MTc0NDkxNzU0NywiaWF0IjoxNzQ0MzEyNzQ3fQ.x_bscHQy9NvetekmDVvrc6Z2b0v_UNasaYS83vGIFPY
 
-# Get all
-GET {{HostAddress}}/{{BookmarksPath}}?userId=019610f6-85ba-7be2-9bdf-360f1c5953b8
-Authorization: Bearer {{token}}
-Accept: application/json
-
-### get by id
-
-GET {{HostAddress}}/{{BookmarksPath}}/ad73ec52-0974-4198-810e-4840e1ad195a
+# Get all from authenticated user
+GET {{HostAddress}}/{{BookmarksPath}}
 Authorization: Bearer {{token}}
 Accept: application/json
 
@@ -19,6 +13,11 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "UserId": "019610f6-85ba-7be2-9bdf-360f1c5953b8",
-  "ArticleId": "0195c351-2ab5-78ba-bd2a-0ac915dc5f4f"
+  "ArticleId": "01963f07-ef24-7049-b9d0-ee7b898be9c7"
 }
+
+### delete
+
+DELETE {{HostAddress}}/{{BookmarksPath}}/01963f1a-26ce-7656-b961-31e5ac6bdcd3
+Authorization: Bearer {{token}}
+Content-Type: application/json

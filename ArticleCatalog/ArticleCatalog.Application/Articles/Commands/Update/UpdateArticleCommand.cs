@@ -1,4 +1,5 @@
 using ArticleCatalog.Application.Articles.Commands.Common;
+using ArticleCatalog.Application.Categories.Queries.GetAll;
 using ArticleCatalog.Domain.Repositories;
 using Common.Application;
 using MediatR;
@@ -10,7 +11,7 @@ public class UpdateArticleCommand(Guid id, ArticleCommand articleCommand)
     public Guid Id => id;
     public ArticleCommand Article => articleCommand;
 
-    public class UpdateArticleCommandHandler(IArticleDomainRepository articleRepository) 
+    public class UpdateArticleCommandHandler(IMediator mediator, IArticleDomainRepository articleRepository) 
         : IRequestHandler<UpdateArticleCommand, Result>
     {
         public async Task<Result> Handle(
@@ -18,6 +19,8 @@ public class UpdateArticleCommand(Guid id, ArticleCommand articleCommand)
             CancellationToken cancellationToken)
         {
             var domainArticle = (await articleRepository.Find(updateArticleCommand.Id, cancellationToken))!;
+
+            await VerifyCategoryExists(updateArticleCommand.Article.CategoryId, cancellationToken);
 
             domainArticle.UpdateTitle(updateArticleCommand.Article.Title);
             domainArticle.UpdateSubtitle(updateArticleCommand.Article.Subtitle);
@@ -28,6 +31,11 @@ public class UpdateArticleCommand(Guid id, ArticleCommand articleCommand)
             await articleRepository.Save(domainArticle, cancellationToken);
 
             return Result.Success;
+        }
+
+        private async Task VerifyCategoryExists(Guid categoryId, CancellationToken cancellationToken)
+        {
+            await mediator.Send(new CategoryGetByIdQuery { Id = categoryId }, cancellationToken);
         }
     }
 }

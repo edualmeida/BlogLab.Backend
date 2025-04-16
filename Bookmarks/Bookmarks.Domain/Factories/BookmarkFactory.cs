@@ -3,16 +3,16 @@ using Bookmarks.Domain.Models.Bookmarks;
 namespace Bookmarks.Domain.Factories;
 internal class BookmarkFactory : IBookmarkFactory
 {
-    private Guid customerId = default!;
-    private Guid articleId = default!;
+    private Guid userId = Guid.Empty;
+    private Guid articleId = Guid.Empty;
 
-    private bool isCustomerIdSet = false;
+    private bool isUserIdSet = false;
     private bool isArticleIdSet = false;
 
-    public IBookmarkFactory WithCustomerId(Guid customerId)
+    public IBookmarkFactory WithUserId(Guid customerId)
     {
-        this.customerId = customerId;
-        isCustomerIdSet = true;
+        this.userId = customerId;
+        isUserIdSet = true;
 
         return this;
     }
@@ -27,9 +27,9 @@ internal class BookmarkFactory : IBookmarkFactory
 
     public Bookmark Build()
     {
-        if (!isCustomerIdSet || !isArticleIdSet)
+        if (!isUserIdSet || !isArticleIdSet)
             throw new InvalidOperationException("Customer ID, article Id must have a value.");
 
-        return new Bookmark(customerId, articleId);
+        return new Bookmark(userId, articleId);
     }
 }

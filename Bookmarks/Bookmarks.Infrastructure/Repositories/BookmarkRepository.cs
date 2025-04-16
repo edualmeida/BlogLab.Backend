@@ -20,10 +20,9 @@ internal class BookmarkRepository : DataRepository<BookmarksDbContext, Bookmark>
         this.mapper = mapper;
     }
 
-    public Task<Bookmark> Find(Guid id, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Bookmark?> Find(Guid id, CancellationToken cancellationToken = default)
+        => await All()
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
     public async Task Delete(Guid bookmarkId, CancellationToken cancellationToken = default)
     {
@@ -34,10 +33,12 @@ internal class BookmarkRepository : DataRepository<BookmarksDbContext, Bookmark>
         await Data.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<List<BookmarkQueryResponse>> GetByUserId(Guid userid, CancellationToken cancellationToken = default)
+    public async Task<List<BookmarkQueryResponse>> GetByUserId(
+        Guid userid, 
+        CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<BookmarkQueryResponse>(AllAsNoTracking()
-                .Where(x => x.UserId == userid)
+                .Where(x => x.UserId == userid && x.Enabled)
             )
             .ToListAsync();
 }

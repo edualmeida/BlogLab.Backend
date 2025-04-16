@@ -17,8 +17,8 @@ public static class ApplicationConfiguration
                 options => options.BindNonPublicProperties = true)
             .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly))
             .AddAutoMapperProfile(assembly)
-            .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-    .AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>))
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
     private static IServiceCollection AddAutoMapperProfile(
         this IServiceCollection services, Assembly assembly)

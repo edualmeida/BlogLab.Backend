@@ -11,10 +11,11 @@ internal class CategoriesRepository(ArticleCatalogDbContext db, IMapper mapper)
     : DataRepository<ArticleCatalogDbContext, Category>(db),
     ICategoriesQueryRepository
 {
-    public async Task<CategoryResponse> GetById(Guid id, CancellationToken cancellationToken = default)
+    public async Task<CategoryResponse?> GetById(Guid id, CancellationToken cancellationToken = default)
         => await mapper
-            .ProjectTo<CategoryResponse>(AllAsNoTracking())
-                .FirstAsync(b => b.Id == id, cancellationToken);
+            .ProjectTo<CategoryResponse?>(AllAsNoTracking()
+                .Where(x => x.Id == id))
+                .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<List<CategoryResponse>> GetAll(CancellationToken cancellationToken = default)
         => (await mapper

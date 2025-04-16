@@ -1,5 +1,6 @@
 ﻿using ArticleCatalog.Application.Articles.Commands.Common;
 using ArticleCatalog.Application.Articles.Commands.Create;
+using ArticleCatalog.Application.Articles.Commands.Delete;
 using ArticleCatalog.Application.Articles.Commands.Update;
 using ArticleCatalog.Application.Articles.Queries.Common;
 using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;

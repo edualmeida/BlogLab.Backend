@@ -1,3 +1,4 @@
+using Bookmarks.Application.Exceptions;
 using Bookmarks.Domain.Repositories;
 using Common.Application;
 using MediatR;
@@ -5,20 +6,19 @@ using MediatR;
 namespace Bookmarks.Application.Bookmarks.Commands.Delete;
 public class DeleteBookmarkCommand : IRequest<Result>
 {
-    public Guid BookmarkId { get; set; }
+    public Guid Id { get; set; }
     
-    public class DeleteBookmarkCommandHandler : IRequestHandler<DeleteBookmarkCommand, Result>
+    public class DeleteBookmarkCommandHandler(IBookmarkDomainRepository bookmarksRepository) 
+        : IRequestHandler<DeleteBookmarkCommand, Result>
     {
-        private readonly IBookmarkDomainRepository bookmarksRepository;
-
-        public DeleteBookmarkCommandHandler(IBookmarkDomainRepository BookmarkRepository)
-        {
-            this.bookmarksRepository = BookmarkRepository;
-        }
-
         public async Task<Result> Handle(DeleteBookmarkCommand request, CancellationToken cancellationToken)
         {
-            await bookmarksRepository.Delete(request.BookmarkId, cancellationToken);
+            var bookmark = await bookmarksRepository.Find(request.Id, cancellationToken) ??
+                throw new BookmarkNotFoundException(request.Id);
+
+            bookmark.DisableArticle();
+
+            await bookmarksRepository.Save(bookmark, cancellationToken);
 
             return Result.Success;
         }

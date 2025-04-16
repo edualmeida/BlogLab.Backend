@@ -21,12 +21,8 @@ public class BookmarksController(IMediator mediator)
     public async Task<ActionResult> Create(CreateBookmarkCommand command)
         => await Send(command);
 
-    [HttpPut]
-    [Route(Id)]
-    public async Task<ActionResult> Update(UpdateBookmarkCommand command)
-        => await Send(command);
-
     [HttpDelete]
+    [Route(Id)]
     public async Task<ActionResult> Delete([FromRoute] DeleteBookmarkCommand command)
         => await Send(command);
 }

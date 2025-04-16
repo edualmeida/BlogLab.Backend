@@ -1,5 +1,6 @@
 using FluentValidation;
 
+namespace ArticleCatalog.Application.Articles.Commands.Delete;
 public class DeleteArticleCommandValidator : AbstractValidator<DeleteArticleCommand>
 {
     public DeleteArticleCommandValidator()
