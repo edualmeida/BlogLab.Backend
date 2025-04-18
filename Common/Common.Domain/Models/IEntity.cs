@@ -1,3 +1,4 @@
-﻿public interface IEntity
+﻿namespace Common.Domain.Models;
+public interface IEntity
 {
 }

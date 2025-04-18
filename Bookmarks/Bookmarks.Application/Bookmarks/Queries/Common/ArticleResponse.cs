@@ -1,5 +1,6 @@
 using AutoMapper;
 using Bookmarks.Application.Services.Contracts.Articles;
+using Common.Application.Mapping;
 
 namespace Bookmarks.Application.Bookmarks.Queries.Common;
 

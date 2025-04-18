@@ -77,19 +77,19 @@ public class Article : Entity, IAggregateRoot
         return this;
     }
 
-    private void Validate(string title, string subtitle, string text)
+    private static void Validate(string title, string subtitle, string text)
     {
         ValidateTitle(title);
         ValidateSubtitle(subtitle);
         ValidateText(text);
     }
 
-    private void ValidateTitle(string title)
+    private static void ValidateTitle(string title)
         => Guard.ForStringLength(title, ArticleModelConstants.Article.MinTitleLength, ArticleModelConstants.Article.MaxTitleLength, nameof(Title));
 
-    private void ValidateSubtitle(string subtitle)
+    private static void ValidateSubtitle(string subtitle)
         => Guard.ForStringLength(subtitle, ArticleModelConstants.Article.MinSubtitleLength, ArticleModelConstants.Article.MaxSubtitleLength, nameof(Subtitle));
 
-    private void ValidateText(string text)
+    private static void ValidateText(string text)
         => Guard.ForStringLength(text, ArticleModelConstants.Article.MinTextLength, ArticleModelConstants.Article.MaxTextLength, nameof(Text));
 }

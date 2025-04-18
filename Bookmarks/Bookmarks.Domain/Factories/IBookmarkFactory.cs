@@ -1,4 +1,5 @@
 using Bookmarks.Domain.Models.Bookmarks;
+using Common.Domain;
 
 namespace Bookmarks.Domain.Factories;
 public interface IBookmarkFactory : IBuilder<Bookmark>

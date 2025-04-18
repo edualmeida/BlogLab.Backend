@@ -1,6 +1,5 @@
 ﻿using Bookmarks.Application.Bookmarks.Commands.Create;
 using Bookmarks.Application.Bookmarks.Commands.Delete;
-using Bookmarks.Application.Bookmarks.Commands.Update;
 using Bookmarks.Application.Bookmarks.Queries.Common;
 using Bookmarks.Application.Bookmarks.Queries.GetByUserId;
 using Common.Web;

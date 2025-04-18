@@ -1,4 +1,6 @@
-﻿namespace Identity.Domain.Factories;
+﻿using Identity.Domain.Models.Users;
+
+namespace Identity.Domain.Factories;
 internal class UserBuilder : IUserBuilder
 {
     private string email = default!;

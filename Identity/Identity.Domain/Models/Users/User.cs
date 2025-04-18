@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Common.Domain.Models;
+using Microsoft.AspNetCore.Identity;
 
-namespace Identity.Domain;
+namespace Identity.Domain.Models.Users;
 public class User : IdentityUser<Guid>, IEntity, IAggregateRoot
 {
     internal User(

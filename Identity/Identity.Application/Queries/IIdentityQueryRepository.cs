@@ -1,5 +1,5 @@
 using Identity.Application.Queries.Common;
-using Identity.Domain;
+using Identity.Domain.Models.Users;
 
 namespace Identity.Application.Queries;
 public interface IIdentityQueryRepository : IQueryRepository<User>

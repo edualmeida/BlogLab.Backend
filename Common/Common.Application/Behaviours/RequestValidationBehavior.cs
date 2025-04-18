@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Common.Application.Exceptions;
+using FluentValidation;
 using MediatR;
 
 namespace Common.Application.Behaviours;

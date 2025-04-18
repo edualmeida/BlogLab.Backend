@@ -1,15 +1,16 @@
 @apiKey=JEXqpyi4cPGWgH
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk2MTBmNS0wZDdlLTc1YWUtOWJiNy02ZmI3ZjYwYjFmNTIiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDQzMTI3NDcsImV4cCI6MTc0NDkxNzU0NywiaWF0IjoxNzQ0MzEyNzQ3fQ.x_bscHQy9NvetekmDVvrc6Z2b0v_UNasaYS83vGIFPY
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk2MTBmNS0wZDdlLTc1YWUtOWJiNy02ZmI3ZjYwYjFmNTIiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDQ5OTY3NTksImV4cCI6MTc0NTYwMTU1OSwiaWF0IjoxNzQ0OTk2NzU5fQ.pGlOAZkOHGCKALX-jq7mFQ5JZ5EoxY810DGINrp37As
 
 ### Get paginated
 
 GET {{HostAddress}}/{{ArticlesPath}}?pageNumber=1&pageSize=10
 Accept: application/json
 X-Api-Key: {{apiKey}}
+Authorization: Bearer {{token}}
 
 ### get by id
 
-GET {{HostAddress}}/{{ArticlesPath}}/0195c351-2ab5-78ba-bd2a-0ac915dc5f4f
+GET {{HostAddress}}/{{ArticlesPath}}/01962595-c90f-7078-a9fd-c71dab80cbce
 Accept: application/json
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{token}}

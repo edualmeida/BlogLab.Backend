@@ -2,8 +2,8 @@
 using Identity.Application;
 using Identity.Application.Commands;
 using Identity.Application.Commands.ChangePassword;
-using Identity.Domain;
 using Identity.Domain.Factories;
+using Identity.Domain.Models.Users;
 using Identity.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 

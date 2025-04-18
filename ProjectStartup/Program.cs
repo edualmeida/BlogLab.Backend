@@ -1,14 +1,17 @@
 using ArticleCatalog.Application;
 using ArticleCatalog.Infrastructure;
 using ArticleCatalog.Web;
+using ArticleCatalog.Domain;
 using Bookmarks.Application;
 using Bookmarks.Infrastructure;
 using Bookmarks.Web;
+using Bookmarks.Domain;
 using Common.Infrastructure;
 using Common.Web;
 using Identity.Application;
 using Identity.Infrastructure;
 using Identity.Web;
+using Identity.Domain;
 using ProjectStartup;
 using Serilog;
 

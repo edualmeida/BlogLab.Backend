@@ -24,6 +24,10 @@ internal class BookmarkRepository : DataRepository<BookmarksDbContext, Bookmark>
         => await All()
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
+    public async Task<Bookmark?> FindByArticleId(Guid userId, Guid articleId, CancellationToken cancellationToken = default)
+        => await All()
+            .FirstOrDefaultAsync(x => x.UserId == userId && x.ArticleId == articleId, cancellationToken);
+
     public async Task Delete(Guid bookmarkId, CancellationToken cancellationToken = default)
     {
         var bookmark = await AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == bookmarkId, cancellationToken) 

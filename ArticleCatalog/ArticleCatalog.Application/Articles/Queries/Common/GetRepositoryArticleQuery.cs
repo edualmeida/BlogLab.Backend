@@ -5,8 +5,10 @@ namespace ArticleCatalog.Application.Articles.Queries.Common;
 internal sealed class GetRepositoryArticleQuery : IRequest<ArticleQueryResponse>
 {
     public Guid ArticleId { get; set; }
+
     public class GetArticleQueryHandler(
-        IArticleQueryRepository articleRepository) : IRequestHandler<GetRepositoryArticleQuery, ArticleQueryResponse>
+        IArticleQueryRepository articleRepository) : 
+        IRequestHandler<GetRepositoryArticleQuery, ArticleQueryResponse>
     {
         public async Task<ArticleQueryResponse> Handle(
             GetRepositoryArticleQuery request,

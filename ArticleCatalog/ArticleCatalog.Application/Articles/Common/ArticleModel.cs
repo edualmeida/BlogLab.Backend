@@ -1,5 +1,6 @@
 using ArticleCatalog.Domain.Models.Articles;
 using AutoMapper;
+using Common.Application.Mapping;
 
 namespace ArticleCatalog.Application.Articles.Common;
 public class ArticleModel : IMapFrom<Article>

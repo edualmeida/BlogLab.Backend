@@ -17,7 +17,7 @@ public class ArticlesController(IMediator mediator) :
     ApiController(mediator)
 {
     [HttpGet]
-    [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
+    [Authorize(AuthenticationSchemes = $"{ApiKey.SchemeName}, {JwtBearerDefaults.AuthenticationScheme}")]
     public async Task<ActionResult<GetArticlesPaginatedResult>> GetAllPaginated(
         [FromQuery] GetArticlesPaginatedQuery paginatedQuery)
         => await Send(paginatedQuery);

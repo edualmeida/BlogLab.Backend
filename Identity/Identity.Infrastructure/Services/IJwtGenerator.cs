@@ -1,4 +1,4 @@
-﻿using Identity.Domain;
+﻿using Identity.Domain.Models.Users;
 
 namespace Identity.Infrastructure.Services;
 public interface IJwtGenerator

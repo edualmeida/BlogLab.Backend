@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Identity.Domain;
+using Common.Application.Mapping;
+using Identity.Domain.Models.Users;
 
 namespace Identity.Application.Queries.Common;
 public class UserResponse : IMapFrom<User>

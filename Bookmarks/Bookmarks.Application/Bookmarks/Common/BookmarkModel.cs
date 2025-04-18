@@ -1,5 +1,6 @@
 using AutoMapper;
 using Bookmarks.Domain.Models.Bookmarks;
+using Common.Application.Mapping;
 
 namespace Bookmarks.Application.Bookmarks.Common;
 public class BookmarkModel : IMapFrom<Bookmark>

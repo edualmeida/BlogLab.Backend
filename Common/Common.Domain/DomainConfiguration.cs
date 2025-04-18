@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
+using Common.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
+namespace Common.Domain;
 public static class DomainConfiguration
 {
     public static IServiceCollection AddCommonDomain(
@@ -26,7 +28,7 @@ public static class DomainConfiguration
         => services
             .Scan(scan => scan
                 .FromAssemblies(assembly)
-                .AddClasses(classes => classes.AssignableTo(typeof(IInitialData)))
+                .AddClasses(classes => classes.AssignableTo<IInitialData>())
                 .AsImplementedInterfaces()
                 .WithTransientLifetime());
 }

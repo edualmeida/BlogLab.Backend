@@ -1,4 +1,5 @@
 using ArticleCatalog.Domain.Models.Articles;
+using Common.Domain;
 
 namespace ArticleCatalog.Domain.Builders;
 public interface IArticleBuilder : IBuilder<Article>

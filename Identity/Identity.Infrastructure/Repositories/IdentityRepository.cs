@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Identity.Application.Queries;
 using Identity.Application.Queries.Common;
-using Identity.Domain;
+using Identity.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

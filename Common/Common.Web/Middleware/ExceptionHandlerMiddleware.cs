@@ -45,6 +45,9 @@ public class ExceptionHandlerMiddleware(
             case NotFoundException _:
                 code = HttpStatusCode.NotFound;
                 break;
+            case BadRequestException _:
+                code = HttpStatusCode.BadRequest;
+                break;
             case HttpRequestException ex:
                 code = ex.StatusCode!.Value;
                 break;
