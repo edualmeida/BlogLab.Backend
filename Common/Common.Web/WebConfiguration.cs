@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using Common.Application.Contracts;
+using Common.Web.Exceptions;
+using Common.Web.Middleware;
 using Common.Web.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -42,4 +44,11 @@ public static class WebConfiguration
         => services
             .AddAutoMapper((_, config) => config
                 .AddProfile(new MappingProfile(assembly)), Array.Empty<Assembly>());
+
+    public static IServiceCollection AddExceptionHandlers(
+        this IServiceCollection services)
+        => services
+            .AddExceptionHandler<ValidationExceptionHandler>()
+            .AddExceptionHandler<GlobalExceptionHandler>()
+            .AddProblemDetails();
 }

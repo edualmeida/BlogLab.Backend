@@ -45,6 +45,8 @@ builder
     .AddSwagger()
     .AddHttpClient();
 
+builder.Services.AddExceptionHandlers();
+
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
