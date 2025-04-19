@@ -1,3 +1,4 @@
+using Common.Application.Contracts;
 using Identity.Application.Queries.Common;
 using Identity.Domain.Models.Users;
 

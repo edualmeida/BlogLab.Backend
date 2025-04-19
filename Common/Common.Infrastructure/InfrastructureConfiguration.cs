@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using Common.Application.Contracts;
+using Common.Domain;
 using Common.Infrastructure.Authentication.HttpMessageHandlers;
 using Common.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

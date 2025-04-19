@@ -1,4 +1,5 @@
-﻿using Common.Domain.Models;
+﻿using Common.Domain;
+using Common.Domain.Models;
 
 namespace ArticleCatalog.Domain.Models.Categories;
 public class Category : Entity, IAggregateRoot

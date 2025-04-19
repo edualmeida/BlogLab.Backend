@@ -1,4 +1,5 @@
 using Bookmarks.Domain.Models.Bookmarks;
+using Common.Domain;
 
 namespace Bookmarks.Domain.Repositories;
 public interface IBookmarkDomainRepository : IDomainRepository<Bookmark>

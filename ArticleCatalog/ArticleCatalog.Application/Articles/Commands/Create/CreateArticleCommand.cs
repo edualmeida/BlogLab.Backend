@@ -23,10 +23,9 @@ public class CreateArticleCommand : ArticleCommand, IRequest<Result<CreateArticl
             }
 
             var article = await mediator.Send(new BuildArticleDomain(request), cancellationToken);
+            var articleId = await articleRepository.Save(article);
 
-            await articleRepository.Save(article, cancellationToken);
-
-            return new CreateArticleResponse(article.Id);
+            return new CreateArticleResponse(articleId);
         }
     }
 }

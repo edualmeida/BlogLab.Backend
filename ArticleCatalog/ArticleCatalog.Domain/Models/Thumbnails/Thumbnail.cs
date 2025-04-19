@@ -1,4 +1,5 @@
 ﻿using ArticleCatalog.Domain.Models.Articles;
+using Common.Domain;
 using Common.Domain.Models;
 
 namespace ArticleCatalog.Domain.Models.Thumbnails;

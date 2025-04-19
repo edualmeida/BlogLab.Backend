@@ -1,4 +1,5 @@
-﻿using Common.Domain.Models;
+﻿using Common.Domain;
+using Common.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Identity.Domain.Models.Users;

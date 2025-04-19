@@ -1,3 +1,4 @@
+using Common.Domain;
 using Common.Domain.Models;
 
 namespace Bookmarks.Domain.Models.Bookmarks;

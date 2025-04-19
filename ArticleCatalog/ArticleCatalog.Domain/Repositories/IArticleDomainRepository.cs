@@ -1,4 +1,5 @@
 using ArticleCatalog.Domain.Models.Articles;
+using Common.Domain;
 
 namespace ArticleCatalog.Domain.Repositories;
 public interface IArticleDomainRepository : IDomainRepository<Article>

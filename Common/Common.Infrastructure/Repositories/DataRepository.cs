@@ -1,4 +1,5 @@
-﻿using Common.Domain.Models;
+﻿using Common.Domain;
+using Common.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Common.Infrastructure.Repositories;
@@ -13,11 +14,13 @@ public abstract class DataRepository<TDbContext, TEntity>(TDbContext db)
 
     protected IQueryable<TEntity> AllAsNoTracking() => All().AsNoTracking();
 
-    public async Task Save(
+    public async Task<Guid> Save(
         TEntity entity,
         CancellationToken cancellationToken = default)
     {
         Data.Update(entity);
         await Data.SaveChangesAsync(cancellationToken);
+
+        return entity.Id;
     }
 }

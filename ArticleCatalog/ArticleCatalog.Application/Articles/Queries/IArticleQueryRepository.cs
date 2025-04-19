@@ -1,6 +1,7 @@
 using ArticleCatalog.Application.Articles.Queries.Common;
 using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
 using ArticleCatalog.Domain.Models.Articles;
+using Common.Application.Contracts;
 
 namespace ArticleCatalog.Application.Articles.Queries;
 public interface IArticleQueryRepository : IQueryRepository<Article>

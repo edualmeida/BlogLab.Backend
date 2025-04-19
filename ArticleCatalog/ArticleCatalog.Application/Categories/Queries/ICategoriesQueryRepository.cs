@@ -1,5 +1,6 @@
 using ArticleCatalog.Application.Categories.Queries.Common;
 using ArticleCatalog.Domain.Models.Categories;
+using Common.Application.Contracts;
 
 namespace ArticleCatalog.Application.Categories.Queries;
 public interface ICategoriesQueryRepository : IQueryRepository<Category>
