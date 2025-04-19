@@ -1,5 +1,4 @@
 using ArticleCatalog.Application.Articles.Commands.Common;
-using ArticleCatalog.Application.Categories.Queries.GetAll;
 using ArticleCatalog.Domain.Repositories;
 using Common.Application;
 using MediatR;
@@ -18,24 +17,21 @@ public class UpdateArticleCommand(Guid id, ArticleCommand articleCommand)
             UpdateArticleCommand updateArticleCommand, 
             CancellationToken cancellationToken)
         {
-            var domainArticle = (await articleRepository.Find(updateArticleCommand.Id, cancellationToken))!;
+            var validationResult = await mediator.Send(new ValidateUpdateArticle(updateArticleCommand.Article), cancellationToken);
+            if(!validationResult.Succeeded)
+            {
+                return validationResult;
+            }
 
-            await VerifyCategoryExists(updateArticleCommand.Article.CategoryId, cancellationToken);
+            var domainArticle = await mediator.Send(new BuildArticleDomain(updateArticleCommand.Id, updateArticleCommand.Article), cancellationToken);
+            if (!domainArticle.Succeeded)
+            {
+                return domainArticle;
+            }
 
-            domainArticle.UpdateTitle(updateArticleCommand.Article.Title);
-            domainArticle.UpdateSubtitle(updateArticleCommand.Article.Subtitle);
-            domainArticle.UpdateText(updateArticleCommand.Article.Text);
-            domainArticle.UpdateCategory(updateArticleCommand.Article.CategoryId);
-            domainArticle.UpdateThumbnail(updateArticleCommand.Article.ThumbnailId);
-
-            await articleRepository.Save(domainArticle, cancellationToken);
+            await articleRepository.Save(domainArticle.Data, cancellationToken);
 
             return Result.Success;
-        }
-
-        private async Task VerifyCategoryExists(Guid categoryId, CancellationToken cancellationToken)
-        {
-            await mediator.Send(new CategoryGetByIdQuery { Id = categoryId }, cancellationToken);
         }
     }
 }

@@ -4,9 +4,9 @@ using MediatR;
 using ArticleCatalog.Domain.Models.Articles;
 
 namespace ArticleCatalog.Application.Articles.Commands.Create;
-public sealed class BuildArticleDomain : IRequest<Article>
+public sealed class BuildArticleDomain(CreateArticleCommand command) : IRequest<Article>
 {
-    public required CreateArticleCommand Command { get; set; }
+    public CreateArticleCommand Command => command;
 
     public sealed class BuildArticleDomainHandler(
         ICurrentUserService currentUserService,

@@ -24,6 +24,18 @@ public class Result
 
     public static Result Failure(string error)
         => Failure([error]);
+
+    public static implicit operator Result(string error)
+    => Failure(new List<string> { error });
+
+    public static implicit operator Result(List<string> errors)
+        => Failure(errors.ToList());
+
+    public static implicit operator Result(bool success)
+        => success ? Success : Failure(new[] { "Unsuccessful operation." });
+
+    public static implicit operator bool(Result result)
+        => result.Succeeded;
 }
 
 public class Result<TData> : Result
@@ -51,4 +63,13 @@ public class Result<TData> : Result
     
     public static implicit operator Result<TData>(TData data)
         => SuccessWith(data);
+
+    public static implicit operator Result<TData>(string error)
+    => Failure(new List<string> { error });
+
+    public static implicit operator Result<TData>(List<string> errors)
+        => Failure(errors);
+
+    public static implicit operator bool(Result<TData> result)
+        => result.Succeeded;
 }

@@ -16,9 +16,13 @@ public class CreateArticleCommand : ArticleCommand, IRequest<Result<CreateArticl
             CreateArticleCommand request,
             CancellationToken cancellationToken)
         {
-            await mediator.Send(new CreateArticleValidator { Command = request }, cancellationToken);
+            var validationResult = await mediator.Send(new ValidateCreateArticle(request), cancellationToken);
+            if (!validationResult.Succeeded)
+            {
+                return validationResult.Errors;
+            }
 
-            var article = await mediator.Send(new BuildArticleDomain { Command = request }, cancellationToken);
+            var article = await mediator.Send(new BuildArticleDomain(request), cancellationToken);
 
             await articleRepository.Save(article, cancellationToken);
 
