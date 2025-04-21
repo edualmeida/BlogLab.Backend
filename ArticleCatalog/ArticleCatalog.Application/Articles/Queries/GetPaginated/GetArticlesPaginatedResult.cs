@@ -1,6 +1,6 @@
 ﻿using ArticleCatalog.Application.Articles.Queries.Common;
 
-namespace ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
+namespace ArticleCatalog.Application.Articles.Queries.GetPaginated;
 public class GetArticlesPaginatedResult
 {
     public int TotalCount { get; set; }

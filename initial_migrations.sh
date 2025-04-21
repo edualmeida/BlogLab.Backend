@@ -38,3 +38,8 @@ dotnet ef database update --context "IdentityDbContext" --project Identity/Ident
 
 
 #dotnet ef migrations add NewUserNameColumns --context "IdentityDbContext" --project Identity/Identity.Infrastructure --startup-project ProjectStartup
+
+
+dotnet ef migrations add ChangeUserIdType --context "IdentityDbContext" --project Identity/Identity.Infrastructure --startup-project ProjectStartup
+
+dotnet ef database update --context "BookmarksDbContext" --project Bookmarks/Bookmarks.Infrastructure --startup-project ProjectStartup

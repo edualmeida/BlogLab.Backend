@@ -26,7 +26,10 @@ internal class BookmarkRepository : DataRepository<BookmarksDbContext, Bookmark>
 
     public async Task<Bookmark?> FindByArticleId(Guid userId, Guid articleId, CancellationToken cancellationToken = default)
         => await All()
-            .FirstOrDefaultAsync(x => x.UserId == userId && x.ArticleId == articleId, cancellationToken);
+            .FirstOrDefaultAsync(x => 
+            x.Enabled &&
+            x.UserId == userId && 
+            x.ArticleId == articleId, cancellationToken);
 
     public async Task Delete(Guid bookmarkId, CancellationToken cancellationToken = default)
     {

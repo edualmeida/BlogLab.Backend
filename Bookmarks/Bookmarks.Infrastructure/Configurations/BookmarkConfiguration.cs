@@ -20,7 +20,7 @@ internal class BookmarkConfiguration : IEntityTypeConfiguration<Bookmark>
             .Property(o => o.ArticleId)
             .IsRequired();
 
-        builder.HasIndex(p => new { p.UserId, p.ArticleId }).IsUnique();
+        builder.HasIndex(p => new { p.UserId, p.ArticleId, p.Enabled }).IsUnique();
 
         builder.ToTable("Bookmarks");
     }

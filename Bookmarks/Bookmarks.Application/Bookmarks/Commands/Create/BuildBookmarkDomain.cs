@@ -13,7 +13,7 @@ public class BuildBookmarkDomain : IRequest<Bookmark>
         IBookmarkFactory bookmarkFactory)
         : IRequestHandler<BuildBookmarkDomain, Bookmark>
     {
-        public async Task<Bookmark> Handle(
+        public Task<Bookmark> Handle(
             BuildBookmarkDomain request,
             CancellationToken cancellationToken)
         {
@@ -22,7 +22,7 @@ public class BuildBookmarkDomain : IRequest<Bookmark>
                 .WithUserId(currentUserService.GetRequiredUserId())
                 .Build();
 
-            return bookmark;
+            return Task.FromResult(bookmark);
         }
     }
 }

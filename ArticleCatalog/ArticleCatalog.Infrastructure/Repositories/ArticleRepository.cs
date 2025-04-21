@@ -1,6 +1,6 @@
 ﻿using ArticleCatalog.Application.Articles.Queries;
 using ArticleCatalog.Application.Articles.Queries.Common;
-using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
+using ArticleCatalog.Application.Articles.Queries.GetPaginated;
 using ArticleCatalog.Domain.Models.Articles;
 using ArticleCatalog.Domain.Repositories;
 using ArticleCatalog.Infrastructure.Persistence;
@@ -40,7 +40,7 @@ internal class ArticleRepository(
         var articles = await mapper
             .ProjectTo<ArticleQueryResponse>(AllAsNoTracking()
                 .Where(x => x.Enabled)
-                .OrderBy(x => x.CreatedOnUtc)
+                .OrderByDescending(x => x.CreatedOnUtc)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize))
             .ToListAsync(cancellationToken);

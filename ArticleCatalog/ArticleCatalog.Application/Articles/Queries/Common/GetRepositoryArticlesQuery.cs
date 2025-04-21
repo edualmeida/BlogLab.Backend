@@ -1,4 +1,4 @@
-﻿using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
+﻿using ArticleCatalog.Application.Articles.Queries.GetPaginated;
 using MediatR;
 
 namespace ArticleCatalog.Application.Articles.Queries.Common;

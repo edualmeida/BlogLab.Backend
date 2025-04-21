@@ -1,5 +1,5 @@
 using ArticleCatalog.Application.Articles.Queries.Common;
-using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
+using ArticleCatalog.Application.Articles.Queries.GetPaginated;
 using ArticleCatalog.Domain.Models.Articles;
 using Common.Application.Contracts;
 

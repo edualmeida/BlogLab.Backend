@@ -10,7 +10,7 @@ Authorization: Bearer {{token}}
 
 ### get by id
 
-GET {{HostAddress}}/{{ArticlesPath}}/01962595-c90f-7078-a9fd-c71dab80cbce
+GET {{HostAddress}}/{{ArticlesPath}}/0196584f-2594-7c8a-86b7-ff0672d16265
 Accept: application/json
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{token}}

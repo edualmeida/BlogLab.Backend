@@ -3,7 +3,7 @@ using ArticleCatalog.Application.Authors.Queries;
 using ArticleCatalog.Application.Bookmarks.Queries;
 using MediatR;
 
-namespace ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
+namespace ArticleCatalog.Application.Articles.Queries.GetPaginated;
 public class GetArticlesPaginatedQuery : IRequest<GetArticlesPaginatedResult>
 {
     public int PageNumber { get; set; } = 1;

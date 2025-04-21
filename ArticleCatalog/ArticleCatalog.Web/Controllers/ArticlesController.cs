@@ -3,7 +3,7 @@ using ArticleCatalog.Application.Articles.Commands.Create;
 using ArticleCatalog.Application.Articles.Commands.Delete;
 using ArticleCatalog.Application.Articles.Commands.Update;
 using ArticleCatalog.Application.Articles.Queries.Common;
-using ArticleCatalog.Application.Articles.Queries.GetAllPaginated;
+using ArticleCatalog.Application.Articles.Queries.GetPaginated;
 using ArticleCatalog.Application.Articles.Queries.GetById;
 using ArticleCatalog.Application.Articles.Queries.GetByIds;
 using Common.Web;
