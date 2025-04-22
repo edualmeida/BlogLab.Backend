@@ -18,5 +18,9 @@ internal class BookmarksDbContext : BaseDbContext<BookmarksDbContext>
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         base.OnModelCreating(modelBuilder);
+
+        // fix names to match postgresql naming conventions,
+        // maybe in the future set schema? .ToTable("users", "identity")
+        modelBuilder.Entity<Bookmark>().ToTable("bookmarks");
     }
 }

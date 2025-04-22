@@ -12,24 +12,24 @@ namespace Bookmarks.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Bookmarks",
+                name: "bookmarks",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ArticleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedOnUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Enabled = table.Column<bool>(type: "boolean", nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    article_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    created_on_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    enabled = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bookmarks", x => x.Id);
+                    table.PrimaryKey("pk_bookmarks", x => x.id);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookmarks_UserId_ArticleId",
-                table: "Bookmarks",
-                columns: new[] { "UserId", "ArticleId" },
+                name: "ix_bookmarks_user_id_article_id_enabled",
+                table: "bookmarks",
+                columns: new[] { "user_id", "article_id", "enabled" },
                 unique: true);
         }
 
@@ -37,7 +37,7 @@ namespace Bookmarks.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Bookmarks");
+                name: "bookmarks");
         }
     }
 }

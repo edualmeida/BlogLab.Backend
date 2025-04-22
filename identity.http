@@ -29,9 +29,9 @@ X-Api-Key: JEXqpyi4cPGWgH
 Content-Type: application/json
 
 {
-    "FirstName": "Admin",
-    "MiddleName": "",
-    "Surname": "Admin",
+    "FirstName": "AdminFirstName",
+    "MiddleName": "MiddleName",
+    "Surname": "AdminSurname",
     "email": "admin@eduardolab.com",
     "password": "1q2w3e4r",
     "ConfirmPassword": "1q2w3e4r",

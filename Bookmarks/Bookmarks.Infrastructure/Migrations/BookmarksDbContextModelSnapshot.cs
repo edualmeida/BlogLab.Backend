@@ -26,26 +26,33 @@ namespace Bookmarks.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("ArticleId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("article_id");
 
                     b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_on_utc");
 
                     b.Property<bool>("Enabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("enabled");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_bookmarks");
 
                     b.HasIndex("UserId", "ArticleId", "Enabled")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_bookmarks_user_id_article_id_enabled");
 
-                    b.ToTable("Bookmarks", (string)null);
+                    b.ToTable("bookmarks", (string)null);
                 });
 #pragma warning restore 612, 618
         }

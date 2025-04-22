@@ -63,8 +63,12 @@ public static class InfrastructureConfiguration
         => services
             .AddScoped<DbContext, TDbContext>()
             .AddDbContext<TDbContext>(options => options
-                .UseNpgsql(configuration.GetConnectionString("DefaultConnection")!, sqlOptions => sqlOptions
-                        .MigrationsAssembly(typeof(TDbContext).Assembly.FullName)));
+                .UseNpgsql(
+                    configuration.GetConnectionString("DefaultConnection")!, 
+                    sqlOptions => sqlOptions.MigrationsAssembly(typeof(TDbContext).Assembly.FullName)
+                )
+                .UseSnakeCaseNamingConvention()
+            );
 
     internal static IServiceCollection AddRepositories(
         this IServiceCollection services,

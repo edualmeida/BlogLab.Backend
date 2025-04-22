@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Bookmarks.Infrastructure.Migrations
 {
     [DbContext(typeof(BookmarksDbContext))]
-    [Migration("20250317181443_InitialMigration")]
+    [Migration("20250422204406_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -29,26 +29,33 @@ namespace Bookmarks.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("ArticleId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("article_id");
 
                     b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_on_utc");
 
                     b.Property<bool>("Enabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("enabled");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_bookmarks");
 
-                    b.HasIndex("UserId", "ArticleId")
-                        .IsUnique();
+                    b.HasIndex("UserId", "ArticleId", "Enabled")
+                        .IsUnique()
+                        .HasDatabaseName("ix_bookmarks_user_id_article_id_enabled");
 
-                    b.ToTable("Bookmarks", (string)null);
+                    b.ToTable("bookmarks", (string)null);
                 });
 #pragma warning restore 612, 618
         }

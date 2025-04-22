@@ -22,5 +22,11 @@ internal class ArticleCatalogDbContext : BaseDbContext<ArticleCatalogDbContext>
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         base.OnModelCreating(modelBuilder);
+
+        // fix names to match postgresql naming conventions,
+        // maybe in the future set schema? .ToTable("users", "identity")
+        modelBuilder.Entity<Article>().ToTable("articles");
+        modelBuilder.Entity<Category>().ToTable("categories");
+        modelBuilder.Entity<Thumbnail>().ToTable("thumbnails");
     }
 }
