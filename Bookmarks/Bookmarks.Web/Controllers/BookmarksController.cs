@@ -21,7 +21,7 @@ public class BookmarksController(IMediator mediator)
         => await Send(command);
 
     [HttpDelete]
-    [Route(Id)]
+    [Route("{ArticleId}")]
     public async Task<ActionResult> Delete([FromRoute] DeleteBookmarkCommand command)
         => await Send(command);
 }

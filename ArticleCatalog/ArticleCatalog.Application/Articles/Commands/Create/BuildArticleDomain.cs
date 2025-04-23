@@ -23,7 +23,7 @@ public sealed class BuildArticleDomain(CreateArticleCommand command) : IRequest<
                 .WithText(request.Command.Text)
                 .WithCategoryId(request.Command.CategoryId)
                 //.WithThumbnailId(request.Command.ThumbnailId)
-                .WithThumbnailId(new Guid("0195c34c-0b46-79e1-ae55-cf8fe370ff17"))
+                .WithThumbnailId(new Guid("01965f47-83db-7f38-bce5-8c1b8e44ce4a"))
                 .WithAuthorId(currentUserService.GetRequiredUserId())
                 .Build();
 

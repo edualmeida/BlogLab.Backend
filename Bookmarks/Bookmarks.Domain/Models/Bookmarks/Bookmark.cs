@@ -11,7 +11,7 @@ public class Bookmark(
     public Guid UserId => userId;
     public Guid ArticleId => articleId;
 
-    public Bookmark DisableArticle()
+    public Bookmark DisableBookmark()
     {
         Enabled = false;
         return this;

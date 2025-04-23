@@ -1,5 +1,5 @@
 @apiKey=JEXqpyi4cPGWgH
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk2MTBmNS0wZDdlLTc1YWUtOWJiNy02ZmI3ZjYwYjFmNTIiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDQ5OTY3NTksImV4cCI6MTc0NTYwMTU1OSwiaWF0IjoxNzQ0OTk2NzU5fQ.pGlOAZkOHGCKALX-jq7mFQ5JZ5EoxY810DGINrp37As
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk2NWY0OS00ZDNmLTcyMzQtYmQ0Yy1jOGY5ZDA4Y2RiNGIiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDU0MzU1OTIsImV4cCI6MTc0NjA0MDM5MiwiaWF0IjoxNzQ1NDM1NTkyfQ.27YIlHI9-bF_umDyRVKOP_0h8TFuIueiQiQhhDJJQDU
 
 ### Get paginated
 
@@ -23,11 +23,11 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "title": "Test2",
-    "subtitle": "test2",
-    "text": "text22",
-    "categoryid": "0195c34c-0b24-7f1d-b502-e7bee888734e",
-    "thumbnailid": "0195c34c-0b46-79e1-ae55-cf8fe370ff17"
+    "title": "2Test1",
+    "subtitle": "2test2",
+    "text": "2text",
+    "categoryid": "01965f47-83be-768c-9137-382637d67c85",
+    "thumbnailid": "01965f47-83db-7f38-bce5-8c1b8e44ce4a"
 }
 
 ### update article
