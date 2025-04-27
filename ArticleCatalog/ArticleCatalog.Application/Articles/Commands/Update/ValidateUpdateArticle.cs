@@ -10,15 +10,15 @@ public class ValidateUpdateArticle(ArticleCommand articleCommand)
     public ArticleCommand Article => articleCommand;
 
     public class ValidateUpdateArticleHandler(IMediator mediator)
-        : IRequestHandler<UpdateArticleCommand, Result>
+        : IRequestHandler<ValidateUpdateArticle, Result>
     {
         public async Task<Result> Handle(
-            UpdateArticleCommand updateArticleCommand, 
+            ValidateUpdateArticle request, 
             CancellationToken cancellationToken)
         {
             var categoryResult = await mediator.Send(new ValidateCategory 
             { 
-                CategoryId = updateArticleCommand.Article.CategoryId 
+                CategoryId = request.Article.CategoryId 
             }, cancellationToken);
 
             if(!categoryResult.Succeeded)
