@@ -1,3 +1,4 @@
+using ArticleCatalog.Domain.Models.Articles;
 using FluentValidation;
 
 namespace ArticleCatalog.Application.Articles.Commands.Common;
@@ -7,23 +8,20 @@ public class ArticleCommandValidator : AbstractValidator<ArticleCommand>
     {
         RuleFor(b => b.Title)
             .NotEmpty().WithMessage("Title is required.")
-            .Length(ArticleModelConstants.Article.MinTitleLength, ArticleModelConstants.Article.MaxTitleLength)
-            .WithMessage($"Name must be between {ArticleModelConstants.Article.MinTitleLength} and {ArticleModelConstants.Article.MaxTitleLength} characters.");
+            .Length(ArticleModelConstants.MinTitleLength, 1)
+            .WithMessage($"Title must be between {ArticleModelConstants.MinTitleLength} and {ArticleModelConstants.MaxTitleLength} characters.");
 
         RuleFor(b => b.Subtitle)
             .NotEmpty().WithMessage("Subtitle is required.")
-            .Length(ArticleModelConstants.Article.MinTitleLength, ArticleModelConstants.Article.MaxTitleLength)
-            .WithMessage($"Name must be between {ArticleModelConstants.Article.MinTitleLength} and {ArticleModelConstants.Article.MaxTitleLength} characters.");
+            .Length(ArticleModelConstants.MinSubtitleLength, ArticleModelConstants.MaxSubtitleLength)
+            .WithMessage($"Subtitle must be between {ArticleModelConstants.MinTitleLength} and {ArticleModelConstants.MaxTitleLength} characters.");
 
         RuleFor(b => b.Text)
             .NotEmpty().WithMessage("Text is required.")
-            .Length(ArticleModelConstants.Article.MinTitleLength, ArticleModelConstants.Article.MaxTitleLength)
-            .WithMessage($"Name must be between {ArticleModelConstants.Article.MinTitleLength} and {ArticleModelConstants.Article.MaxTitleLength} characters.");
+            .Length(ArticleModelConstants.MinTextLength, ArticleModelConstants.MaxTextLength)
+            .WithMessage($"Text must be between {ArticleModelConstants.MinTitleLength} and {ArticleModelConstants.MaxTitleLength} characters.");
 
         RuleFor(b => b.CategoryId)
             .NotEmpty().WithMessage("CategoryId is required.");
-
-        //RuleFor(b => b.ThumbnailId)
-        //    .NotEmpty().WithMessage("Thumbnail is required.");
     }
 }

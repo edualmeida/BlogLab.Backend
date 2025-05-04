@@ -1,5 +1,7 @@
 ﻿using System.Net.Mime;
 using Common.Application;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Common.Web.Extensions;
@@ -17,7 +19,7 @@ public static class ResultExtensions
 
         if (!result.Succeeded)
         {
-            return new BadRequestObjectResult(result.Errors);
+            return new BadRequestObjectResult(CreateProblemDetails(result.Errors));
         }
 
         return new OkResult();
@@ -29,7 +31,7 @@ public static class ResultExtensions
 
         if (!result.Succeeded)
         {
-            return new BadRequestObjectResult(result.Errors);
+            return new BadRequestObjectResult(CreateProblemDetails(result.Errors));
         }
 
         return result.Data;
@@ -40,5 +42,19 @@ public static class ResultExtensions
         var result = await resultTask;
 
         return new FileStreamResult(result, MediaTypeNames.Image.Jpeg);
+    }
+
+    private static ProblemDetails CreateProblemDetails(IList<string> errors)
+    {
+        return new ProblemDetails
+        {
+            Title = "Workflow error",
+            Detail = string.Join(", ", errors),
+            Status = StatusCodes.Status400BadRequest,
+            Extensions =
+            {
+                ["errorType"] = ProblemDetailErrorType.Workflow
+            }
+        };
     }
 }

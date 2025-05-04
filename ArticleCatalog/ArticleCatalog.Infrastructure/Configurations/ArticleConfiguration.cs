@@ -16,17 +16,17 @@ internal class ArticleConfiguration : IEntityTypeConfiguration<Article>
         builder
             .Property(p => p.Title)
             .IsRequired()
-            .HasMaxLength(ArticleModelConstants.Article.MaxTitleLength);
+            .HasMaxLength(ArticleModelConstants.MaxTitleLength);
 
         builder
             .Property(p => p.Subtitle)
             .IsRequired()
-            .HasMaxLength(ArticleModelConstants.Article.MaxSubtitleLength);
+            .HasMaxLength(ArticleModelConstants.MaxSubtitleLength);
 
         builder
             .Property(p => p.Text)
             .IsRequired()
-            .HasMaxLength(ArticleModelConstants.Article.MaxTextLength);
+            .HasMaxLength(ArticleModelConstants.MaxTextLength);
 
         builder
             .HasOne(p => p.Category);

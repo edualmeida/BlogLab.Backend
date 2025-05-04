@@ -86,11 +86,11 @@ public class Article : Entity, IAggregateRoot
     }
 
     private static void ValidateTitle(string title)
-        => Guard.ForStringLength(title, ArticleModelConstants.Article.MinTitleLength, ArticleModelConstants.Article.MaxTitleLength, nameof(Title));
+        => Guard.ForStringLength(title, ArticleModelConstants.MinTitleLength, ArticleModelConstants.MaxTitleLength, nameof(Title));
 
     private static void ValidateSubtitle(string subtitle)
-        => Guard.ForStringLength(subtitle, ArticleModelConstants.Article.MinSubtitleLength, ArticleModelConstants.Article.MaxSubtitleLength, nameof(Subtitle));
+        => Guard.ForStringLength(subtitle, ArticleModelConstants.MinSubtitleLength, ArticleModelConstants.MaxSubtitleLength, nameof(Subtitle));
 
     private static void ValidateText(string text)
-        => Guard.ForStringLength(text, ArticleModelConstants.Article.MinTextLength, ArticleModelConstants.Article.MaxTextLength, nameof(Text));
+        => Guard.ForStringLength(text, ArticleModelConstants.MinTextLength, ArticleModelConstants.MaxTextLength, nameof(Text));
 }

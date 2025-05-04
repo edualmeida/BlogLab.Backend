@@ -21,6 +21,8 @@ public class GlobalExceptionHandler(IHostEnvironment env, ILogger<GlobalExceptio
         logger.LogError(exception, httpContext.TraceIdentifier);
 
         var exceptionHandlerFeature = httpContext.Features.Get<IExceptionHandlerFeature>();
+        // TODO: remove custom exception handling because we are going to use Result pattern with
+        // custom ToActionResult method in the controller
         var statusCode = exceptionHandlerFeature!.Error switch
         {
             NotFoundException => StatusCodes.Status404NotFound,
@@ -50,10 +52,10 @@ public class GlobalExceptionHandler(IHostEnvironment env, ILogger<GlobalExceptio
         {
             Status = statusCode,
             Title = string.IsNullOrEmpty(reasonPhrase) ? UnhandledExceptionMsg : reasonPhrase,
-            //Extensions =
-            //{ maybe we will have custom error codes in the future
-            //    [nameof(errorCode)] = errorCode
-            //} maybe we will have custom error codes in the future
+            Extensions =
+            {
+                ["errorType"] = ProblemDetailErrorType.Unexpected
+            }
         };
 
         if (!env.IsDevelopment())

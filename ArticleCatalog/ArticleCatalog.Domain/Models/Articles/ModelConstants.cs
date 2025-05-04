@@ -1,12 +1,10 @@
-public class ArticleModelConstants
+namespace ArticleCatalog.Domain.Models.Articles;
+public static class ArticleModelConstants
 {
-    public class Article
-    {
-        public const int MinTitleLength = 1;
-        public const int MaxTitleLength = 50;
-        public const int MinSubtitleLength = 1;
-        public const int MaxSubtitleLength = 200;
-        public const int MinTextLength = 1;
-        public const int MaxTextLength = 4000;
-    }
+    public const int MinTitleLength = 1;
+    public const int MaxTitleLength = 50;
+    public const int MinSubtitleLength = 1;
+    public const int MaxSubtitleLength = 200;
+    public const int MinTextLength = 1;
+    public const int MaxTextLength = 4000;
 }

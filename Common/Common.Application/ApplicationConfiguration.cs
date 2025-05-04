@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Common.Application.Behaviours;
 using Common.Application.Mapping;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,10 +15,13 @@ public static class ApplicationConfiguration
             .Configure<ApplicationSettings>(
                 configuration.GetSection(nameof(ApplicationSettings)),
                 options => options.BindNonPublicProperties = true)
-            .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly))
-            .AddAutoMapperProfile(assembly)
-            .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>))
-            .AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            .AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(assembly);
+                cfg.AddOpenBehavior(typeof(RequestValidationBehavior<,>));
+                cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
+            })
+            .AddAutoMapperProfile(assembly);
 
     private static IServiceCollection AddAutoMapperProfile(
         this IServiceCollection services, Assembly assembly)

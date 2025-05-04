@@ -1,10 +1,10 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using Common.Application.Contracts;
-using Common.Web.Exceptions;
 using Common.Web.Middleware;
 using Common.Web.Services;
 using FluentValidation;
-using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Web;
@@ -17,8 +17,6 @@ public static class WebConfiguration
     {
         services
             .AddValidatorsFromAssemblyContaining(applicationConfigurationType)
-            .AddFluentValidationAutoValidation()
-            .AddFluentValidationClientsideAdapters()
             .AddScoped<ICurrentUserService, CurrentUserService>()
             .AddAutoMapperProfile(assembly);
 
@@ -50,5 +48,17 @@ public static class WebConfiguration
         => services
             .AddExceptionHandler<ValidationExceptionHandler>()
             .AddExceptionHandler<GlobalExceptionHandler>()
-            .AddProblemDetails();
+            .AddProblemDetails(options =>
+            {
+                options.CustomizeProblemDetails = context =>
+                {
+                    context.ProblemDetails.Instance =
+                        $"{context.HttpContext.Request.Method} {context.HttpContext.Request.Path}";
+
+                    context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
+
+                    Activity? activity = context.HttpContext.Features.Get<IHttpActivityFeature>()?.Activity;
+                    context.ProblemDetails.Extensions.TryAdd("traceId", activity?.Id);
+                };
+            });
 }
