@@ -53,7 +53,7 @@ public static class ResultExtensions
             Status = StatusCodes.Status400BadRequest,
             Extensions =
             {
-                ["errorType"] = ProblemDetailErrorType.Workflow
+                ["errorType"] = ProblemDetailErrorType.Application
             }
         };
     }

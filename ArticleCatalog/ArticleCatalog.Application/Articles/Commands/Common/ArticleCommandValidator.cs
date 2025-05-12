@@ -8,7 +8,7 @@ public class ArticleCommandValidator : AbstractValidator<ArticleCommand>
     {
         RuleFor(b => b.Title)
             .NotEmpty().WithMessage("Title is required.")
-            .Length(ArticleModelConstants.MinTitleLength, 1)
+            .Length(ArticleModelConstants.MinTitleLength, ArticleModelConstants.MaxTitleLength)
             .WithMessage($"Title must be between {ArticleModelConstants.MinTitleLength} and {ArticleModelConstants.MaxTitleLength} characters.");
 
         RuleFor(b => b.Subtitle)
