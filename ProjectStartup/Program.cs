@@ -47,6 +47,9 @@ builder
 
 builder.Services.AddExceptionHandlers();
 
+// Enable Serilog self-logging to the console for troubleshooting
+Serilog.Debugging.SelfLog.Enable(msg => Console.WriteLine($"[ELK]:{msg}"));
+
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
