@@ -10,7 +10,7 @@ Authorization: Bearer {{token}}
 
 ### Search
 
-GET {{HostAddress}}/{{ArticlesPath}}/Search?Query=dependency
+GET {{HostAddress}}/{{ArticlesPath}}/Search?Query=news
 Accept: application/json
 X-Api-Key: {{apiKey}}
 
@@ -29,9 +29,9 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "title": "How to use dependency injection",
-    "subtitle": ".NET C# dependency injection",
-    "text": "How to use dependency injection .NET C# dependency injection",
+    "title": "SOLID Design Pattern",
+    "subtitle": "How to use SOLID",
+    "text": "blah blah blah",
     "categoryid": "01965f47-83be-768c-9137-382637d67c85",
     "thumbnailid": "01965f47-83db-7f38-bce5-8c1b8e44ce4a"
 }

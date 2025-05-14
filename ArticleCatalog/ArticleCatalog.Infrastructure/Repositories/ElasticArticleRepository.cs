@@ -5,6 +5,8 @@ using Common.Infrastructure.Repositories.Configuration;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using Microsoft.Extensions.Logging;
+using System.Linq.Expressions;
+using System;
 
 namespace ArticleCatalog.Infrastructure.Repositories;
 public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticleRepository
@@ -27,28 +29,39 @@ public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticle
                 .Bool(b => b
                     .Should(
                         sh => sh
-                            .Match(m => m
-                                .Field(f => f.Title)
+                        .MultiMatch(mm => mm
+                                .Fields(
+                                    f=> f.Title!, 
+                                    f => f.Subtitle!
+                                )
                                 .Query(query)
-                                .Fuzziness("AUTO")
+                                .Fuzziness("AUTO") // typo-tolerant and spelling mistakes
+                            ),
+                        sh => sh
+                            .MultiMatch(mm => mm
+                                .Fields(
+                                    f => f.Title!,
+                                    f => f.Subtitle!
+                                )
+                                .Query(query)
+                                .Type(TextQueryType.Phrase)
+                                .Slop(2) 
+                              // phrase matching with slop
+                             //  2 means up to two word positions can be swapped, inserted, or skipped between the query terms.
+                            /*
+                             * •	Query: "quick fox"
+                                •	Document: "the quick brown fox"
+                                •	With slop: 0, this does not match (because "quick" and "fox" are not adjacent).
+                                •	With slop: 1, this still does not match (they are two positions apart).
+                                •	With slop: 2, this does match (they are within two positions).
+                             * 
+                             */
                             ),
                         sh => sh
                             .Match(m => m
-                                .Field(f => f.Subtitle)
+                                .Field(f => f.Category!)
                                 .Query(query)
                                 .Fuzziness("AUTO")
-                            ),
-                        sh => sh
-                            .MatchPhrase(m => m
-                                .Field(f => f.Title)
-                                .Query(query)
-                                .Slop(2)
-                            ),
-                        sh => sh
-                            .MatchPhrase(m => m
-                                .Field(f => f.Subtitle)
-                                .Query(query)
-                                .Slop(2)
                             )
                     )
                     .MinimumShouldMatch(1)
@@ -59,7 +72,7 @@ public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticle
         return articles.Select(a => a.Id).ToList();
     }
 
-    public async Task<bool> CreateArticleAsync(Article article)
+    public async Task<bool> CreateArticleAsync(ElasticArticle article)
     {
         var response = await CreateAsync(IndexName, article);
 
@@ -71,6 +84,7 @@ public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticle
                 response.ElasticsearchServerError?.ToString() ?? "No server error details",
                 response.DebugInformation
             );
+
             return false;
         }
 
