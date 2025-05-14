@@ -50,4 +50,10 @@ public class ArticlesController(IMediator mediator) :
     [Route(Id)]
     public async Task<ActionResult> Delete([FromRoute] DeleteArticleCommand command)
         => await Send(command);
+
+    [HttpGet]
+    [Route("Search")]
+    [Authorize(AuthenticationSchemes = ApiKeyConstants.SchemeName)]
+    public async Task<ActionResult<List<ArticleQueryResponse>>> Search([FromQuery] string query)
+    => await Send(new SearchArticlesQuery() { Query = query });
 }

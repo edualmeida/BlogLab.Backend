@@ -2,6 +2,8 @@
 using ArticleCatalog.Domain.Repositories;
 using Common.Infrastructure.Repositories;
 using Common.Infrastructure.Repositories.Configuration;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.QueryDsl;
 using Microsoft.Extensions.Logging;
 
 namespace ArticleCatalog.Infrastructure.Repositories;
@@ -18,13 +20,38 @@ public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticle
         _logger = logger;
     }
 
-    public async Task<IReadOnlyCollection<Guid>> SearchArticlesByNameAsync(string name)
+    public async Task<IReadOnlyCollection<Guid>> SearchArticlesAsync(string query)
     {
-        var articles = await SearchAsync<Article>(IndexName, s => s
+        var articles = await SearchAsync<ElasticArticle>(IndexName, s => s
             .Query(q => q
-                .Match(m => m
-                    .Field(f => f.Title)
-                    .Query(name)
+                .Bool(b => b
+                    .Should(
+                        sh => sh
+                            .Match(m => m
+                                .Field(f => f.Title)
+                                .Query(query)
+                                .Fuzziness("AUTO")
+                            ),
+                        sh => sh
+                            .Match(m => m
+                                .Field(f => f.Subtitle)
+                                .Query(query)
+                                .Fuzziness("AUTO")
+                            ),
+                        sh => sh
+                            .MatchPhrase(m => m
+                                .Field(f => f.Title)
+                                .Query(query)
+                                .Slop(2)
+                            ),
+                        sh => sh
+                            .MatchPhrase(m => m
+                                .Field(f => f.Subtitle)
+                                .Query(query)
+                                .Slop(2)
+                            )
+                    )
+                    .MinimumShouldMatch(1)
                 )
             )
         );
@@ -47,7 +74,7 @@ public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticle
             return false;
         }
 
-        _logger.LogInformation($"Index document with ID {response.Id} succeeded.");
+        _logger.LogInformation("Index document with ID {ResponseId} succeeded.", response.Id);
 
         return true;
     }
