@@ -92,4 +92,46 @@ public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticle
 
         return true;
     }
+    public async Task<IReadOnlyCollection<ElasticArticle>> GetArticlesByDateRangeAsync(DateTime fromUtc, DateTime toUtc)
+    {
+        var articles = await SearchAsync<ElasticArticle>(IndexName, s => s
+            .Query(q => q
+                .Range(r => r
+                    .Date(dr => dr
+                        .Field(f => f.CreatedOnUtc)
+                        .Gte(fromUtc)
+                        .Lte(toUtc)
+                    )
+                )
+            )
+        );
+
+        return articles;
+    }
+    public async Task<IReadOnlyCollection<ElasticArticle>> GetArticlesByAuthorAsync(string authorQuery)
+    {
+        var articles = await SearchAsync<ElasticArticle>(IndexName, s => s
+            .Query(q => q
+                .Bool(b => b
+                    .Should(
+                        sh => sh
+                            .Match(m => m
+                                .Field(f => f.Author!)
+                                .Query(authorQuery)
+                                .Fuzziness("AUTO")
+                            ),
+                        sh => sh
+                            .MatchPhrase(m => m
+                                .Field(f => f.Author!)
+                                .Query(authorQuery)
+                                .Slop(2)
+                            )
+                    )
+                    .MinimumShouldMatch(1)
+                )
+            )
+        );
+
+        return articles;
+    }
 }
