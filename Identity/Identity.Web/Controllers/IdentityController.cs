@@ -14,18 +14,18 @@ public class IdentityController(IMediator mediator) :
     ApiController(mediator)
 {
     [HttpGet]
-    [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
+    [Authorize(AuthenticationSchemes = ApiKeyConstants.SchemeName)]
     public async Task<ActionResult<List<UserResponse>>> GetAllUsers()
         => await Send(new UserGetAllQuery());
 
     [HttpGet]
     [Route(Id)]
-    [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
+    [Authorize(AuthenticationSchemes = ApiKeyConstants.SchemeName)]
     public async Task<ActionResult<UserResponse>> GetById([FromRoute] UserGetByIdQuery query)
         => await Send(query);
 
     [HttpPost]
-    [Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
+    [Authorize(AuthenticationSchemes = ApiKeyConstants.SchemeName)]
     [Route(nameof(Register))]
     public async Task<ActionResult> Register(
         RegisterUserCommand command)

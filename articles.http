@@ -1,5 +1,5 @@
 @apiKey=JEXqpyi4cPGWgH
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk2NWY0OS00ZDNmLTcyMzQtYmQ0Yy1jOGY5ZDA4Y2RiNGIiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDU0MzU1OTIsImV4cCI6MTc0NjA0MDM5MiwiaWF0IjoxNzQ1NDM1NTkyfQ.27YIlHI9-bF_umDyRVKOP_0h8TFuIueiQiQhhDJJQDU
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk2NWY0OS00ZDNmLTcyMzQtYmQ0Yy1jOGY5ZDA4Y2RiNGIiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDcyMTE1ODgsImV4cCI6MTc0NzgxNjM4OCwiaWF0IjoxNzQ3MjExNTg4fQ.2bTtZnjuROcUcPSrsXJNVysBE2zB1sCDzJK7v7jSSeE
 
 ### Get paginated
 
@@ -23,9 +23,9 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "title": "2Test1",
-    "subtitle": "2test2",
-    "text": "2text",
+    "title": "3Test1",
+    "subtitle": "3test3",
+    "text": "3text",
     "categoryid": "01965f47-83be-768c-9137-382637d67c85",
     "thumbnailid": "01965f47-83db-7f38-bce5-8c1b8e44ce4a"
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArticleCatalog.Web.Controllers;
-[Authorize(AuthenticationSchemes = ApiKey.SchemeName)]
+[Authorize(AuthenticationSchemes = ApiKeyConstants.SchemeName)]
 public class CategoriesController(IMediator mediator) : ApiController(mediator)
 {
     [HttpGet]

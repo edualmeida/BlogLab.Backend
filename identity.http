@@ -29,13 +29,13 @@ X-Api-Key: JEXqpyi4cPGWgH
 Content-Type: application/json
 
 {
-    "FirstName": "AdminFirstName",
+    "FirstName": "Test",
     "MiddleName": "MiddleName",
-    "Surname": "AdminSurname",
-    "email": "admin@eduardolab.com",
+    "Surname": "Test",
+    "email": "test@eduardolab.com",
     "password": "1q2w3e4r",
     "ConfirmPassword": "1q2w3e4r",
-    "Role": 1
+    "Role": 2
 }
 
 ### register User

@@ -18,7 +18,7 @@ internal static class ApiKeyAuthenticationExtensions
         this AuthenticationBuilder authentication,
         IConfiguration configuration)
     {
-        authentication.AddScheme<ApiKeySchemeOptions, ApiKeyHandler>(ApiKey.SchemeName, options =>
+        authentication.AddScheme<ApiKeySchemeOptions, ApiKeyHandler>(ApiKeyConstants.SchemeName, options =>
         {
             configuration.GetRequiredSection(Constants.ApiKeyOptions).Bind(options);
         });
