@@ -8,6 +8,10 @@ using Bookmarks.Web;
 using Bookmarks.Domain;
 using Common.Infrastructure;
 using Common.Web;
+using Comments.Infrastructure;
+using Comments.Domain;
+using Comments.Application;
+using Comments.Web;
 using Identity.Application;
 using Identity.Infrastructure;
 using Identity.Web;
@@ -30,6 +34,13 @@ builder
     .AddBookmarksApplication(builder.Configuration)
     .AddBookmarksInfrastructure(builder.Configuration)
     .AddBookmarksWebComponents();
+
+builder
+    .Services
+    .AddCommentsDomain()
+    .AddCommentsApplication(builder.Configuration)
+    .AddCommentsInfrastructure(builder.Configuration)
+    .AddCommentsWebComponents();
 
 builder
     .Services

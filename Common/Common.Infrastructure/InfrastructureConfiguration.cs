@@ -56,6 +56,18 @@ public static class InfrastructureConfiguration
             })
             .SetHandlerLifetime(Timeout.InfiniteTimeSpan);
 
+    public static IServiceCollection AddRepositories(
+        this IServiceCollection services,
+        Assembly assembly)
+        => services
+            .Scan(scan => scan
+                .FromAssemblies(assembly)
+                .AddClasses(classes => classes
+                    .AssignableTo(typeof(IDomainRepository<>))
+                    .AssignableTo(typeof(IQueryRepository<>)))
+                .AsImplementedInterfaces()
+                .WithTransientLifetime());
+
     private static IServiceCollection AddDatabase<TDbContext>(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -69,16 +81,4 @@ public static class InfrastructureConfiguration
                 )
                 .UseSnakeCaseNamingConvention()
             );
-
-    internal static IServiceCollection AddRepositories(
-        this IServiceCollection services,
-        Assembly assembly)
-        => services
-            .Scan(scan => scan
-                .FromAssemblies(assembly)
-                .AddClasses(classes => classes
-                    .AssignableTo(typeof(IDomainRepository<>))
-                    .AssignableTo(typeof(IQueryRepository<>)))
-                .AsImplementedInterfaces()
-                .WithTransientLifetime());
 }
