@@ -6,7 +6,7 @@ using Comments.Domain.Repositories;
 using Common.Application;
 using MediatR;
 
-namespace ArticleCatalog.Application.Comments.Commands.Create;
+namespace Comments.Application.Comments.Commands.Create;
 internal sealed class CreateElasticComment(Comment comment) : IRequest<Result>
 {
     public Comment Comment => comment;
@@ -24,6 +24,7 @@ internal sealed class CreateElasticComment(Comment comment) : IRequest<Result>
             {
                 Id = request.Comment.Id,
                 Text = request.Comment.Text,
+                ArticleId = request.Comment.ArticleId,
                 AuthorId = articleQueryResponse.AuthorId,
                 Author = articleQueryResponse.Author,
                 CreatedOnUtc = request.Comment.CreatedOnUtc,

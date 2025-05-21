@@ -22,7 +22,7 @@ internal class ElasticCommentRepository : ElasticsearchRepository, IElasticComme
 
     public async Task<bool> CreateCommentAsync(ElasticComment comment)
     {
-        var response = await CreateAsync(_configuration.IndexName, comment);
+        var response = await CreateWithPipelineAsync(_configuration.IndexName, comment, "enrich-comments-with-article");
 
         if (!response.IsValidResponse)
         {

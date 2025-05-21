@@ -1,4 +1,3 @@
-using ArticleCatalog.Application.Comments.Commands.Create;
 using Comments.Application.Comments.Commands.Common;
 using Comments.Application.Comments.Commands.Create.Validators;
 using Comments.Domain.Repositories;

@@ -20,6 +20,16 @@ public abstract class ElasticsearchRepository
         var response = await _client.IndexAsync(document, idx => idx.Index(index));
         return response;
     }
+    
+    public async Task<IndexResponse> CreateWithPipelineAsync<T>(string index, T document, string pipeline) where T : class
+    {
+        var response = await _client
+            .IndexAsync(document, idx => idx
+                .Index(index)
+                .Pipeline(pipeline));
+
+        return response;
+    }
 
     public async Task<T?> ReadAsync<T>(string index, string id) where T : class
     {
