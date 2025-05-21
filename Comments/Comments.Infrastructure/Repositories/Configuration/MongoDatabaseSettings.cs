@@ -1,4 +1,4 @@
-﻿namespace Common.Infrastructure.Repositories.Configuration;
+﻿namespace Comments.Infrastructure.Repositories.Configuration;
 public class MongoStoreDatabaseSettings
 {
     public string ConnectionString { get; set; } = null!;

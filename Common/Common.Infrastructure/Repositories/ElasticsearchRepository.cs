@@ -1,5 +1,4 @@
-﻿using Common.Infrastructure.Repositories.Configuration;
-using Elastic.Clients.Elasticsearch;
+﻿using Elastic.Clients.Elasticsearch;
 
 namespace Common.Infrastructure.Repositories;
 public abstract class ElasticsearchRepository
@@ -7,10 +6,11 @@ public abstract class ElasticsearchRepository
     private readonly ElasticsearchClient _client;
 
     protected ElasticsearchRepository(
-        ElasticsearchConfiguration configuration)
+        string nodeUri,
+        string apiKey)
     {
-        var settings = new ElasticsearchClientSettings(new Uri(configuration.NodeUri))
-            .Authentication(new Elastic.Transport.Base64ApiKey(configuration.ApiKey));
+        var settings = new ElasticsearchClientSettings(new Uri(nodeUri))
+            .Authentication(new Elastic.Transport.Base64ApiKey(apiKey));
 
         _client = new ElasticsearchClient(settings);
     }

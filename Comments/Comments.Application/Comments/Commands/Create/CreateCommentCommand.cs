@@ -1,3 +1,4 @@
+using ArticleCatalog.Application.Comments.Commands.Create;
 using Comments.Application.Comments.Commands.Common;
 using Comments.Application.Comments.Commands.Create.Validators;
 using Comments.Domain.Repositories;
@@ -25,6 +26,7 @@ public class CreateCommentCommand : CommentCommand, IRequest<Result<CreateCommen
             var comment = await mediator.Send(new BuildCommentDomain(request), cancellationToken);
 
             await repository.CreateAsync(comment);
+            await mediator.Send(new CreateElasticComment(comment), cancellationToken);
 
             return new CreateCommentResponse(comment.Id);
         }

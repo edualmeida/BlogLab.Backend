@@ -15,7 +15,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "text": "blah blah blah",
+    "text": "2blah blah blah",
     "articleId": "01966415-0c39-7f6b-969d-f5074e363288",
     "authorId": "01966ea2-2a6d-7b33-a7a3-116247fc79f8"
 }

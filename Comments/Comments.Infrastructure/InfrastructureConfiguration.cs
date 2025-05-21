@@ -2,13 +2,15 @@
 using Comments.Infrastructure.Extensions;
 using Comments.Infrastructure.HttpServices;
 using Common.Infrastructure;
-using Common.Infrastructure.Repositories.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson;
 using System.Reflection;
+using Comments.Domain.Repositories;
+using Comments.Infrastructure.Repositories;
+using Comments.Infrastructure.Repositories.Configuration;
 
 namespace Comments.Infrastructure;
 public static class InfrastructureConfiguration
@@ -19,7 +21,9 @@ public static class InfrastructureConfiguration
         BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 
         return services
-            .Configure<MongoStoreDatabaseSettings>(configuration.GetSection("CommentsStoreDatabase"))
+            .Configure<MongoStoreDatabaseSettings>(configuration.GetSection("CommentsSettings:CommentsStoreDatabase"))
+            .Configure<ElasticsearchOptions>(configuration.GetSection("CommentsSettings:ElasticsearchConfiguration"))
+            .AddScoped<IElasticCommentRepository, ElasticCommentRepository>()
             .AddRepositories(Assembly.GetExecutingAssembly())
             .AddHttpClients(configuration);
     }

@@ -3,10 +3,10 @@ using Comments.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using Common.Infrastructure.Repositories.Configuration;
 using Comments.Domain.Models.Comments;
 using AutoMapper;
 using Comments.Application.Comments.Queries.Common;
+using Comments.Infrastructure.Repositories.Configuration;
 
 namespace Comments.Infrastructure.Repositories;
 internal sealed class CommentsRepository :

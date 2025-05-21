@@ -1,11 +1,9 @@
 ﻿namespace Comments.Domain.Models.Comments;
-public sealed class ElasticArticle
+public sealed class ElasticComment
 {
     public Guid Id { get; set; }
-    public string? Title { get; set; }
-    public string? Subtitle { get; set; }
     public string? Text { get; set; }
-    public string? Category { get; set; }
     public string? Author { get; set; }
+    public Guid AuthorId { get; set; }
     public DateTime CreatedOnUtc { get; set; }
 }

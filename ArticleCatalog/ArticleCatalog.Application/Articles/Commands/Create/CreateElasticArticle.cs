@@ -1,5 +1,4 @@
-﻿using ArticleCatalog.Application.Articles.Commands.Create.Validators;
-using ArticleCatalog.Application.Articles.Exceptions;
+﻿using ArticleCatalog.Application.Articles.Exceptions;
 using ArticleCatalog.Application.Articles.Queries.GetById;
 using ArticleCatalog.Domain.Models.Articles;
 using ArticleCatalog.Domain.Repositories;

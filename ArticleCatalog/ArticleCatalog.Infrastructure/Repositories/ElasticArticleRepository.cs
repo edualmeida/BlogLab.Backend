@@ -1,30 +1,29 @@
 ﻿using ArticleCatalog.Domain.Models.Articles;
 using ArticleCatalog.Domain.Repositories;
+using ArticleCatalog.Infrastructure.Repositories.Configuration;
 using Common.Infrastructure.Repositories;
-using Common.Infrastructure.Repositories.Configuration;
-using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using Microsoft.Extensions.Logging;
-using System.Linq.Expressions;
-using System;
+using Microsoft.Extensions.Options;
 
 namespace ArticleCatalog.Infrastructure.Repositories;
 public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticleRepository
 {
-    private const string IndexName = "articles";
     private readonly ILogger<ElasticArticleRepository> _logger;
+    private readonly ElasticsearchOptions _configuration;
 
     public ElasticArticleRepository(
         ILogger<ElasticArticleRepository> logger,
-        ElasticsearchConfiguration configuration
-        ) : base(configuration)
+        IOptions<ElasticsearchOptions> options
+        ) : base(options.Value.NodeUri, options.Value.ApiKey)
     {
         _logger = logger;
+        _configuration = options.Value;
     }
 
     public async Task<IReadOnlyCollection<Guid>> SearchArticlesAsync(string query)
     {
-        var articles = await SearchAsync<ElasticArticle>(IndexName, s => s
+        var articles = await SearchAsync<ElasticArticle>(_configuration.IndexName, s => s
             .Query(q => q
                 .Bool(b => b
                     .Should(
@@ -74,7 +73,7 @@ public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticle
 
     public async Task<bool> CreateArticleAsync(ElasticArticle article)
     {
-        var response = await CreateAsync(IndexName, article);
+        var response = await CreateAsync(_configuration.IndexName, article);
 
         if (!response.IsValidResponse)
         {
@@ -92,9 +91,10 @@ public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticle
 
         return true;
     }
+
     public async Task<IReadOnlyCollection<ElasticArticle>> GetArticlesByDateRangeAsync(DateTime fromUtc, DateTime toUtc)
     {
-        var articles = await SearchAsync<ElasticArticle>(IndexName, s => s
+        var articles = await SearchAsync<ElasticArticle>(_configuration.IndexName, s => s
             .Query(q => q
                 .Range(r => r
                     .Date(dr => dr
@@ -108,9 +108,10 @@ public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticle
 
         return articles;
     }
+
     public async Task<IReadOnlyCollection<ElasticArticle>> GetArticlesByAuthorAsync(string authorQuery)
     {
-        var articles = await SearchAsync<ElasticArticle>(IndexName, s => s
+        var articles = await SearchAsync<ElasticArticle>(_configuration.IndexName, s => s
             .Query(q => q
                 .Bool(b => b
                     .Should(
