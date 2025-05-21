@@ -5,6 +5,9 @@ using Common.Infrastructure;
 using Common.Infrastructure.Repositories.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson;
 using System.Reflection;
 
 namespace Comments.Infrastructure;
@@ -12,10 +15,14 @@ public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddCommentsInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
-        => services
+    {
+        BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+
+        return services
             .Configure<MongoStoreDatabaseSettings>(configuration.GetSection("CommentsStoreDatabase"))
             .AddRepositories(Assembly.GetExecutingAssembly())
             .AddHttpClients(configuration);
+    }
 
     private static IServiceCollection AddHttpClients(
         this IServiceCollection services,

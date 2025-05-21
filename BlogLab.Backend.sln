@@ -60,9 +60,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_HttpTests", "_HttpTests", "{A4F0F5E5-49D8-4D24-AA5F-A361A9E4C968}"
 	ProjectSection(SolutionItems) = preProject
 		articles.http = articles.http
-		categories.http = categories.http
-		http-client.env.json = http-client.env.json
 		bookmarks.http = bookmarks.http
+		categories.http = categories.http
+		comments.http = comments.http
+		http-client.env.json = http-client.env.json
 		identity.http = identity.http
 	EndProjectSection
 EndProject

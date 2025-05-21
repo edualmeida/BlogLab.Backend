@@ -1,0 +1,40 @@
+@apiKey=JEXqpyi4cPGWgH
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTk2NWY0OS00ZDNmLTcyMzQtYmQ0Yy1jOGY5ZDA4Y2RiNGIiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQGVkdWFyZG9sYWIuY29tIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3NDc4NDM3NjEsImV4cCI6MTc0ODQ0ODU2MSwiaWF0IjoxNzQ3ODQzNzYxfQ.eXq-od2QVO0OK3n8TstUudZMdMq0SncttLdIDZ5Q5kI
+
+### Get all
+
+GET {{HostAddress}}/{{CommentsPath}}?articleId=01966415-0c39-7f6b-969d-f5074e363288
+Accept: application/json
+X-Api-Key: {{apiKey}}
+Authorization: Bearer {{token}}
+
+### create comment
+
+POST {{HostAddress}}/{{CommentsPath}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "text": "blah blah blah",
+    "articleId": "01966415-0c39-7f6b-969d-f5074e363288",
+    "authorId": "01966ea2-2a6d-7b33-a7a3-116247fc79f8"
+}
+
+### update
+
+PUT {{HostAddress}}/{{CommentsPath}}/01963f07-ef24-7049-b9d0-ee7b898be9c7
+Authorization: Bearer {{token}}
+Content-Type: application/json
+{
+    "text": "text update 2",
+    "categoryid": "0195c34c-0b24-7f1d-b502-e7bee888734e",
+    "thumbnailid": "0195c34c-0b46-79e1-ae55-cf8fe370ff17"
+}
+
+### delete (logically)
+
+DELETE {{HostAddress}}/{{CommentsPath}}/01961b2a-6783-7cb2-bb59-cc5185f6fef0
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
