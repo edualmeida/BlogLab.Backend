@@ -2,8 +2,13 @@
 using Comments.Domain.Repositories;
 using Comments.Infrastructure.Repositories.Configuration;
 using Common.Infrastructure.Repositories;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.Aggregations;
+using Elastic.Clients.Elasticsearch.Nodes;
+using Elastic.Clients.Elasticsearch.QueryDsl;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Net.Sockets;
 
 namespace Comments.Infrastructure.Repositories;
 internal class ElasticCommentRepository : ElasticsearchRepository, IElasticCommentRepository
@@ -39,5 +44,37 @@ internal class ElasticCommentRepository : ElasticsearchRepository, IElasticComme
         _logger.LogInformation("Index document with ID {ResponseId} succeeded.", response.Id);
 
         return true;
+    }
+
+    /// <summary>
+    /// Dictionary<string, long> where:
+    /// Each key is a category name(like "Design Patterns"), 
+    /// Each value is the number of comments made on articles in that category.
+    /// </summary>
+    /// <returns></returns>
+    public async Task<Dictionary<string, long>> GetCommentCountsByCategoryAsync()
+    {
+        var response = await _elasticClient.SearchAsync<ElasticComment>(s => s
+            .Indices("comments")
+            .Size(0) // not to return any actual comment documents 
+            .Aggregations(agg => agg
+                .Add("by_category", a => a
+                    .Terms(t => t
+                        .Field("article.category.keyword")
+                        .Size(10)
+                    )
+                )
+            )
+        );
+
+        var result = new Dictionary<string, long>();
+        var states = response.Aggregations!.GetStringTerms("states");
+
+        foreach (var item in states!.Buckets)
+        {
+            result[item.Key.ToString()] = item.DocCount;
+        }
+
+        return result;
     }
 }

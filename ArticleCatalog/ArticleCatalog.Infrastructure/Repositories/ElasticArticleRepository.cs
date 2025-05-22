@@ -37,31 +37,31 @@ public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticle
                                 .Fuzziness("AUTO") // typo-tolerant and spelling mistakes
                             ),
                         sh => sh
-                            .MultiMatch(mm => mm
-                                .Fields(
-                                    f => f.Title!,
-                                    f => f.Subtitle!
-                                )
-                                .Query(query)
-                                .Type(TextQueryType.Phrase)
-                                .Slop(2) 
-                              // phrase matching with slop
-                             //  2 means up to two word positions can be swapped, inserted, or skipped between the query terms.
-                            /*
-                             * •	Query: "quick fox"
-                                •	Document: "the quick brown fox"
-                                •	With slop: 0, this does not match (because "quick" and "fox" are not adjacent).
-                                •	With slop: 1, this still does not match (they are two positions apart).
-                                •	With slop: 2, this does match (they are within two positions).
-                             * 
-                             */
-                            ),
-                        sh => sh
-                            .Match(m => m
-                                .Field(f => f.Category!)
-                                .Query(query)
-                                .Fuzziness("AUTO")
+                        .MultiMatch(mm => mm
+                            .Fields(
+                                f => f.Title!,
+                                f => f.Subtitle!
                             )
+                            .Query(query)
+                            .Type(TextQueryType.Phrase)
+                            .Slop(2) 
+                          // phrase matching with slop
+                         //  2 means up to two word positions can be swapped, inserted, or skipped between the query terms.
+                        /*
+                         * •	Query: "quick fox"
+                            •	Document: "the quick brown fox"
+                            •	With slop: 0, this does not match (because "quick" and "fox" are not adjacent).
+                            •	With slop: 1, this still does not match (they are two positions apart).
+                            •	With slop: 2, this does match (they are within two positions).
+                         * 
+                         */
+                        ),
+                        sh => sh
+                        .Match(m => m
+                            .Field(f => f.Category!)
+                            .Query(query)
+                            .Fuzziness("AUTO")
+                        )
                     )
                     .MinimumShouldMatch(1)
                 )

@@ -3,7 +3,7 @@
 namespace Common.Infrastructure.Repositories;
 public abstract class ElasticsearchRepository
 {
-    private readonly ElasticsearchClient _client;
+    protected readonly ElasticsearchClient _elasticClient;
 
     protected ElasticsearchRepository(
         string nodeUri,
@@ -12,18 +12,18 @@ public abstract class ElasticsearchRepository
         var settings = new ElasticsearchClientSettings(new Uri(nodeUri))
             .Authentication(new Elastic.Transport.Base64ApiKey(apiKey));
 
-        _client = new ElasticsearchClient(settings);
+        _elasticClient = new ElasticsearchClient(settings);
     }
 
     public async Task<IndexResponse> CreateAsync<T>(string index, T document) where T : class
     {
-        var response = await _client.IndexAsync(document, idx => idx.Index(index));
+        var response = await _elasticClient.IndexAsync(document, idx => idx.Index(index));
         return response;
     }
     
     public async Task<IndexResponse> CreateWithPipelineAsync<T>(string index, T document, string pipeline) where T : class
     {
-        var response = await _client
+        var response = await _elasticClient
             .IndexAsync(document, idx => idx
                 .Index(index)
                 .Pipeline(pipeline));
@@ -33,18 +33,18 @@ public abstract class ElasticsearchRepository
 
     public async Task<T?> ReadAsync<T>(string index, string id) where T : class
     {
-        var response = await _client.GetAsync<T>(id, g => g.Index(index));
+        var response = await _elasticClient.GetAsync<T>(id, g => g.Index(index));
         return response.Found ? response.Source : null;
     }
 
     public async Task<DeleteResponse> DeleteAsync<T>(string index, string id) where T : class
     {
-        var response = await _client.DeleteAsync<T>(id, d => d.Index(index));
+        var response = await _elasticClient.DeleteAsync<T>(id, d => d.Index(index));
         return response;
     }
     public async Task<IReadOnlyCollection<T>> SearchAsync<T>(string index, Func<SearchRequestDescriptor<T>, SearchRequestDescriptor<T>> selector) where T : class
     {
-        var response = await _client.SearchAsync<T>(s => selector(s.Index(index)));
+        var response = await _elasticClient.SearchAsync<T>(s => selector(s.Index(index)));
         return response.Documents;
     }
 }
