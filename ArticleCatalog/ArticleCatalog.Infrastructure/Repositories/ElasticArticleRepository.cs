@@ -10,12 +10,12 @@ namespace ArticleCatalog.Infrastructure.Repositories;
 public class ElasticArticleRepository : ElasticsearchRepository, IElasticArticleRepository
 {
     private readonly ILogger<ElasticArticleRepository> _logger;
-    private readonly ElasticsearchOptions _configuration;
+    private readonly ElasticsArticleOptions _configuration;
 
     public ElasticArticleRepository(
         ILogger<ElasticArticleRepository> logger,
-        IOptions<ElasticsearchOptions> options
-        ) : base(options.Value.NodeUri, options.Value.ApiKey)
+        IOptions<ElasticsArticleOptions> options
+        ) : base(options.Value)
     {
         _logger = logger;
         _configuration = options.Value;

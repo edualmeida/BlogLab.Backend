@@ -14,12 +14,12 @@ namespace Comments.Infrastructure.Repositories;
 internal class ElasticCommentRepository : ElasticsearchRepository, IElasticCommentRepository
 {
     private readonly ILogger<ElasticCommentRepository> _logger;
-    private readonly ElasticsearchOptions _configuration;
+    private readonly CommentsElasticsearchOptions _configuration;
 
     public ElasticCommentRepository(
         ILogger<ElasticCommentRepository> logger,
-        IOptions<ElasticsearchOptions> options
-        ) : base(options.Value.NodeUri, options.Value.ApiKey)
+        IOptions<CommentsElasticsearchOptions> options
+        ) : base(options.Value)
     {
         _logger = logger;
         _configuration = options.Value;

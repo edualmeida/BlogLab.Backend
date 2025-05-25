@@ -17,7 +17,7 @@ public static class InfrastructureConfiguration
     public static IServiceCollection AddArticleCatalogInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
         => services
-            .Configure<ElasticsearchOptions>(configuration.GetSection("ArticleCatalogSettings:ElasticsearchConfiguration"))
+            .Configure<ElasticsArticleOptions>(configuration.GetSection("ArticleCatalogSettings:ElasticsearchConfiguration"))
             .AddScoped<IElasticArticleRepository, ElasticArticleRepository>()
             .AddDabaseStorage<ArticleCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
             .AddTransient<IDbInitializer, ArticleCatalogDbInitializer>()

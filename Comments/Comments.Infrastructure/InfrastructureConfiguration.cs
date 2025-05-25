@@ -22,7 +22,7 @@ public static class InfrastructureConfiguration
 
         return services
             .Configure<CommentsMongoDatabaseOptions>(configuration.GetSection("CommentsSettings:CommentsStoreDatabase"))
-            .Configure<ElasticsearchOptions>(configuration.GetSection("CommentsSettings:ElasticsearchConfiguration"))
+            .Configure<CommentsElasticsearchOptions>(configuration.GetSection("CommentsSettings:ElasticsearchConfiguration"))
             .AddScoped<IElasticCommentRepository, ElasticCommentRepository>()
             .AddRepositories(Assembly.GetExecutingAssembly())
             .AddHttpClients(configuration);
