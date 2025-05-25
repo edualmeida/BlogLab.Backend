@@ -6,6 +6,6 @@ public interface ICommentDomainRepository : IDomainRepository<Comment>
 {
     Task CreateAsync(Comment newItem);
     Task UpdateAsync(Guid id, Comment updateItem);
-    Task RemoveAsync(Guid id);
+    Task DeleteAsync(Guid id);
     Task<Comment?> Find(Guid id);
 }

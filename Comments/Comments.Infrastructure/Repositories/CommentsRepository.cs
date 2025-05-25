@@ -1,52 +1,39 @@
-﻿using Comments.Application.Comments.Queries;
-using Comments.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
-using Comments.Domain.Models.Comments;
-using AutoMapper;
+﻿using AutoMapper;
+using Comments.Application.Comments.Queries;
 using Comments.Application.Comments.Queries.Common;
+using Comments.Domain.Models.Comments;
+using Comments.Domain.Repositories;
 using Comments.Infrastructure.Repositories.Configuration;
+using Common.Infrastructure.Repositories;
+using Microsoft.Extensions.Options;
 
 namespace Comments.Infrastructure.Repositories;
-internal sealed class CommentsRepository :
+internal sealed class CommentsRepository : MongoRepository<Comment>,
     ICommentDomainRepository, ICommentsQueryRepository
 {
-    private readonly IMongoCollection<Comment> commentsCollection;
-    private readonly IMapper mapper;
+    private readonly IMapper _mapper;
 
     public CommentsRepository(
         IMapper mapper,
-        IOptions<MongoStoreDatabaseSettings> settings)
+        IOptions<CommentsMongoDatabaseOptions> settings) : base(settings.Value)
     {
-        this.mapper = mapper;
-        var mongoClient = new MongoClient(
-            settings.Value.ConnectionString);
-
-        var mongoDatabase = mongoClient.GetDatabase(
-            settings.Value.DatabaseName);
-
-        commentsCollection = mongoDatabase.GetCollection<Comment>(
-            settings.Value.CollectionName);
+        _mapper = mapper;
     }
 
-    public async Task<List<CommentQueryResponse>> GetAll(Guid articleId) =>
-        mapper.Map<List<CommentQueryResponse>>(await commentsCollection.Find(_ => true).ToListAsync());
-
-    public async Task<CommentQueryResponse?> GetById(Guid id) =>
-        mapper.Map<CommentQueryResponse?>(await commentsCollection.Find(x => x.Id == id).FirstOrDefaultAsync());
-
     public async Task<Comment?> Find(Guid id) =>
-        await commentsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+        await GetByIdAsync(id);
 
-    public async Task CreateAsync(Comment newItem) =>
-        await commentsCollection.InsertOneAsync(newItem);
+    public async Task<List<CommentQueryResponse>> GetAll(Guid articleId)
+    {
+        var comments = await FindAsync(x => x.ArticleId == articleId);
 
-    public async Task UpdateAsync(Guid id, Comment updateItem) =>
-        await commentsCollection.ReplaceOneAsync(x => x.Id == id, updateItem);
+        return _mapper.Map<List<CommentQueryResponse>>(comments);
+    }
 
-    public async Task RemoveAsync(Guid id) =>
-        await commentsCollection.DeleteOneAsync(x => x.Id == id);
+    public async Task<CommentQueryResponse?> GetById(Guid id)
+    {
+        return _mapper.Map<CommentQueryResponse?>(await GetByIdAsync(id));
+    }
 
     public Task<Guid> Save(Comment entity, CancellationToken cancellationToken = default)
     {
