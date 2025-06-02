@@ -10,7 +10,7 @@ public class UpdateArticleCommand(Guid id, ArticleCommand articleCommand)
     public Guid Id => id;
     public ArticleCommand Article => articleCommand;
 
-    public class UpdateArticleCommandHandler(IMediator mediator, IArticleDomainRepository articleRepository) 
+    public class UpdateArticleCommandHandler(IMediator mediator, IArticlesDomainRepository articleRepository) 
         : IRequestHandler<UpdateArticleCommand, Result>
     {
         public async Task<Result> Handle(

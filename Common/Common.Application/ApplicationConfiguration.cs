@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Common.Application.Behaviours;
+using Common.Application.Behaviors;
 using Common.Application.Mapping;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

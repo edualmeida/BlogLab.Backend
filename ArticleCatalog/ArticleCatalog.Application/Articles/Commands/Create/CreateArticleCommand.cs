@@ -9,7 +9,7 @@ public class CreateArticleCommand : ArticleCommand, IRequest<Result<CreateArticl
 {
     public class CreateArticleCommandHandler(
         IMediator mediator,
-        IArticleDomainRepository articleRepository) : 
+        IArticlesDomainRepository articleRepository) : 
         IRequestHandler<CreateArticleCommand, Result<CreateArticleResponse>>
     {
         public async Task<Result<CreateArticleResponse>> Handle(

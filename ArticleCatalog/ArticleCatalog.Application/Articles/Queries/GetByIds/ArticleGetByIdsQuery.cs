@@ -9,7 +9,7 @@ public class ArticleGetByIdsQuery : IRequest<List<ArticleQueryResponse>>
     public List<Guid> ArticleIds { get; set; } = [];
     
     public class ArticleGetByIdsQueryHandler(
-        IArticleQueryRepository articleRepository,
+        IArticlesQueryRepository articleRepository,
         IAuthorsHttpService authorsHttpService) : IRequestHandler<ArticleGetByIdsQuery, List<ArticleQueryResponse>>
     {
         public async Task<List<ArticleQueryResponse>> Handle(

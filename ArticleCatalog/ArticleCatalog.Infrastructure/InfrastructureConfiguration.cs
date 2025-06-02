@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using ArticleCatalog.Application.Articles.Queries.GetPaginated;
 using ArticleCatalog.Application.Services;
 using ArticleCatalog.Domain.Repositories;
 using ArticleCatalog.Infrastructure.Extensions;
@@ -6,10 +6,14 @@ using ArticleCatalog.Infrastructure.HttpServices;
 using ArticleCatalog.Infrastructure.Persistence;
 using ArticleCatalog.Infrastructure.Repositories;
 using ArticleCatalog.Infrastructure.Repositories.Configuration;
+using Common.Domain;
 using Common.Infrastructure;
 using Common.Infrastructure.Authentication.HttpMessageHandlers;
+using Common.Infrastructure.Repositories;
+using Common.Infrastructure.Repositories.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace ArticleCatalog.Infrastructure;
 public static class InfrastructureConfiguration
@@ -19,6 +23,9 @@ public static class InfrastructureConfiguration
         => services
             .Configure<ElasticsArticleOptions>(configuration.GetSection("ArticleCatalogSettings:ElasticsearchConfiguration"))
             .AddScoped<IElasticArticleRepository, ElasticArticleRepository>()
+            .Configure<ArticleCacheOptions>(configuration.GetSection("ArticleCatalogSettings:RedisConfiguration"))
+            .AddSingleton<IRedisConnectionBuilder, RedisConnectionBuilder>()
+            .AddScoped<ICacheRepository<GetArticlesPaginatedResult>, RedisRepository<GetArticlesPaginatedResult>>()
             .AddDabaseStorage<ArticleCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
             .AddTransient<IDbInitializer, ArticleCatalogDbInitializer>()
             .AddHttpClients(configuration);

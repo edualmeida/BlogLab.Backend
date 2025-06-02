@@ -9,7 +9,7 @@ public class DeleteArticleCommand : IRequest<Result>
     public Guid Id { get; set; }
 
     public class DeleteArticleCommandHandler(
-        IArticleDomainRepository articleRepository) 
+        IArticlesDomainRepository articleRepository) 
         : IRequestHandler<DeleteArticleCommand, Result>
     {
         public async Task<Result> Handle(

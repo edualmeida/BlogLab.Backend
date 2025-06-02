@@ -12,7 +12,7 @@ public class BuildArticleDomain(Guid id, ArticleCommand articleCommand)
     public Guid Id => id;
     public ArticleCommand Article => articleCommand;
 
-    public class BuildArticleDomainHandler(IArticleDomainRepository articleRepository) 
+    public class BuildArticleDomainHandler(IArticlesDomainRepository articleRepository) 
         : IRequestHandler<BuildArticleDomain, Result<Article>>
     {
         public async Task<Result<Article>> Handle(

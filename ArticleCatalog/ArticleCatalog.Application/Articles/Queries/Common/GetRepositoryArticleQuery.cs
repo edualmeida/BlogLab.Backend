@@ -7,7 +7,7 @@ internal sealed class GetRepositoryArticleQuery : IRequest<ArticleQueryResponse>
     public Guid ArticleId { get; set; }
 
     public class GetArticleQueryHandler(
-        IArticleQueryRepository articleRepository) : 
+        IArticlesQueryRepository articleRepository) : 
         IRequestHandler<GetRepositoryArticleQuery, ArticleQueryResponse>
     {
         public async Task<ArticleQueryResponse> Handle(

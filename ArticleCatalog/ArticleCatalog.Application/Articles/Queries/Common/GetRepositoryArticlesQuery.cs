@@ -8,7 +8,7 @@ internal sealed class GetRepositoryArticlesQuery : IRequest<GetArticlesPaginated
     public int PageSize { get; set; } = 5;
 
     public class GetRepositoryArticlesQueryHandler(
-        IArticleQueryRepository articleRepository) : IRequestHandler<GetRepositoryArticlesQuery, GetArticlesPaginatedResult>
+        IArticlesQueryRepository articleRepository) : IRequestHandler<GetRepositoryArticlesQuery, GetArticlesPaginatedResult>
     {
         public async Task<GetArticlesPaginatedResult> Handle(
             GetRepositoryArticlesQuery request,

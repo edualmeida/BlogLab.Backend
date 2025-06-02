@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
-namespace Common.Application.Behaviours;
+namespace Common.Application.Behaviors;
 public class LoggingBehavior<TRequest, TResponse>(ILogger<TRequest> logger)
     : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {

@@ -9,11 +9,11 @@ using Common.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArticleCatalog.Infrastructure.Repositories;
-internal class ArticleRepository(
+internal class ArticlesRepository(
     ArticleCatalogDbContext db, 
     IMapper mapper) 
     : DataRepository<ArticleCatalogDbContext, Article>(db),
-    IArticleDomainRepository, IArticleQueryRepository
+    IArticlesDomainRepository, IArticlesQueryRepository
 {
     public async Task<Article?> Find(Guid id, CancellationToken cancellationToken = default)
         => await All()

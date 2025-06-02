@@ -4,7 +4,7 @@ using ArticleCatalog.Domain.Models.Articles;
 using Common.Application.Contracts;
 
 namespace ArticleCatalog.Application.Articles.Queries;
-public interface IArticleQueryRepository : IQueryRepository<Article>
+public interface IArticlesQueryRepository : IQueryRepository<Article>
 {
     Task<ArticleQueryResponse?> GetById(
         Guid id, 
