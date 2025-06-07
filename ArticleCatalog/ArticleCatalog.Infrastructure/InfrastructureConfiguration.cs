@@ -1,5 +1,4 @@
-﻿using ArticleCatalog.Application.Articles.Queries.GetPaginated;
-using ArticleCatalog.Application.Services;
+﻿using ArticleCatalog.Application.Services;
 using ArticleCatalog.Domain.Repositories;
 using ArticleCatalog.Infrastructure.Extensions;
 using ArticleCatalog.Infrastructure.HttpServices;
@@ -21,14 +20,26 @@ public static class InfrastructureConfiguration
     public static IServiceCollection AddArticleCatalogInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
         => services
-            .Configure<ElasticsArticleOptions>(configuration.GetSection("ArticleCatalogSettings:ElasticsearchConfiguration"))
-            .AddScoped<IElasticArticleRepository, ElasticArticleRepository>()
-            .Configure<ArticleCacheOptions>(configuration.GetSection("ArticleCatalogSettings:RedisConfiguration"))
-            .AddSingleton<IRedisConnectionBuilder, RedisConnectionBuilder>()
-            .AddScoped<ICacheRepository<GetArticlesPaginatedResult>, RedisRepository<GetArticlesPaginatedResult>>()
+            .ConfigureElasticsearch(configuration)
+            .ConfigureCaching(configuration)
             .AddDabaseStorage<ArticleCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
             .AddTransient<IDbInitializer, ArticleCatalogDbInitializer>()
             .AddHttpClients(configuration);
+
+    private static IServiceCollection ConfigureCaching(this IServiceCollection services, IConfiguration configuration)
+    {
+        return services
+            .Configure<ArticleCacheOptions>(configuration.GetSection("ArticleCatalogSettings:RedisConfiguration"))
+            .AddSingleton<IRedisConnectionBuilder, RedisConnectionBuilder>()
+            .AddScoped<ICacheRepository, RedisRepository>();
+    }
+
+    private static IServiceCollection ConfigureElasticsearch(this IServiceCollection services, IConfiguration configuration)
+    {
+        return services
+            .Configure<ElasticsArticleOptions>(configuration.GetSection("ArticleCatalogSettings:ElasticsearchConfiguration"))
+            .AddScoped<IElasticArticleRepository, ElasticArticleRepository>();
+    }
 
     private static IServiceCollection AddHttpClients(
         this IServiceCollection services,
@@ -36,21 +47,21 @@ public static class InfrastructureConfiguration
     {
         var httpClientSettings = configuration.GetArticleCatalogSettings();
         services.AddHttpClient<AuthorsHttpService>(httpClient =>
-            {
-                httpClient.BaseAddress = new Uri(httpClientSettings.AuthorsApiClientSettings.BaseUrl);
-                httpClient.ConfigureApiKey(configuration);
-            })
+        {
+            httpClient.BaseAddress = new Uri(httpClientSettings.AuthorsApiClientSettings.BaseUrl);
+            httpClient.ConfigureApiKey(configuration);
+        })
             .ConfigureDefaultHttpClientHandler()
             .AddTypedClient<IAuthorsHttpService, AuthorsHttpService>();
-        
+
         services.AddHttpClient<BookmarksHttpService>((sp, httpClient) =>
-            {
-                httpClient.BaseAddress = new Uri(httpClientSettings.BookmarksApiClientSettings.BaseUrl);
-            })
+        {
+            httpClient.BaseAddress = new Uri(httpClientSettings.BookmarksApiClientSettings.BaseUrl);
+        })
             .AddHttpMessageHandler<FowardAuthorizationHeaderHandler>()
             .ConfigureDefaultHttpClientHandler()
             .AddTypedClient<IBookmarksHttpService, BookmarksHttpService>();
-        
+
         return services;
     }
 }

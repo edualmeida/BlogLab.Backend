@@ -1,5 +1,6 @@
 using ArticleCatalog.Application.Articles.Commands.Common;
 using ArticleCatalog.Application.Articles.Commands.Create.Validators;
+using ArticleCatalog.Application.Articles.Common;
 using ArticleCatalog.Domain.Repositories;
 using Common.Application;
 using MediatR;
@@ -26,6 +27,7 @@ public class CreateArticleCommand : ArticleCommand, IRequest<Result<CreateArticl
             var articleId = await articleRepository.Save(article);
 
             await mediator.Send(new CreateElasticArticle(article), cancellationToken);
+            await mediator.Send(new InvalidateCacheRequest { CacheKey = Constants.ArticlesPaginatedCacheKey }, cancellationToken);
 
             return new CreateArticleResponse(articleId);
         }

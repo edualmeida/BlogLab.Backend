@@ -4,8 +4,7 @@ using StackExchange.Redis;
 using System.Text.Json;
 
 namespace Common.Infrastructure.Repositories;
-public sealed class RedisRepository<T> : ICacheRepository<T>
-    where T : class
+public sealed class RedisRepository : ICacheRepository
 {
     private readonly IDatabase _db;
     private readonly JsonSerializerOptions _serializerOptions;
@@ -28,17 +27,17 @@ public sealed class RedisRepository<T> : ICacheRepository<T>
         };
     }
 
-    public async Task SetAsync(string key, T value, TimeSpan? expiry = null)
+    public async Task SetAsync<T>(string key, T value, TimeSpan? expiry = null)
     {
         var json = JsonSerializer.Serialize(value, _serializerOptions);
         await _db.StringSetAsync(key, json, expiry);
     }
 
-    public async Task<T?> GetAsync(string key)
+    public async Task<T?> GetAsync<T>(string key)
     {
         var value = await _db.StringGetAsync(key);
         if (value.IsNullOrEmpty)
-            return null;
+            return default;
 
         return JsonSerializer.Deserialize<T>(value!, _serializerOptions);
     }

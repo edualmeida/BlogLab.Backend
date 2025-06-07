@@ -1,13 +1,14 @@
-﻿using ArticleCatalog.Application.Articles.Queries.GetPaginated;
+﻿using ArticleCatalog.Application.Articles.Common;
+using ArticleCatalog.Application.Articles.Queries.GetPaginated;
 using Common.Domain;
 using MediatR;
 
 namespace ArticleCatalog.Application.Behaviors;
 public class GetArticlesCacheBehavior(
-    ICacheRepository<GetArticlesPaginatedResult> cacheRepository) : 
+    ICacheRepository cacheRepository) : 
     IPipelineBehavior<GetArticlesPaginatedQuery, GetArticlesPaginatedResult>
 {
-    private const string CacheKey = "GetArticlesPaginatedQuery";
+    private const string CacheKey = Constants.ArticlesPaginatedCacheKey;
 
     public async Task<GetArticlesPaginatedResult> Handle(
         GetArticlesPaginatedQuery request, 
@@ -19,7 +20,7 @@ public class GetArticlesCacheBehavior(
             return await next(); // Cache only the first page
         }
 
-        var cachedResult = await cacheRepository.GetAsync(CacheKey);
+        var cachedResult = await cacheRepository.GetAsync<GetArticlesPaginatedResult>(CacheKey);
         if (cachedResult != null)
         {
             return cachedResult;
