@@ -20,6 +20,7 @@ public static class InfrastructureConfiguration
     public static IServiceCollection AddArticleCatalogInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
         => services
+            .AddCommonInfrastructure(configuration)
             .ConfigureElasticsearch(configuration)
             .ConfigureCaching(configuration)
             .AddDabaseStorage<ArticleCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
@@ -29,7 +30,7 @@ public static class InfrastructureConfiguration
     private static IServiceCollection ConfigureCaching(this IServiceCollection services, IConfiguration configuration)
     {
         return services
-            .Configure<ArticleCacheOptions>(configuration.GetSection("ArticleCatalogSettings:RedisConfiguration"))
+            .Configure<ArticleCacheOptions>(configuration.GetSection("RedisConfiguration"))
             .AddSingleton<IRedisConnectionBuilder, RedisConnectionBuilder>()
             .AddScoped<ICacheRepository, RedisRepository>();
     }
@@ -37,7 +38,7 @@ public static class InfrastructureConfiguration
     private static IServiceCollection ConfigureElasticsearch(this IServiceCollection services, IConfiguration configuration)
     {
         return services
-            .Configure<ElasticsArticleOptions>(configuration.GetSection("ArticleCatalogSettings:ElasticsearchConfiguration"))
+            .Configure<ElasticsArticleOptions>(configuration.GetSection("ElasticsearchConfiguration"))
             .AddScoped<IElasticArticleRepository, ElasticArticleRepository>();
     }
 

@@ -18,7 +18,11 @@ public static class WebConfiguration
         services
             .AddValidatorsFromAssemblyContaining(applicationConfigurationType)
             .AddScoped<ICurrentUserService, CurrentUserService>()
-            .AddAutoMapperProfile(assembly);
+            .AddAutoMapperProfile(assembly)
+            .AddHttpContextAccessor();
+
+        services.AddControllers();
+        services.AddOpenApi();
 
         return services;
     }

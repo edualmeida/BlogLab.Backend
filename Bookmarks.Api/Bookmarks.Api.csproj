@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>1a075171-f56c-4504-abdf-1bec82381129</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1-Preview.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlogLab.ServiceDefaults\BlogLab.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\Bookmarks\Bookmarks.Application\Bookmarks.Application.csproj" />
+    <ProjectReference Include="..\Bookmarks\Bookmarks.Domain\Bookmarks.Domain.csproj" />
+    <ProjectReference Include="..\Bookmarks\Bookmarks.Infrastructure\Bookmarks.Infrastructure.csproj" />
+    <ProjectReference Include="..\Common\Common.Web\Common.Web.csproj" />
+  </ItemGroup>
+
+</Project>

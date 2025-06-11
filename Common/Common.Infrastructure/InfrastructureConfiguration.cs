@@ -7,10 +7,23 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace Common.Infrastructure;
 public static class InfrastructureConfiguration
 {
+    public static IServiceCollection AddCommonInfrastructure(
+        this IServiceCollection services, IConfiguration configuration)
+    {
+        services
+            .AddOpenTelemetry(configuration)
+            .AddAuthenticationHandlers(configuration);
+
+        return services;
+    }
+
     public static IServiceCollection AddDabaseStorage<TDbContext>(
         this IServiceCollection services,
         IConfiguration configuration,
@@ -81,4 +94,51 @@ public static class InfrastructureConfiguration
                 )
                 .UseSnakeCaseNamingConvention()
             );
+
+
+    public static IServiceCollection AddOpenTelemetry(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var tracingOtlpEndpoint = configuration["OTLP_ENDPOINT_URL"];
+        var otel = services.AddOpenTelemetry();
+
+        // Configure OpenTelemetry Resources with the application name
+        otel.ConfigureResource(resource => resource
+            .AddService(serviceName: "bloglab"));
+
+        // Add Metrics for ASP.NET Core and our custom metrics and export to Prometheus
+        otel.WithMetrics(metrics => metrics
+            // Metrics provider from OpenTelemetry
+            .AddAspNetCoreInstrumentation()
+            //.AddMeter(greeterMeter.Name)
+            // Metrics provides by ASP.NET Core in .NET 8
+            .AddMeter("Microsoft.AspNetCore.Hosting")
+            .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
+            // Metrics provided by System.Net libraries
+            .AddMeter("System.Net.Http")
+            .AddMeter("System.Net.NameResolution")
+            .AddPrometheusExporter());
+
+        // Add Tracing for ASP.NET Core and our custom ActivitySource and export to Jaeger
+        otel.WithTracing(tracing =>
+        {
+            tracing.AddAspNetCoreInstrumentation();
+            tracing.AddHttpClientInstrumentation();
+            tracing.AddSource("OtPrGrYa.Example");
+            if (tracingOtlpEndpoint != null)
+            {
+                tracing.AddOtlpExporter(otlpOptions =>
+                {
+                    otlpOptions.Endpoint = new Uri(tracingOtlpEndpoint);
+                });
+            }
+            else
+            {
+                tracing.AddConsoleExporter();
+            }
+        });
+
+        return services;
+    }
 }

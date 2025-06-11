@@ -20,6 +20,7 @@ using ProjectStartup;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.AddServiceDefaults();
 
 builder
     .Services
@@ -69,5 +70,7 @@ var app = builder.Build();
 app
     .SetupWebApplication(app.Environment)
     .InitializeDatabase(builder.Configuration);
+
+app.MapPrometheusScrapingEndpoint();
 
 await app.RunAsync();
