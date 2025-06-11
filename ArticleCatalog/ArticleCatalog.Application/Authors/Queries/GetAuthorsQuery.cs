@@ -5,7 +5,6 @@ using MediatR;
 namespace ArticleCatalog.Application.Authors.Queries;
 public class GetAuthorsQuery: IRequest<List<AuthorResponse>>
 {
-
     public class GetAuthorsQueryHandler(
         IAuthorsHttpService authorsHttpService) : IRequestHandler<GetAuthorsQuery, List<AuthorResponse>>
     {

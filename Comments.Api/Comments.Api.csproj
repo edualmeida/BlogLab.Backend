@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>b1902fe7-5457-4b15-aecf-8a7a4ac1de43</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1-Preview.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlogLab.ServiceDefaults\BlogLab.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\Comments\Comments.Application\Comments.Application.csproj" />
+    <ProjectReference Include="..\Comments\Comments.Domain\Comments.Domain.csproj" />
+    <ProjectReference Include="..\Comments\Comments.Infrastructure\Comments.Infrastructure.csproj" />
+    <ProjectReference Include="..\Common\Common.Web\Common.Web.csproj" />
+  </ItemGroup>
+
+</Project>

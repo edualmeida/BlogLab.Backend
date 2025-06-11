@@ -18,6 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\ArticleCatalog.Api\ArticleCatalog.Api.csproj" />
     <ProjectReference Include="..\Bookmarks.Api\Bookmarks.Api.csproj" />
+    <ProjectReference Include="..\Comments.Api\Comments.Api.csproj" />
+    <ProjectReference Include="..\Identity.Api\Identity.Api.csproj" />
   </ItemGroup>
 
 </Project>
