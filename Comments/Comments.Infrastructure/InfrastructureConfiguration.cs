@@ -21,6 +21,7 @@ public static class InfrastructureConfiguration
         BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 
         return services
+            .AddCommonInfrastructure(configuration)
             .Configure<CommentsMongoDatabaseOptions>(configuration.GetSection("CommentsSettings:CommentsStoreDatabase"))
             .Configure<CommentsElasticsearchOptions>(configuration.GetSection("CommentsSettings:ElasticsearchConfiguration"))
             .AddScoped<IElasticCommentRepository, ElasticCommentRepository>()

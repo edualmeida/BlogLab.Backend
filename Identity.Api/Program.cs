@@ -2,6 +2,7 @@
 using Identity.Application;
 using Identity.Infrastructure;
 using Identity.Domain;
+using Scalar.AspNetCore;
 
 namespace Identity.Api;
 public class Program
@@ -25,6 +26,7 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+            app.MapScalarApiReference();
         }
 
         app.UseHttpsRedirection();

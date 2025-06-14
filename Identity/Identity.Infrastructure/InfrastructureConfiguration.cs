@@ -18,6 +18,7 @@ public static class InfrastructureConfiguration
         this IServiceCollection services,
         IConfiguration configuration)
         => services
+            .AddCommonInfrastructure(configuration)
             .AddIdentity()
             .AddDabaseStorage<IdentityDbContext>(
                 configuration,
