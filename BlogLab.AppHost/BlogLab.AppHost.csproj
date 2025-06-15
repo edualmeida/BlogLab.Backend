@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
 
@@ -20,6 +20,10 @@
     <ProjectReference Include="..\Bookmarks.Api\Bookmarks.Api.csproj" />
     <ProjectReference Include="..\Comments.Api\Comments.Api.csproj" />
     <ProjectReference Include="..\Identity.Api\Identity.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="OpenTelemetryCollector\" />
   </ItemGroup>
 
 </Project>

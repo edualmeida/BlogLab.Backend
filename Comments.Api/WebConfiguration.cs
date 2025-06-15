@@ -7,5 +7,5 @@ public static class WebConfiguration
 {
     public static IServiceCollection AddCommentsWebComponents(
         this IServiceCollection services)
-        => services.AddWebComponents(typeof(CommentsApplicationConfiguration), Assembly.GetExecutingAssembly());
+        => services.AddCommonWebComponents(typeof(CommentsApplicationConfiguration), Assembly.GetExecutingAssembly());
 }

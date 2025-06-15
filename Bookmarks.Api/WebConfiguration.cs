@@ -8,5 +8,5 @@ public static class WebConfiguration
 {
     public static IServiceCollection AddBookmarksWebComponents(
         this IServiceCollection services)
-        => services.AddWebComponents(typeof(BookmarksApplicationConfiguration), Assembly.GetExecutingAssembly());
+        => services.AddCommonWebComponents(typeof(BookmarksApplicationConfiguration), Assembly.GetExecutingAssembly());
 }

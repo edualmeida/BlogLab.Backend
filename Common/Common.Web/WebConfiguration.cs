@@ -15,7 +15,7 @@ using System.Reflection;
 namespace Common.Web;
 public static class WebConfiguration
 {
-    public static IServiceCollection AddWebComponents(
+    public static IServiceCollection AddCommonWebComponents(
         this IServiceCollection services,
         Type applicationConfigurationType,
         Assembly assembly)
@@ -24,7 +24,8 @@ public static class WebConfiguration
             .AddValidatorsFromAssemblyContaining(applicationConfigurationType)
             .AddScoped<ICurrentUserService, CurrentUserService>()
             .AddAutoMapperProfile(assembly)
-            .AddHttpContextAccessor();
+            .AddHttpContextAccessor()
+            .AddExceptionHandlers();
 
         services.AddControllers();
         services.AddOpenApi();

@@ -8,6 +8,6 @@ public static class WebConfiguration
 {
     public static IServiceCollection AddIdentityWebComponents(
         this IServiceCollection services)
-        => services.AddWebComponents(
+        => services.AddCommonWebComponents(
             typeof(IdentityApplicationConfiguration), Assembly.GetExecutingAssembly());
 }
