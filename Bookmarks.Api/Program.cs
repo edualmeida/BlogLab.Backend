@@ -1,6 +1,7 @@
-using Bookmarks.Domain;
 using Bookmarks.Application;
+using Bookmarks.Domain;
 using Bookmarks.Infrastructure;
+using Common.Web;
 
 namespace Bookmarks.Api;
 public class Program
@@ -18,20 +19,7 @@ public class Program
 
         var app = builder.Build();
 
-        app.MapDefaultEndpoints();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-
-        app.MapControllers();
+        app.UseCommonWebComponents();
 
         app.Run();
     }

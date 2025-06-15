@@ -18,7 +18,7 @@
     <ProjectReference Include="..\ArticleCatalog\ArticleCatalog.Application\ArticleCatalog.Application.csproj" />
     <ProjectReference Include="..\ArticleCatalog\ArticleCatalog.Infrastructure\ArticleCatalog.Infrastructure.csproj" />
     <ProjectReference Include="..\BlogLab.ServiceDefaults\BlogLab.ServiceDefaults.csproj" />
-    <ProjectReference Include="..\Comments\Comments.Web\Comments.Web.csproj" />
+    <ProjectReference Include="..\Common\Common.Web\Common.Web.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Scalar.AspNetCore;
+//using Serilog;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -52,6 +53,9 @@ public static class WebConfiguration
                 })
             );
         }
+
+        app.UseExceptionHandler();
+        //app.UseSerilogRequestLogging();
 
         app.UseHttpsRedirection();
 

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.ServiceDiscovery;
 using OpenTelemetry;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
@@ -54,10 +55,20 @@ namespace Microsoft.Extensions.Hosting
                 {
                     metrics.AddAspNetCoreInstrumentation()
                         .AddHttpClientInstrumentation()
-                        .AddRuntimeInstrumentation();
+                        .AddRuntimeInstrumentation()
+                        .AddMeter(
+                            "Microsoft.AspNetCore.Hosting",
+                            "Microsoft.AspNetCore.Server.Kestrel",
+                            "System.Net.Http",
+                            "ArticleCatalog.Api");
                 })
                 .WithTracing(tracing =>
                 {
+                    if (builder.Environment.IsDevelopment())
+                    {
+                        tracing.SetSampler<AlwaysOnSampler>();
+                    }
+
                     tracing.AddSource(builder.Environment.ApplicationName)
                         .AddAspNetCoreInstrumentation()
                         // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
@@ -77,7 +88,12 @@ namespace Microsoft.Extensions.Hosting
             if (useOtlpExporter)
             {
                 builder.Services.AddOpenTelemetry().UseOtlpExporter();
+                //builder.Services.Configure<OpenTelemetryLoggerOptions>(logging => logging.AddOtlpExporter());
+                //builder.Services.ConfigureOpenTelemetryMeterProvider(metrics => metrics.AddOtlpExporter());
+                //builder.Services.ConfigureOpenTelemetryTracerProvider(tracing => tracing.AddOtlpExporter());
             }
+
+            builder.Services.AddOpenTelemetry().WithMetrics(x => x.AddPrometheusExporter());
 
             // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
             //if (!string.IsNullOrEmpty(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
