@@ -15,9 +15,12 @@
         <PackageReference Include="FluentValidation" Version="11.11.0" />
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
         <PackageReference Include="MediatR" Version="12.4.1" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
+		<PackageReference Include="Scalar.AspNetCore" Version="2.4.13" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\BlogLab.ServiceDefaults\BlogLab.ServiceDefaults.csproj" />
       <ProjectReference Include="..\Common.Infrastructure\Common.Infrastructure.csproj" />
     </ItemGroup>
 

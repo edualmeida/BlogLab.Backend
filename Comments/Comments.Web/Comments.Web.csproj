@@ -10,6 +10,8 @@
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
+		<PackageReference Include="Scalar.AspNetCore" Version="2.4.13" />
     </ItemGroup>
 
     <ItemGroup>

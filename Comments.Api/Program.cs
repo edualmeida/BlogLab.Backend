@@ -1,6 +1,7 @@
 using Comments.Infrastructure;
 using Comments.Domain;
 using Comments.Application;
+using Common.Web;
 
 namespace Comments.Api;
 public class Program
@@ -18,20 +19,7 @@ public class Program
 
         var app = builder.Build();
 
-        app.MapDefaultEndpoints();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-
-        app.MapControllers();
+        app.UseCommonWebComponents();
 
         app.Run();
     }

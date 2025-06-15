@@ -26,12 +26,12 @@ public static class ApplicationBuilderExtensions
         if (env.IsDevelopment())
         {
             // app.UseDeveloperExceptionPage(); we are using custom exception handler with Services.AddExceptionHandler
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Article Shop v1");
-                options.EnablePersistAuthorization();
-            });
+            //app.UseSwagger();
+            //app.UseSwaggerUI(options =>
+            //{
+            //    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Article Shop v1");
+            //    options.EnablePersistAuthorization();
+            //});
         }
 
         return app;

@@ -10,6 +10,6 @@ builder.AddProject<Projects.ArticleCatalog_Api>("articles")
     .WaitFor(bookmarks)
     .WaitFor(identity);
 
-builder.AddProject<Projects.Comments_Api>("comments-api");
+builder.AddProject<Projects.Comments_Api>("comments");
 
 builder.Build().Run();
