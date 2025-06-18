@@ -12,6 +12,8 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         builder.AddServiceDefaults();
 
+        builder.AddRedisClient(connectionName: "BlogLabCache");
+
         builder.Services
             .AddArticleCatalogDomain()
             .AddArticleCatalogApplication(builder.Configuration)

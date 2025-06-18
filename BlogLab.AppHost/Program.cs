@@ -16,6 +16,11 @@ var grafana = builder.AddContainer("grafana", "grafana/grafana")
 builder.AddOpenTelemetryCollector("otelcollector", "../otelcollector/config.yaml")
        .WithEnvironment("PROMETHEUS_ENDPOINT", $"{prometheus.GetEndpoint("http")}/api/v1/otlp");
 
+var redis = builder
+    .AddRedis("BlogLabCache")
+    .WithDataVolume(isReadOnly: false)
+    .WithRedisInsight();
+
 var bookmarks = builder.AddProject<Projects.Bookmarks_Api>("bookmarks");
 var identity = builder.AddProject<Projects.Identity_Api>("identity");
 
@@ -25,6 +30,7 @@ builder.AddProject<Projects.ArticleCatalog_Api>("articles")
     .WithExternalHttpEndpoints()
     .WithReference(bookmarks)
     .WithReference(identity)
+    .WithReference(redis)
     .WaitFor(bookmarks)
     .WaitFor(identity)
     .WithEnvironment("GRAFANA_URL", grafana.GetEndpoint("http")); ;

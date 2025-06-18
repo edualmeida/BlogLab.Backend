@@ -1,5 +1,4 @@
 ﻿using Common.Domain;
-using Common.Infrastructure.Repositories.Configuration;
 using StackExchange.Redis;
 using System.Text.Json;
 
@@ -9,17 +8,12 @@ public sealed class RedisRepository : ICacheRepository
     private readonly IDatabase _db;
     private readonly JsonSerializerOptions _serializerOptions;
 
-    public RedisRepository(IRedisConnectionBuilder redisConnectionBuilder)
+    public RedisRepository(IConnectionMultiplexer connectionMultiplexer)
     {
-        if (redisConnectionBuilder is null)
-            throw new ArgumentNullException(nameof(redisConnectionBuilder));
-
-        var connection = redisConnectionBuilder.BuildConnection();
-
-        if (connection is null || !connection.IsConnected)
+        if (connectionMultiplexer is null || !connectionMultiplexer.IsConnected)
             throw new InvalidOperationException("Failed to connect to Redis server.");
 
-        _db = connection.GetDatabase();
+        _db = connectionMultiplexer.GetDatabase();
         _serializerOptions = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,

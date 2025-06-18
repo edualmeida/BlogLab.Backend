@@ -30,8 +30,8 @@ public static class InfrastructureConfiguration
     private static IServiceCollection ConfigureCaching(this IServiceCollection services, IConfiguration configuration)
     {
         return services
-            .Configure<ArticleCacheOptions>(configuration.GetSection("RedisConfiguration"))
-            .AddSingleton<IRedisConnectionBuilder, RedisConnectionBuilder>()
+            //.Configure<ArticleCacheOptions>(configuration.GetSection("RedisConfiguration"))
+            //.AddSingleton<IRedisConnectionBuilder, RedisConnectionBuilder>()
             .AddScoped<ICacheRepository, RedisRepository>();
     }
 
