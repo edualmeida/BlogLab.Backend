@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
-namespace BlogLab.AppHost;
+namespace BlogLab.AppHost.Extensions;
 public static class DevCertHostingExtensions
 {
     /// <summary>

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Aspire.Hosting.ApplicationModel;
+using BlogLab.AppHost.Extensions;
+using Microsoft.Extensions.Hosting;
 
 namespace BlogLab.AppHost.OpenTelemetryCollector;
 
@@ -9,6 +11,15 @@ public static class OpenTelemetryCollectorResourceBuilderExtensions
     private const string DashboardOtlpUrlDefaultValue = "http://localhost:18889";
     private const string OTelCollectorImageName = "ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib";
     private const string OTelCollectorImageTag = "0.123.0";
+
+    public static IResourceBuilder<ContainerResource> AddOpenTelemetry(
+    this IDistributedApplicationBuilder builder,
+    EndpointReference prometheusEndpoint)
+    {
+        return builder
+            .AddOpenTelemetryCollector("otelcollector", "../otelcollector/config.yaml")
+            .WithEnvironment("PROMETHEUS_ENDPOINT", $"{prometheusEndpoint}/api/v1/otlp");
+    }
 
     public static IResourceBuilder<OpenTelemetryCollectorResource> AddOpenTelemetryCollector(this IDistributedApplicationBuilder builder, string name, string configFileLocation)
     {
