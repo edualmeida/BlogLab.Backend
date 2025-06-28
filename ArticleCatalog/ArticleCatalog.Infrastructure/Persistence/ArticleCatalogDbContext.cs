@@ -5,7 +5,7 @@ using ArticleCatalog.Domain.Models.Thumbnails;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArticleCatalog.Infrastructure.Persistence;
-internal class ArticleCatalogDbContext : BaseDbContext<ArticleCatalogDbContext>
+public class ArticleCatalogDbContext : BaseDbContext<ArticleCatalogDbContext>
 {
     public ArticleCatalogDbContext(
         DbContextOptions<ArticleCatalogDbContext> options)

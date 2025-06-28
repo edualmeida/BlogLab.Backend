@@ -24,6 +24,21 @@ var redis = builder
     .WithDataVolume(isReadOnly: false)
     .WithRedisInsight();
 
+var username = builder.AddParameter("username", "postgres", secret: true);
+var password = builder.AddParameter("password", "1q2w3e4r", secret: true);
+
+var postgres = builder.AddPostgres("postgres", username, password)
+    .WithHostPort(54285)
+    .WithDataVolume(isReadOnly: false)
+    //.WithPgWeb()
+    .WithLifetime(ContainerLifetime.Persistent);
+
+var blogLabDb = postgres.AddDatabase("bloglab");
+
+var migrationService = builder.AddProject<Projects.BlogLab_MigrationService>("migrationservice")
+    .WithReference(blogLabDb)
+    .WaitFor(blogLabDb);
+
 var bookmarks = builder.AddProject<Projects.Bookmarks_Api>("bookmarks");
 var identity = builder.AddProject<Projects.Identity_Api>("identity");
 

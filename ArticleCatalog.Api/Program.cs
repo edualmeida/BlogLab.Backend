@@ -2,6 +2,7 @@
 using ArticleCatalog.Application;
 using ArticleCatalog.Domain;
 using ArticleCatalog.Infrastructure;
+using ArticleCatalog.Infrastructure.Persistence;
 using Common.Web;
 
 namespace ArticleCatalog.Api;
@@ -19,6 +20,8 @@ public class Program
             .AddArticleCatalogApplication(builder.Configuration)
             .AddArticleCatalogInfrastructure(builder.Configuration)
             .AddArticleCatalogWebComponents();
+
+        builder.EnrichNpgsqlDbContext<ArticleCatalogDbContext>();
 
         var app = builder.Build();
 

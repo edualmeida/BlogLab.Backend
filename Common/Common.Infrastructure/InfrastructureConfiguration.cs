@@ -30,7 +30,7 @@ public static class InfrastructureConfiguration
         Assembly assembly)
         where TDbContext : DbContext
         => services
-            .AddDatabase<TDbContext>(configuration)
+            .AddDatabase<TDbContext>(configuration, "bloglab")
             .AddRepositories(assembly);
 
     public static IServiceCollection AddAuthenticationHandlers(
@@ -81,15 +81,16 @@ public static class InfrastructureConfiguration
                 .AsImplementedInterfaces()
                 .WithTransientLifetime());
 
-    private static IServiceCollection AddDatabase<TDbContext>(
+    public static IServiceCollection AddDatabase<TDbContext>(
         this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        string connectionStringName)
         where TDbContext : DbContext
         => services
             .AddScoped<DbContext, TDbContext>()
             .AddDbContext<TDbContext>(options => options
                 .UseNpgsql(
-                    configuration.GetConnectionString("DefaultConnection")!, 
+                    configuration.GetConnectionString(connectionStringName)!, 
                     sqlOptions => sqlOptions.MigrationsAssembly(typeof(TDbContext).Assembly.FullName)
                 )
                 .UseSnakeCaseNamingConvention()

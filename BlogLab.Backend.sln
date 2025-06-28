@@ -83,6 +83,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Api", "Identity.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comments.Api", "Comments.Api\Comments.Api.csproj", "{3FCD40B1-AA6D-2A70-6AA5-3235900D38CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogLab.MigrationService", "Database\BlogLab.MigrationService\BlogLab.MigrationService.csproj", "{32C773C7-55E1-39F8-0BA0-E304E7CCED07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -197,6 +199,10 @@ Global
 		{3FCD40B1-AA6D-2A70-6AA5-3235900D38CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FCD40B1-AA6D-2A70-6AA5-3235900D38CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FCD40B1-AA6D-2A70-6AA5-3235900D38CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32C773C7-55E1-39F8-0BA0-E304E7CCED07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32C773C7-55E1-39F8-0BA0-E304E7CCED07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32C773C7-55E1-39F8-0BA0-E304E7CCED07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32C773C7-55E1-39F8-0BA0-E304E7CCED07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

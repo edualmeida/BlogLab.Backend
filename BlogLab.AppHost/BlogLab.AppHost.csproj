@@ -10,12 +10,14 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="9.3.1" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.3.1" />
     <PackageReference Include="Aspire.Hosting.Redis" Version="9.3.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArticleCatalog.Api\ArticleCatalog.Api.csproj" />
     <ProjectReference Include="..\Bookmarks.Api\Bookmarks.Api.csproj" />
     <ProjectReference Include="..\Comments.Api\Comments.Api.csproj" />
+    <ProjectReference Include="..\Database\BlogLab.MigrationService\BlogLab.MigrationService.csproj" />
     <ProjectReference Include="..\Identity.Api\Identity.Api.csproj" />
   </ItemGroup>
   <ItemGroup>
