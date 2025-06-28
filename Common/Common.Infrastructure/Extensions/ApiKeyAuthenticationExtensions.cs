@@ -20,7 +20,7 @@ internal static class ApiKeyAuthenticationExtensions
     {
         authentication.AddScheme<ApiKeySchemeOptions, ApiKeyHandler>(ApiKeyConstants.SchemeName, options =>
         {
-            configuration.GetRequiredSection(Constants.ApiKeyOptions).Bind(options);
+            configuration.GetRequiredSection(InfrastructureConstants.ApiKeyOptions).Bind(options);
         });
         return authentication;
     }

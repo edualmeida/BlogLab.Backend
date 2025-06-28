@@ -3,6 +3,7 @@ using ArticleCatalog.Application;
 using ArticleCatalog.Domain;
 using ArticleCatalog.Infrastructure;
 using ArticleCatalog.Infrastructure.Persistence;
+using Common.Infrastructure;
 using Common.Web;
 
 namespace ArticleCatalog.Api;
@@ -13,15 +14,13 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         builder.AddServiceDefaults();
 
-        builder.AddRedisClient(connectionName: "BlogLabCache");
-
         builder.Services
             .AddArticleCatalogDomain()
             .AddArticleCatalogApplication(builder.Configuration)
             .AddArticleCatalogInfrastructure(builder.Configuration)
             .AddArticleCatalogWebComponents();
 
-        builder.EnrichNpgsqlDbContext<ArticleCatalogDbContext>();
+        builder.AddHostingInfrastructure<ArticleCatalogDbContext>();
 
         var app = builder.Build();
 

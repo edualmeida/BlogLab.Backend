@@ -1,7 +1,8 @@
 ﻿namespace BlogLab.AppHost.Extensions;
 internal static class PrometheusHostingExtensions
 {
-    public static IResourceBuilder<ContainerResource> AddPrometheus(this IDistributedApplicationBuilder builder)
+    public static IResourceBuilder<ContainerResource> AddPrometheus(
+        this IDistributedApplicationBuilder builder)
     {
         return builder
             .AddContainer("prometheus", "prom/prometheus", "v3.2.1")

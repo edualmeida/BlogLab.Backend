@@ -8,7 +8,7 @@ var grafana = builder.AddGrafanaWithPrometheus(prometheusEndpoint);
 
 builder.AddOpenTelemetry(prometheusEndpoint);
 
-var redis = builder.AddRedis();
+var redis = builder.AddRedisCache();
 var blogLabDatabase = builder.AddPostgresWithMigration();
 
 var bookmarks = builder.AddProject<Projects.Bookmarks_Api>("bookmarks");

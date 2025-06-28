@@ -4,9 +4,11 @@ using Common.Domain;
 using Common.Infrastructure.Authentication.HttpMessageHandlers;
 using Common.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -14,6 +16,14 @@ using OpenTelemetry.Trace;
 namespace Common.Infrastructure;
 public static class InfrastructureConfiguration
 {
+    public static void AddHostingInfrastructure<TDbContext>(
+        this WebApplicationBuilder builder)
+        where TDbContext : DbContext
+    {
+        builder.AddRedisClient(connectionName: InfrastructureConstants.RedisCacheName);
+        builder.EnrichNpgsqlDbContext<TDbContext>();
+    }
+
     public static IServiceCollection AddCommonInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
     {
