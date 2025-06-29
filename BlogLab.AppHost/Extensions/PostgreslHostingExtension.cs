@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Common.Infrastructure;
 namespace BlogLab.AppHost.Extensions
 {
     public static class PostgresHostingExtensions
@@ -24,7 +19,7 @@ namespace BlogLab.AppHost.Extensions
                 //.WithPgWeb()
                 .WithLifetime(ContainerLifetime.Persistent);
 
-            var blogLabDb = postgres.AddDatabase("bloglab");
+            var blogLabDb = postgres.AddDatabase(InfrastructureConstants.BlogLabDatabaseName);
 
             var migrationService = builder.AddProject<Projects.BlogLab_MigrationService>("migrationservice")
                 .WithReference(blogLabDb)

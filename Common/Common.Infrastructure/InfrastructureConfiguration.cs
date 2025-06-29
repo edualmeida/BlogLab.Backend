@@ -40,7 +40,7 @@ public static class InfrastructureConfiguration
         Assembly assembly)
         where TDbContext : DbContext
         => services
-            .AddDatabase<TDbContext>(configuration, "bloglab")
+            .AddDatabase<TDbContext>(configuration, InfrastructureConstants.BlogLabDatabaseName)
             .AddRepositories(assembly);
 
     public static IServiceCollection AddAuthenticationHandlers(

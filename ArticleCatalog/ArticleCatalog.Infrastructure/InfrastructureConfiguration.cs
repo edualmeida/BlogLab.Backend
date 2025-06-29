@@ -9,7 +9,6 @@ using Common.Domain;
 using Common.Infrastructure;
 using Common.Infrastructure.Authentication.HttpMessageHandlers;
 using Common.Infrastructure.Repositories;
-using Common.Infrastructure.Repositories.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
