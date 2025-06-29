@@ -3,7 +3,7 @@ using Bookmarks.Domain.Models.Bookmarks;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookmarks.Infrastructure.Persistence;
-internal class BookmarksDbContext : BaseDbContext<BookmarksDbContext>
+public class BookmarksDbContext : BaseDbContext<BookmarksDbContext>
 {
     public BookmarksDbContext(
         DbContextOptions<BookmarksDbContext> options)

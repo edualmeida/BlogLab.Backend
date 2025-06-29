@@ -20,7 +20,7 @@ public static class InfrastructureConfiguration
         => services
             .AddCommonInfrastructure(configuration)
             .AddIdentity()
-            .AddDabaseStorage<IdentityDbContext>(
+            .AddDabaseStorage<AppIdentityDbContext>(
                 configuration,
                 Assembly.GetExecutingAssembly())
             .AddTransient<IDbInitializer, IdentityDbInitializer>()
@@ -40,7 +40,7 @@ public static class InfrastructureConfiguration
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = UserModelConstants.Identity.MinPasswordLength;
             })
-            .AddEntityFrameworkStores<IdentityDbContext>();
+            .AddEntityFrameworkStores<AppIdentityDbContext>();
 
         return services;
     }

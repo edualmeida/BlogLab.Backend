@@ -22,5 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\ArticleCatalog\ArticleCatalog.Infrastructure\ArticleCatalog.Infrastructure.csproj" />
     <ProjectReference Include="..\..\BlogLab.ServiceDefaults\BlogLab.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\..\Bookmarks\Bookmarks.Infrastructure\Bookmarks.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Identity\Identity.Infrastructure\Identity.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

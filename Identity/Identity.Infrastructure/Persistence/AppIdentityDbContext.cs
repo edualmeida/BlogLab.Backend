@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Infrastructure.Persistence;
-internal class IdentityDbContext(DbContextOptions<IdentityDbContext> options) : 
+public class AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : 
     IdentityDbContext<User, Role, Guid>(options)
 {
     public new DbSet<User> Users { get; set; } = default!;

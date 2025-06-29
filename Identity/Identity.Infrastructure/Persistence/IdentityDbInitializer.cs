@@ -9,7 +9,7 @@ internal class IdentityDbInitializer : DbInitializer
     private readonly RoleManager<Role> roleManager;
 
     public IdentityDbInitializer(
-        IdentityDbContext db,
+        AppIdentityDbContext db,
         UserManager<User> userManager,
         RoleManager<Role> roleManager)
         : base(db)

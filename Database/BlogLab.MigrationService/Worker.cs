@@ -1,9 +1,11 @@
 using ArticleCatalog.Infrastructure.Persistence;
+using Bookmarks.Infrastructure.Persistence;
+using Identity.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore.Storage;
 using OpenTelemetry.Trace;
+using System.Diagnostics;
 
 namespace BlogLab.MigrationService;
 
@@ -15,36 +17,52 @@ public class Worker(
 {
     private readonly ActivitySource _activitySource = new(hostEnvironment.ApplicationName);
 
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         using var activity = _activitySource.StartActivity(hostEnvironment.ApplicationName, ActivityKind.Client);
+        using var scope = serviceProvider.CreateScope();
+        var dbContexts = new List<Type>
+            {
+                typeof(AppIdentityDbContext),
+                typeof(BookmarksDbContext),
+                typeof(ArticleCatalogDbContext),
+            };
 
-        try
+        foreach (var contextType in dbContexts)
         {
-            using var scope = serviceProvider.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<ArticleCatalogDbContext>();
+            var name = contextType.Name;
+            try
+            {
+                var dbContext = (DbContext)scope.ServiceProvider.GetRequiredService(contextType);
 
-            await EnsureDatabaseAsync(dbContext, cancellationToken);
-            await RunMigrationAsync(dbContext, cancellationToken);
+                logger.LogInformation("Migrating {DbContext}...", name);
+
+                await EnsureDatabaseAsync(dbContext, stoppingToken);
+                await RunMigrationAsync(dbContext, stoppingToken);
+
+                logger.LogInformation("{DbContext} migration complete.", name);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "{DbContext} migration error.", name);
+                activity?.RecordException(ex);
+                throw;
+            }
         }
-        catch (Exception ex)
-        {
-            activity?.RecordException(ex);
-            throw;
-        }
+
+        logger.LogInformation("All migrations complete.");
 
         hostApplicationLifetime.StopApplication();
     }
 
-    private static async Task EnsureDatabaseAsync(ArticleCatalogDbContext dbContext, CancellationToken cancellationToken)
+    private static async Task EnsureDatabaseAsync(
+        DbContext dbContext, CancellationToken cancellationToken)
     {
         var dbCreator = dbContext.GetService<IRelationalDatabaseCreator>();
 
         var strategy = dbContext.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(async () =>
         {
-            // Create the database if it does not exist.
-            // Do this first so there is then a database to start a transaction against.
             if (!await dbCreator.ExistsAsync(cancellationToken))
             {
                 await dbCreator.CreateAsync(cancellationToken);
@@ -52,15 +70,13 @@ public class Worker(
         });
     }
 
-    private static async Task RunMigrationAsync(ArticleCatalogDbContext dbContext, CancellationToken cancellationToken)
+    private static async Task RunMigrationAsync(
+        DbContext dbContext, CancellationToken cancellationToken)
     {
         var strategy = dbContext.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(async () =>
         {
-            // Run migration in a transaction to avoid partial migration if it fails.
-            //await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
             await dbContext.Database.MigrateAsync(cancellationToken);
-            //await transaction.CommitAsync(cancellationToken);
         });
     }
 }
