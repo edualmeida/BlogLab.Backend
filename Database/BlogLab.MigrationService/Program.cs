@@ -1,6 +1,7 @@
 using ArticleCatalog.Infrastructure.Persistence;
 using Bookmarks.Infrastructure.Persistence;
 using Common.Infrastructure;
+using Common.Infrastructure.Persistence;
 using Identity.Infrastructure.Persistence;
 
 namespace BlogLab.MigrationService;
@@ -13,9 +14,11 @@ public static class Program
         builder.AddServiceDefaults();
         builder.Services.AddHostedService<Worker>();
 
-        builder.Services.AddDatabase<AppIdentityDbContext>(
-            builder.Configuration,
-            InfrastructureConstants.DefaultConnectionStringName);
+        builder.Services
+            .AddDatabase<AppIdentityDbContext>(
+                builder.Configuration,
+                InfrastructureConstants.DefaultConnectionStringName)
+            .AddTransient<IDbInitializer, ArticleCatalogDbInitializer>();
 
         builder.Services.AddDatabase<BookmarksDbContext>(
             builder.Configuration,

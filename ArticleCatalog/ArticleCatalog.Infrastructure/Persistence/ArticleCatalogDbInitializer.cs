@@ -1,10 +1,11 @@
 ﻿using ArticleCatalog.Domain.Models.Categories;
 using ArticleCatalog.Domain.Models.Thumbnails;
+using Common.Infrastructure.Persistence;
 
 namespace ArticleCatalog.Infrastructure.Persistence;
-internal class ArticleCatalogDbInitializer : DbInitializer
+public class ArticleCatalogDbInitializer : DbInitializer
 {
     public ArticleCatalogDbInitializer(ArticleCatalogDbContext db)
-        : base(db, [new CategoryData(), new ThumbnailData()]) { }
+        : base(db, [new CategoryData(), new ThumbnailData()], nameof(ArticleCatalogDbContext)) { }
 
 }

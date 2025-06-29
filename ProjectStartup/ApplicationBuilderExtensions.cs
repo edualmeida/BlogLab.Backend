@@ -41,16 +41,16 @@ public static class ApplicationBuilderExtensions
         this IApplicationBuilder app, 
         IConfiguration configuration)
     {
-        if (configuration.GetSection("InitializeDatabase").Value!.ToLowerInvariant() == "false")
-            return app;
+        //if (configuration.GetSection("InitializeDatabase").Value!.ToLowerInvariant() == "false")
+        //    return app;
 
-        using var serviceScope = app.ApplicationServices.CreateScope();
-        var initializers = serviceScope.ServiceProvider.GetServices<IDbInitializer>();
+        //using var serviceScope = app.ApplicationServices.CreateScope();
+        //var initializers = serviceScope.ServiceProvider.GetServices<IDbInitializer>();
 
-        foreach (var initializer in initializers)
-        {
-            initializer.Initialize();
-        }
+        //foreach (var initializer in initializers)
+        //{
+        //    initializer.Initialize();
+        //}
 
         return app;
     }

@@ -1,26 +1,26 @@
-﻿using Identity.Domain;
+﻿using Common.Infrastructure.Persistence;
 using Identity.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 
 namespace Identity.Infrastructure.Persistence;
-internal class IdentityDbInitializer : DbInitializer
+public class AppIdentityDbInitializer : DbInitializer
 {
     private readonly UserManager<User> userManager;
     private readonly RoleManager<Role> roleManager;
 
-    public IdentityDbInitializer(
+    public AppIdentityDbInitializer(
         AppIdentityDbContext db,
         UserManager<User> userManager,
         RoleManager<Role> roleManager)
-        : base(db)
+        : base(db, nameof(AppIdentityDbContext))
     {
         this.userManager = userManager;
         this.roleManager = roleManager;
     }
 
-    public override void Initialize()
+    public override async Task Initialize(CancellationToken stoppingToken)
     {
-        base.Initialize();
+        await base.Initialize(stoppingToken);
 
         SeedAdministrator();
     }

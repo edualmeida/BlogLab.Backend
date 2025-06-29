@@ -2,7 +2,6 @@
 using Common.Infrastructure;
 using Identity.Application;
 using Identity.Application.Queries;
-using Identity.Domain;
 using Identity.Domain.Models.Users;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Repositories;
@@ -23,7 +22,6 @@ public static class InfrastructureConfiguration
             .AddDabaseStorage<AppIdentityDbContext>(
                 configuration,
                 Assembly.GetExecutingAssembly())
-            .AddTransient<IDbInitializer, IdentityDbInitializer>()
             .AddTransient<IIdentityQueryRepository, IdentityRepository>();
 
     private static IServiceCollection AddIdentity(

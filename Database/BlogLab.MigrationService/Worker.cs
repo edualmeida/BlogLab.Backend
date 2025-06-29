@@ -1,5 +1,6 @@
 using ArticleCatalog.Infrastructure.Persistence;
 using Bookmarks.Infrastructure.Persistence;
+using Common.Infrastructure.Persistence;
 using Identity.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -21,24 +22,16 @@ public class Worker(
     {
         using var activity = _activitySource.StartActivity(hostEnvironment.ApplicationName, ActivityKind.Client);
         using var scope = serviceProvider.CreateScope();
-        var dbContexts = new List<Type>
-            {
-                typeof(AppIdentityDbContext),
-                typeof(BookmarksDbContext),
-                typeof(ArticleCatalogDbContext),
-            };
+        var initializers = serviceProvider.GetServices<IDbInitializer>();
 
-        foreach (var contextType in dbContexts)
+        foreach (var initializer in initializers)
         {
-            var name = contextType.Name;
+            var name = initializer.Name;
             try
             {
-                var dbContext = (DbContext)scope.ServiceProvider.GetRequiredService(contextType);
-
                 logger.LogInformation("Migrating {DbContext}...", name);
 
-                await EnsureDatabaseAsync(dbContext, stoppingToken);
-                await RunMigrationAsync(dbContext, stoppingToken);
+                await initializer.Initialize(stoppingToken);
 
                 logger.LogInformation("{DbContext} migration complete.", name);
             }
@@ -53,30 +46,5 @@ public class Worker(
         logger.LogInformation("All migrations complete.");
 
         hostApplicationLifetime.StopApplication();
-    }
-
-    private static async Task EnsureDatabaseAsync(
-        DbContext dbContext, CancellationToken cancellationToken)
-    {
-        var dbCreator = dbContext.GetService<IRelationalDatabaseCreator>();
-
-        var strategy = dbContext.Database.CreateExecutionStrategy();
-        await strategy.ExecuteAsync(async () =>
-        {
-            if (!await dbCreator.ExistsAsync(cancellationToken))
-            {
-                await dbCreator.CreateAsync(cancellationToken);
-            }
-        });
-    }
-
-    private static async Task RunMigrationAsync(
-        DbContext dbContext, CancellationToken cancellationToken)
-    {
-        var strategy = dbContext.Database.CreateExecutionStrategy();
-        await strategy.ExecuteAsync(async () =>
-        {
-            await dbContext.Database.MigrateAsync(cancellationToken);
-        });
     }
 }

@@ -1,4 +1,6 @@
-﻿public interface IDbInitializer
+﻿namespace Common.Infrastructure.Persistence;
+public interface IDbInitializer
 {
-    void Initialize();
+    public string Name { get; }
+    Task Initialize(CancellationToken stoppingToken);
 }

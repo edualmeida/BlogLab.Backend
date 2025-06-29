@@ -23,7 +23,6 @@ public static class InfrastructureConfiguration
             .ConfigureElasticsearch(configuration)
             .ConfigureCaching(configuration)
             .AddDabaseStorage<ArticleCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
-            .AddTransient<IDbInitializer, ArticleCatalogDbInitializer>()
             .AddHttpClients(configuration);
 
     private static IServiceCollection ConfigureCaching(this IServiceCollection services, IConfiguration configuration)
