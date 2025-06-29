@@ -15,7 +15,7 @@ public static class InfrastructureConfiguration
         IConfiguration configuration)
         => services
             .AddCommonInfrastructure(configuration)
-            .AddDabaseStorage<BookmarksDbContext>(
+            .AddDatabaseStorage<BookmarksDbContext>(
                 configuration,
                 Assembly.GetExecutingAssembly())
             .AddHttpClients(configuration);

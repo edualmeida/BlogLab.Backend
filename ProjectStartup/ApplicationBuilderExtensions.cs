@@ -31,7 +31,7 @@ public static class ApplicationBuilderExtensions
             //{
             //    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Article Shop v1");
             //    options.EnablePersistAuthorization();
-            //});
+            //}); 
         }
 
         return app;

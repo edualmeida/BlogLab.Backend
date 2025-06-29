@@ -1,8 +1,10 @@
 
+using Common.Infrastructure;
+using Common.Web;
 using Identity.Application;
-using Identity.Infrastructure;
 using Identity.Domain;
-using Scalar.AspNetCore;
+using Identity.Infrastructure;
+using Identity.Infrastructure.Persistence;
 
 namespace Identity.Api;
 public class Program
@@ -18,23 +20,11 @@ public class Program
             .AddIdentityInfrastructure(builder.Configuration)
             .AddIdentityWebComponents();
 
+        builder.AddHostingInfrastructure<AppIdentityDbContext>();
+
         var app = builder.Build();
 
-        app.MapDefaultEndpoints();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-            app.MapScalarApiReference();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-
-        app.MapControllers();
+        app.UseCommonWebComponents();
 
         app.Run();
     }

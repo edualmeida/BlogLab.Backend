@@ -18,17 +18,17 @@ public static class InfrastructureConfiguration
         IConfiguration configuration)
         => services
             .AddCommonInfrastructure(configuration)
-            .AddIdentity()
-            .AddDabaseStorage<AppIdentityDbContext>(
+            .AddTransient<IIdentity, IdentityService>()
+            .AddIdentityStores()
+            .AddDatabaseStorage<AppIdentityDbContext>(
                 configuration,
                 Assembly.GetExecutingAssembly())
             .AddTransient<IIdentityQueryRepository, IdentityRepository>();
 
-    private static IServiceCollection AddIdentity(
+    public static IServiceCollection AddIdentityStores(
         this IServiceCollection services)
     {
         services
-            .AddTransient<IIdentity, IdentityService>()
             .AddTransient<IJwtGenerator, JwtGeneratorService>()
             .AddIdentity<User, Role>(options =>
             {

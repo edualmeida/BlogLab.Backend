@@ -22,7 +22,7 @@ public class Worker(
     {
         using var activity = _activitySource.StartActivity(hostEnvironment.ApplicationName, ActivityKind.Client);
         using var scope = serviceProvider.CreateScope();
-        var initializers = serviceProvider.GetServices<IDbInitializer>();
+        var initializers = scope.ServiceProvider.GetServices<IDbInitializer>();
 
         foreach (var initializer in initializers)
         {

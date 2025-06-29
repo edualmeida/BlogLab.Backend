@@ -34,7 +34,7 @@ public static class InfrastructureConfiguration
         return services;
     }
 
-    public static IServiceCollection AddDabaseStorage<TDbContext>(
+    public static IServiceCollection AddDatabaseStorage<TDbContext>(
         this IServiceCollection services,
         IConfiguration configuration,
         Assembly assembly)

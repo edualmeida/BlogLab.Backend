@@ -22,7 +22,7 @@ public static class InfrastructureConfiguration
             .AddCommonInfrastructure(configuration)
             .ConfigureElasticsearch(configuration)
             .ConfigureCaching(configuration)
-            .AddDabaseStorage<ArticleCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
+            .AddDatabaseStorage<ArticleCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
             .AddHttpClients(configuration);
 
     private static IServiceCollection ConfigureCaching(this IServiceCollection services, IConfiguration configuration)
