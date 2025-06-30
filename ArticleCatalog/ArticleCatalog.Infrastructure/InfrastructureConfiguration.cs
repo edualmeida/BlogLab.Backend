@@ -44,10 +44,9 @@ public static class InfrastructureConfiguration
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var httpClientSettings = configuration.GetArticleCatalogSettings();
         services.AddHttpClient<AuthorsHttpService>(httpClient =>
         {
-            httpClient.BaseAddress = new("https+http://identity");
+            httpClient.BaseAddress = new($"https+http://{InfrastructureConstants.IdentityApiName}");
             httpClient.ConfigureApiKey(configuration);
         })
             .ConfigureDefaultHttpClientHandler()
@@ -55,7 +54,7 @@ public static class InfrastructureConfiguration
 
         services.AddHttpClient<BookmarksHttpService>((sp, httpClient) =>
         {
-            httpClient.BaseAddress = new("https+http://bookmarks");
+            httpClient.BaseAddress = new($"https+http://{InfrastructureConstants.BookmarksApiName}");
         })
             .AddHttpMessageHandler<FowardAuthorizationHeaderHandler>()
             .ConfigureDefaultHttpClientHandler()

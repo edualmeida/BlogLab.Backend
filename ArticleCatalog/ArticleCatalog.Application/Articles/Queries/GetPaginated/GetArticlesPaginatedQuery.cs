@@ -31,7 +31,7 @@ public class GetArticlesPaginatedQuery : IRequest<GetArticlesPaginatedResult>
             using var activity = greeterActivitySource.StartActivity("GreeterActivity");
 
             //var userBookmarks = mediator.Send(new GetUserBookmarksQuery(), cancellationToken);
-            //var authors = mediator.Send(new GetAuthorsQuery(), cancellationToken);
+            var authors = mediator.Send(new GetAuthorsQuery(), cancellationToken);
             var getResult = mediator.Send(new GetRepositoryArticlesQuery
             {
                 PageNumber = request.PageNumber,
@@ -43,10 +43,9 @@ public class GetArticlesPaginatedQuery : IRequest<GetArticlesPaginatedResult>
             getResult.Result.Articles.ForEach(article =>
             {
                 article.IsBookmarked = false;//userBookmarks.Result.Any(x => x.Bookmark.ArticleId == article.Id);
-                article.Author = "ND";
-                //authors.Result
-                //    .FirstOrDefault(a => a.Id == article.AuthorId)?
-                //    .FirstName ?? "ND";
+                article.Author = authors.Result
+                    .FirstOrDefault(a => a.Id == article.AuthorId)?
+                    .FirstName ?? "ND";
             });
 
             // Log a message

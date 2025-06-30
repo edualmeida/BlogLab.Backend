@@ -1,5 +1,6 @@
 using BlogLab.AppHost.Extensions;
 using BlogLab.AppHost.OpenTelemetryCollector;
+using Common.Infrastructure;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
@@ -11,12 +12,12 @@ builder.AddOpenTelemetry(prometheusEndpoint);
 var redis = builder.AddRedisCache();
 var blogLabDatabase = builder.AddPostgresWithMigration();
 
-var bookmarks = builder.AddProject<Projects.Bookmarks_Api>("bookmarks");
-var identity = builder.AddProject<Projects.Identity_Api>("identity");
+var bookmarks = builder.AddProject<Projects.Bookmarks_Api>(InfrastructureConstants.BookmarksApiName);
+var identity = builder.AddProject<Projects.Identity_Api>(InfrastructureConstants.IdentityApiName);
 
-builder.AddProject<Projects.Comments_Api>("comments");
+builder.AddProject<Projects.Comments_Api>(InfrastructureConstants.CommentsApiName);
 
-builder.AddProject<Projects.ArticleCatalog_Api>("articles")
+builder.AddProject<Projects.ArticleCatalog_Api>(InfrastructureConstants.ArticlesApiName)
     .WithExternalHttpEndpoints()
     .WithReference(bookmarks)
     .WithReference(identity)

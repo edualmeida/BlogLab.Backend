@@ -39,14 +39,18 @@ public class AppIdentityDbInitializer : DbInitializer
                     await roleManager.CreateAsync(new Role(CommonModelConstants.Common.UserRoleName));
                 }
 
-                if(await roleManager.FindByNameAsync(CommonModelConstants.Common.AuthorRoleName) == null)
+                if (await roleManager.FindByNameAsync(CommonModelConstants.Common.AuthorRoleName) == null)
                 {
                     await roleManager.CreateAsync(new Role(CommonModelConstants.Common.AuthorRoleName));
                 }
 
-                //var adminUser = new UserData().GetData();
-                //await userManager.CreateAsync(adminUser, "5a5ec25b-1b60-44dc-88b4-f1013eb56832");
-                //await userManager.AddToRoleAsync(adminUser, CommonModelConstants.Common.AdministratorRoleName);
+                var adminUser = new UserData().GetData();
+                var existingUser = await userManager.FindByEmailAsync(adminUser!.Email ?? "");
+                if (existingUser == null)
+                {
+                    await userManager.CreateAsync(adminUser!, "password");
+                    await userManager.AddToRoleAsync(adminUser!, CommonModelConstants.Common.AdministratorRoleName);
+                }
             })
             .GetAwaiter()
             .GetResult();
