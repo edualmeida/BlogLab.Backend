@@ -16,9 +16,15 @@ namespace Microsoft.Extensions.Hosting
     // To learn more about using this project, see https://aka.ms/dotnet/aspire/service-defaults
     public static class Extensions
     {
-        public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+        private const string HealthEndpointPath = "/health";
+        private const string AlivenessEndpointPath = "/alive";
+
+        public static TBuilder AddServiceDefaults<TBuilder>(
+            this TBuilder builder
+            , params string[] meterNames
+            ) where TBuilder : IHostApplicationBuilder
         {
-            builder.ConfigureOpenTelemetry();
+            builder.ConfigureOpenTelemetry(meterNames);
 
             builder.AddDefaultHealthChecks();
 
@@ -42,7 +48,10 @@ namespace Microsoft.Extensions.Hosting
             return builder;
         }
 
-        public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+        public static TBuilder ConfigureOpenTelemetry<TBuilder>(
+            this TBuilder builder,
+            params string[] meterNames
+            ) where TBuilder : IHostApplicationBuilder
         {
             builder.Logging.AddOpenTelemetry(logging =>
             {
@@ -60,7 +69,13 @@ namespace Microsoft.Extensions.Hosting
                             "Microsoft.AspNetCore.Hosting",
                             "Microsoft.AspNetCore.Server.Kestrel",
                             "System.Net.Http",
-                            "ArticleCatalog.Api");
+                            "System.Net.NameResolution",
+                            builder.Environment.ApplicationName);
+
+                    foreach (var meter in meterNames)
+                    {
+                        metrics.AddMeter(meter);
+                    }
                 })
                 .WithTracing(tracing =>
                 {
@@ -70,7 +85,11 @@ namespace Microsoft.Extensions.Hosting
                     }
 
                     tracing.AddSource(builder.Environment.ApplicationName)
-                        .AddAspNetCoreInstrumentation()
+                        .AddAspNetCoreInstrumentation(tracing =>
+                        // Don't trace requests to the health endpoint to avoid filling the dashboard with noise
+                        tracing.Filter = httpContext =>
+                            !(httpContext.Request.Path.StartsWithSegments(HealthEndpointPath)
+                              || httpContext.Request.Path.StartsWithSegments(AlivenessEndpointPath)))
                         // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
                         //.AddGrpcClientInstrumentation()
                         .AddHttpClientInstrumentation();
@@ -121,10 +140,10 @@ namespace Microsoft.Extensions.Hosting
             if (app.Environment.IsDevelopment())
             {
                 // All health checks must pass for app to be considered ready to accept traffic after starting
-                app.MapHealthChecks("/health");
+                app.MapHealthChecks(HealthEndpointPath);
 
                 // Only health checks tagged with the "live" tag must pass for app to be considered alive
-                app.MapHealthChecks("/alive", new HealthCheckOptions
+                app.MapHealthChecks(AlivenessEndpointPath, new HealthCheckOptions
                 {
                     Predicate = r => r.Tags.Contains("live")
                 });

@@ -19,7 +19,7 @@ public static class InfrastructureConfiguration
     public static IServiceCollection AddArticleCatalogInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
         => services
-            .AddCommonInfrastructure(configuration)
+            .AddCommonInfrastructure(Assembly.GetExecutingAssembly(), configuration)
             .ConfigureElasticsearch(configuration)
             .ConfigureCaching(configuration)
             .AddDatabaseStorage<ArticleCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())

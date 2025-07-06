@@ -1,6 +1,7 @@
 ﻿using ArticleCatalog.Application.Articles.Queries.Common;
 using ArticleCatalog.Application.Authors.Queries;
 using ArticleCatalog.Application.Bookmarks.Queries;
+using Common.Domain.Telemetry;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -14,21 +15,18 @@ public class GetArticlesPaginatedQuery : IRequest<GetArticlesPaginatedResult>
 
     public class ArticleAllQueryHandler(
         IMediator mediator,
-        ILogger<ArticleAllQueryHandler> logger) : 
+        ILogger<ArticleAllQueryHandler> logger,
+        IActivityScopeFactory activityScopeFactory) : 
         IRequestHandler<GetArticlesPaginatedQuery, GetArticlesPaginatedResult>
     {
         public async Task<GetArticlesPaginatedResult> Handle(
             GetArticlesPaginatedQuery request, 
             CancellationToken cancellationToken)
         {
-            // Custom metrics for the application
-            var greeterMeter = new Meter("OtPrGrYa.Example", "1.0.0");
-            var countGreetings = greeterMeter.CreateCounter<int>("greetings.count", description: "Counts the number of greetings");
+            using var activity = activityScopeFactory.Start("GetArticlesPaginatedQuery.Handle");
 
-            // Custom ActivitySource for the application
-            var greeterActivitySource = new ActivitySource("OtPrGrJa.Example");
-
-            using var activity = greeterActivitySource.StartActivity("GreeterActivity");
+            activity.AddTag("PageNumber", request.PageNumber.ToString());
+            activity.AddTag("PageSize", request.PageSize.ToString());
 
             //var userBookmarks = mediator.Send(new GetUserBookmarksQuery(), cancellationToken);
             var authors = mediator.Send(new GetAuthorsQuery(), cancellationToken);
@@ -49,13 +47,10 @@ public class GetArticlesPaginatedQuery : IRequest<GetArticlesPaginatedResult>
             });
 
             // Log a message
-            logger.LogInformation("Sending greeting");
+            logger.LogInformation("GetArticlesPaginatedQuery finished");
 
-            // Increment the custom counter
-            countGreetings.Add(1);
-
-            // Add a tag to the Activity
-            activity?.SetTag("greeting", "Hello World!");
+            activity?.AddTag("articles.count", getResult.Result.Articles.Count.ToString());
+            activity?.AddEvent("ArticlesPaginatedQueryCompleted");
 
             return getResult.Result;
         }

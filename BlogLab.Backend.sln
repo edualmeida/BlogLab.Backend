@@ -5,8 +5,6 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ArticleCatalog", "ArticleCatalog", "{5CD659AC-5C66-4183-A015-FDB79A591FD6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectStartup", "ProjectStartup\ProjectStartup.csproj", "{70153B25-DE72-4CD9-989B-C7EF2288C2CF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleCatalog.Application", "ArticleCatalog\ArticleCatalog.Application\ArticleCatalog.Application.csproj", "{B09B0258-8BE1-4044-B0F4-29DA81A3E9D6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleCatalog.Domain", "ArticleCatalog\ArticleCatalog.Domain\ArticleCatalog.Domain.csproj", "{74ACEAA5-FDCB-4476-8FD0-CD41D94E5B05}"
@@ -91,10 +89,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{70153B25-DE72-4CD9-989B-C7EF2288C2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70153B25-DE72-4CD9-989B-C7EF2288C2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70153B25-DE72-4CD9-989B-C7EF2288C2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70153B25-DE72-4CD9-989B-C7EF2288C2CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B09B0258-8BE1-4044-B0F4-29DA81A3E9D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B09B0258-8BE1-4044-B0F4-29DA81A3E9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B09B0258-8BE1-4044-B0F4-29DA81A3E9D6}.Release|Any CPU.ActiveCfg = Release|Any CPU

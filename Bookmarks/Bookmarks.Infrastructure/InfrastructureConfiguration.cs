@@ -14,7 +14,7 @@ public static class InfrastructureConfiguration
         this IServiceCollection services,
         IConfiguration configuration)
         => services
-            .AddCommonInfrastructure(configuration)
+            .AddCommonInfrastructure(Assembly.GetExecutingAssembly(), configuration)
             .AddDatabaseStorage<BookmarksDbContext>(
                 configuration,
                 Assembly.GetExecutingAssembly())

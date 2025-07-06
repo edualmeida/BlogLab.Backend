@@ -3,6 +3,7 @@ using ArticleCatalog.Application;
 using ArticleCatalog.Domain;
 using ArticleCatalog.Infrastructure;
 using ArticleCatalog.Infrastructure.Persistence;
+using ArticleCatalog.Infrastructure.Telemetry;
 using Common.Infrastructure;
 using Common.Web;
 
@@ -12,7 +13,7 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        builder.AddServiceDefaults();
+        builder.AddServiceDefaults(ArticleCatalogMetrics.MeterName);
 
         builder.Services
             .AddArticleCatalogDomain()

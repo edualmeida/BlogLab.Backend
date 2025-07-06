@@ -1,8 +1,9 @@
-﻿using System.Reflection;
-using Common.Application.Contracts;
+﻿using Common.Application.Contracts;
 using Common.Domain;
+using Common.Domain.Telemetry;
 using Common.Infrastructure.Authentication.HttpMessageHandlers;
 using Common.Infrastructure.Extensions;
+using Common.Infrastructure.Telemetry;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using System.Reflection;
 
 namespace Common.Infrastructure;
 public static class InfrastructureConfiguration
@@ -25,11 +27,15 @@ public static class InfrastructureConfiguration
     }
 
     public static IServiceCollection AddCommonInfrastructure(
-        this IServiceCollection services, IConfiguration configuration)
+        this IServiceCollection services,
+        Assembly assembly,
+        IConfiguration configuration)
     {
         services
-            .AddOpenTelemetry(configuration)
-            .AddAuthenticationHandlers(configuration);
+            //.AddOpenTelemetry(configuration)
+            .AddTelemetryWorkers(assembly)
+            .AddAuthenticationHandlers(configuration)
+            .AddSingleton<IActivityScopeFactory, ActivityScopeFactory>();
 
         return services;
     }
@@ -106,6 +112,15 @@ public static class InfrastructureConfiguration
                 .UseSnakeCaseNamingConvention()
             );
 
+    private static IServiceCollection AddTelemetryWorkers(
+        this IServiceCollection services,
+        Assembly assembly)
+        => services
+            .Scan(scan => scan
+                .FromAssemblies(assembly)
+                .AddClasses(classes => classes.AssignableTo(typeof(ITelemetry)))
+                .AsImplementedInterfaces()
+                .WithSingletonLifetime());
 
     public static IServiceCollection AddOpenTelemetry(
         this IServiceCollection services,
@@ -113,6 +128,9 @@ public static class InfrastructureConfiguration
     {
         var tracingOtlpEndpoint = configuration["OTLP_ENDPOINT_URL"];
         var otel = services.AddOpenTelemetry();
+
+        string HealthEndpointPath = "/health";
+        string AlivenessEndpointPath = "/alive";
 
         // Configure OpenTelemetry Resources with the application name
         otel.ConfigureResource(resource => resource
@@ -122,7 +140,8 @@ public static class InfrastructureConfiguration
         otel.WithMetrics(metrics => metrics
             // Metrics provider from OpenTelemetry
             .AddAspNetCoreInstrumentation()
-            //.AddMeter(greeterMeter.Name)
+            .AddHttpClientInstrumentation()
+            .AddMeter("ArticleCatalog")
             // Metrics provides by ASP.NET Core in .NET 8
             .AddMeter("Microsoft.AspNetCore.Hosting")
             .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
@@ -134,7 +153,12 @@ public static class InfrastructureConfiguration
         // Add Tracing for ASP.NET Core and our custom ActivitySource and export to Jaeger
         otel.WithTracing(tracing =>
         {
-            tracing.AddAspNetCoreInstrumentation();
+            tracing.AddAspNetCoreInstrumentation(tracing =>
+                        // Don't trace requests to the health endpoint to avoid filling the dashboard with noise
+                tracing.Filter = httpContext =>
+                    !(httpContext.Request.Path.StartsWithSegments(HealthEndpointPath)
+                      || httpContext.Request.Path.StartsWithSegments(AlivenessEndpointPath))
+            );
             tracing.AddHttpClientInstrumentation();
             tracing.AddSource("OtPrGrYa.Example");
             if (tracingOtlpEndpoint != null)
