@@ -13,7 +13,7 @@ public class GetAuthorsQuery: IRequest<List<AuthorResponse>>
         public async Task<List<AuthorResponse>> Handle(
             GetAuthorsQuery request,
             CancellationToken cancellationToken)
-        {
+         {
             authorsMetrics.IncrementApiCallCount();
 
             var result = await authorsMetrics

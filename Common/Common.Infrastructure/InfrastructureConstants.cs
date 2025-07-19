@@ -3,6 +3,7 @@ public static class InfrastructureConstants
 {
     public const string ApiKeyOptions = "ApiKeyOptions";
 
+    public const string OtelCollectorName = "otelcollector";
     public const string RedisCacheName = "BlogLabCache";
     public const string BlogLabDatabaseName = "bloglab";
     public const string DefaultConnectionStringName = "bloglab";
@@ -10,4 +11,6 @@ public static class InfrastructureConstants
     public const string BookmarksApiName = "bookmarks";
     public const string ArticlesApiName = "articles";
     public const string CommentsApiName = "comments";
+
+    public const int OtelCollectorPort = 4317;
 }

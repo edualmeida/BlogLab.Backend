@@ -7,6 +7,8 @@ var builder = DistributedApplication.CreateBuilder(args);
 var prometheusEndpoint = builder.AddPrometheus().GetEndpoint("http");
 var grafana = builder.AddGrafanaWithPrometheus(prometheusEndpoint);
 
+builder.AddJaeger();
+
 builder.AddOpenTelemetry(prometheusEndpoint);
 
 var redis = builder.AddRedisCache();

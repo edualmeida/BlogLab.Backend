@@ -1,3 +1,4 @@
+using Common.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
@@ -84,7 +85,7 @@ namespace Microsoft.Extensions.Hosting
                         tracing.SetSampler<AlwaysOnSampler>();
                     }
 
-                    tracing.AddSource(builder.Environment.ApplicationName)
+                    tracing
                         .AddAspNetCoreInstrumentation(tracing =>
                         // Don't trace requests to the health endpoint to avoid filling the dashboard with noise
                         tracing.Filter = httpContext =>
@@ -92,7 +93,24 @@ namespace Microsoft.Extensions.Hosting
                               || httpContext.Request.Path.StartsWithSegments(AlivenessEndpointPath)))
                         // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
                         //.AddGrpcClientInstrumentation()
-                        .AddHttpClientInstrumentation();
+                        .AddHttpClientInstrumentation()
+                        //.AddEntityFrameworkCoreInstrumentation()
+                        //.AddRedisInstrumentation()
+                        //.AddNpgsql()
+                        .AddSource(builder.Environment.ApplicationName)
+                        .AddSource("GetArticlesPaginatedQuery.Handle")
+                        ;
+
+                    tracing.AddOtlpExporter(otlpOptions =>
+                    {
+                        otlpOptions.Endpoint = new Uri(
+                            $"http://{InfrastructureConstants.OtelCollectorName}:{InfrastructureConstants.OtelCollectorPort}");
+                    });
+
+                    if (builder.Environment.IsDevelopment())
+                    {
+                        tracing.AddConsoleExporter();
+                    }
                 });
 
             builder.AddOpenTelemetryExporters();
@@ -102,17 +120,18 @@ namespace Microsoft.Extensions.Hosting
 
         private static TBuilder AddOpenTelemetryExporters<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
         {
-            var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+            //var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
-            if (useOtlpExporter)
-            {
-                builder.Services.AddOpenTelemetry().UseOtlpExporter();
-                //builder.Services.Configure<OpenTelemetryLoggerOptions>(logging => logging.AddOtlpExporter());
-                //builder.Services.ConfigureOpenTelemetryMeterProvider(metrics => metrics.AddOtlpExporter());
-                //builder.Services.ConfigureOpenTelemetryTracerProvider(tracing => tracing.AddOtlpExporter());
-            }
+            //if (useOtlpExporter)
+            //{
+            //    builder.Services.AddOpenTelemetry().UseOtlpExporter();
+            //    //builder.Services.Configure<OpenTelemetryLoggerOptions>(logging => logging.AddOtlpExporter());
+            //    //builder.Services.ConfigureOpenTelemetryMeterProvider(metrics => metrics.AddOtlpExporter());
+            //    //builder.Services.ConfigureOpenTelemetryTracerProvider(tracing => tracing.AddOtlpExporter());
+            //}
 
-            builder.Services.AddOpenTelemetry().WithMetrics(x => x.AddPrometheusExporter());
+            builder.Services.AddOpenTelemetry()
+                .WithMetrics(x => x.AddPrometheusExporter());
 
             // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
             //if (!string.IsNullOrEmpty(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
