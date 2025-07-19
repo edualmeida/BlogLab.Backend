@@ -63,6 +63,7 @@ public static class WebConfiguration
         app.UseAuthorization();
 
         app.MapControllers();
+        app.MapPrometheusScrapingEndpoint();
 
         return app;
     }

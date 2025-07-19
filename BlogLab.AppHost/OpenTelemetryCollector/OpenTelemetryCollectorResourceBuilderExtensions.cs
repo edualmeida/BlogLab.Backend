@@ -13,7 +13,7 @@ public static class OpenTelemetryCollectorResourceBuilderExtensions
     private const string OTelCollectorImageName = "ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib";
     private const string OTelCollectorImageTag = "0.123.0";
 
-    public static IResourceBuilder<ContainerResource> AddOpenTelemetry(
+    public static IResourceBuilder<ContainerResource> AddOpenTelemetryCollector(
     this IDistributedApplicationBuilder builder,
     EndpointReference prometheusEndpoint)
     {

@@ -17,7 +17,7 @@
     <ProjectReference Include="..\ArticleCatalog.Api\ArticleCatalog.Api.csproj" />
     <ProjectReference Include="..\Bookmarks.Api\Bookmarks.Api.csproj" />
     <ProjectReference Include="..\Comments.Api\Comments.Api.csproj" />
-    <ProjectReference Include="..\Common\Common.Infrastructure\Common.Infrastructure.csproj" IsAspireProjectResource="false"/>
+    <ProjectReference Include="..\Common\Common.Infrastructure\Common.Infrastructure.csproj" IsAspireProjectResource="false" />
     <ProjectReference Include="..\Database\BlogLab.MigrationService\BlogLab.MigrationService.csproj" />
     <ProjectReference Include="..\Identity.Api\Identity.Api.csproj" />
   </ItemGroup>
