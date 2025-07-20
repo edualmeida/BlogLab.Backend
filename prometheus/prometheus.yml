@@ -1,5 +1,10 @@
-storage:
-  tsdb:
-    out_of_order_time_window: 30m
+global:
+  scrape_interval: 1s
 
-otlp:
+scrape_configs:
+  - job_name: 'articlecatalog_api'
+    scheme: http
+    tls_config:
+      insecure_skip_verify: true
+    static_configs:
+      - targets: ['host.docker.internal:6087']

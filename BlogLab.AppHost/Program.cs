@@ -19,8 +19,12 @@ var identity = builder.AddProject<Projects.Identity_Api>(InfrastructureConstants
 
 builder.AddProject<Projects.Comments_Api>(InfrastructureConstants.CommentsApiName);
 
-builder.AddProject<Projects.ArticleCatalog_Api>(InfrastructureConstants.ArticlesApiName)
-    .WithExternalHttpEndpoints()
+builder.AddProject<Projects.ArticleCatalog_Api>("articles")
+     //.WithExternalHttpEndpoints()
+    .WithHttpEndpoint(
+        //port: InfrastructureConstants.ArticlesApiPort, 
+        targetPort: 6087, 
+        name: "https-main")
     .WithReference(bookmarks)
     .WithReference(identity)
     .WithReference(redis)

@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 namespace Microsoft.Extensions.Hosting
@@ -52,18 +54,26 @@ namespace Microsoft.Extensions.Hosting
             params string[] meterNames
             ) where TBuilder : IHostApplicationBuilder
         {
+            var tracingOtlpEndpoint = builder.Configuration["OTLP_ENDPOINT_URL"];
+            var otel = builder.Services.AddOpenTelemetry();
+
+            // Configure OpenTelemetry Resources with the application name
+            otel.ConfigureResource(resource => resource
+                .AddService(serviceName: builder.Environment.ApplicationName));
+
             builder.Logging.AddOpenTelemetry(logging =>
             {
                 logging.IncludeFormattedMessage = true;
                 logging.IncludeScopes = true;
             });
 
-            builder.Services.AddOpenTelemetry()
+            otel
                 .WithMetrics(metrics =>
                 {
                     metrics.AddAspNetCoreInstrumentation()
                         .AddHttpClientInstrumentation()
                         .AddRuntimeInstrumentation()
+                        .AddPrometheusExporter()
                         .AddMeter(
                             "Microsoft.AspNetCore.Hosting",
                             "Microsoft.AspNetCore.Server.Kestrel",
@@ -99,37 +109,55 @@ namespace Microsoft.Extensions.Hosting
                         .AddSource("GetArticlesPaginatedQuery.Handle")
                         ;
 
-                    tracing.AddOtlpExporter(otlpOptions =>
+                    if (tracingOtlpEndpoint != null)
                     {
-                        otlpOptions.Endpoint = new Uri(
-                            $"http://{InfrastructureConstants.OtelCollectorName}:{InfrastructureConstants.OtelCollectorPort}");
-                    });
+                        tracing.AddOtlpExporter(otlpOptions =>
+                        {
+                            otlpOptions.Endpoint = new Uri(tracingOtlpEndpoint);
+                        });
+                    }
+                    //tracing.AddOtlpExporter(otlpOptions =>
+                    //{
+                    //    otlpOptions.Endpoint = new Uri(
+                    //        $"http://{InfrastructureConstants.OtelCollectorName}:{InfrastructureConstants.OtelCollectorPort}");
+                    //});
+
+                    //tracing.AddOtlpExporter(options =>
+                    //{
+                    //    options.Endpoint = new Uri($"http://{InfrastructureConstants.JaegerName}:{InfrastructureConstants.JaegerPort}"); // or "http://jaeger:4317" if using Docker Compose network
+                    //});
 
                     if (builder.Environment.IsDevelopment())
                     {
-                        tracing.AddConsoleExporter();
+                        //tracing.AddConsoleExporter();
                     }
                 });
 
-            builder.AddOpenTelemetryExporters();
+            //builder.AddOpenTelemetryExporters();
 
             return builder;
         }
 
         private static TBuilder AddOpenTelemetryExporters<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
         {
-            //var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+            var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
-            //if (useOtlpExporter)
-            //{
-            //    builder.Services.AddOpenTelemetry().UseOtlpExporter();
-            //    //builder.Services.Configure<OpenTelemetryLoggerOptions>(logging => logging.AddOtlpExporter());
-            //    //builder.Services.ConfigureOpenTelemetryMeterProvider(metrics => metrics.AddOtlpExporter());
-            //    //builder.Services.ConfigureOpenTelemetryTracerProvider(tracing => tracing.AddOtlpExporter());
-            //}
+            if (useOtlpExporter)
+            {
+                builder.Services.AddOpenTelemetry().UseOtlpExporter();
+                //builder.Services.Configure<OpenTelemetryLoggerOptions>(logging => logging.AddOtlpExporter());
+                //builder.Services.ConfigureOpenTelemetryMeterProvider(metrics => metrics.AddOtlpExporter());
+                //builder.Services.ConfigureOpenTelemetryTracerProvider(tracing => tracing.AddOtlpExporter());
+            }
 
             builder.Services.AddOpenTelemetry()
-                .WithMetrics(x => x.AddPrometheusExporter());
+                .WithMetrics(x => x
+                    .AddPrometheusExporter()
+                    .AddOtlpExporter(options =>
+                    {
+                        options.Endpoint = new Uri("http://localhost:18889"); // Change if your Aspire dashboard OTLP endpoint is different
+                    })
+            );
 
             // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
             //if (!string.IsNullOrEmpty(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
